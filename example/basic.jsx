@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import Layout, { Draggable } from '../src';
 
 const components = [
-  {props: {background: 'red'}},
+  {props: {background: 'red', content: 'a'}},
   {props: {background: 'green'}},
   {props: {background: 'blue'}},
   {props: {background: 'pink'}},
@@ -21,7 +21,8 @@ class BasicExample extends Component {
           <Draggable background="cyan" />
           <Draggable background="grey" />
         </div>
-        <Layout components={components}/>
+        <Layout components={components.slice(0,2)}/>
+        <Layout components={components.slice(2)}/>
       </div>
     );
   }

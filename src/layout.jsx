@@ -32,13 +32,13 @@ class Layout extends Component {
       return (
         <Draggable {...c.props} remove={this.removeComponent(idx, c.props)} />
       );
-    }), idx => <Target onDrop={this.addComponent(idx)}/>);
+    }), idx => <Target onDrop={this.addComponent(idx)}  vertical={true}/>);
 
     return (
-      <div style={{flex: 1, height: 500, background: '#ccc', display: 'flex', margin: '25px 0', position: 'relative', overflow: 'hidden'}}>
-        <Target onDrop={this.addComponent(0)}/>
+      <div style={{minHeight: 100, background: '#ccc', display: 'block', margin: '25px 0', position: 'relative', overflow: 'hidden', flexDirection: 'column'}}>
+        <Target onDrop={this.addComponent(0)} vertical={true}/>
           {components}
-        <Target onDrop={this.addComponent(this.state.components.length)}/>
+        <Target onDrop={this.addComponent(this.state.components.length)}  vertical={true}/>
       </div>
     );
   }

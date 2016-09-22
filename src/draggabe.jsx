@@ -20,10 +20,14 @@ const collect = (connect, monitor) => {
   };
 };
 
-const Draggable = ({ connectDragSource, isDragging, background, hideOnDrag }) => {
+const Draggable = ({ connectDragSource, isDragging, background, hideOnDrag, content }) => {
   if (isDragging && hideOnDrag) return null;
   return connectDragSource(
-    <div style={{flex: 1, background, cursor: 'move', minHeight: 50}}>
+    <div style={{flex: 1, background, cursor: 'move', minHeight: 150}}>
+     { content ? (
+       <div style={{height: 300}}>
+       </div>
+     ) : ""}
     </div>
   );
 };
