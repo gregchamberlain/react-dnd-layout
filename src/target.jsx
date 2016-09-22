@@ -4,6 +4,7 @@ import { DropTarget } from 'react-dnd';
 const target = {
   drop(props, monitor) {
     props.onDrop(monitor.getItem());
+    return props;
   },
   canDrop(props, monitor) {
     return true;
@@ -33,6 +34,7 @@ const style = ({ isOver, vertical, canDrop }) => ({
     width: vertical ? null: 0,
     height: vertical ? 0 : null,
     position: 'relative',
+    zIndex: 1
   },
   target: {
     position: 'absolute',
@@ -50,9 +52,9 @@ const style = ({ isOver, vertical, canDrop }) => ({
   },
   line: {
     display: isOver ? 'block' : 'none',
-    width: vertical ? null : 10,
-    height: vertical ? 10 : null,
-    background: '#444'
+    width: vertical ? null : 4,
+    height: vertical ? 4 : null,
+    background: '#35b5e6',
   }
 });
 
