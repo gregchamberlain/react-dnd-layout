@@ -8,9 +8,20 @@ class WrapperExample extends Component {
   render() {
     return (
       <div>
-        <Wrapper />
-        <Wrapper />
-        <Wrapper />
+        <Wrapper>
+          <div style={{display: 'flex'}}>
+            <Wrapper row >Wrapper #4</Wrapper>
+            <Wrapper row >Wrapper #5</Wrapper>
+            <Wrapper row >Wrapper #6</Wrapper>
+          </div>
+        </Wrapper>
+        <Wrapper>
+          <div style={{display: 'flex'}}>
+            <Wrapper row >Wrapper #1</Wrapper>
+            <Wrapper row >Wrapper #2</Wrapper>
+            <Wrapper row >Wrapper #3</Wrapper>
+          </div>
+        </Wrapper>
       </div>
     );
   }

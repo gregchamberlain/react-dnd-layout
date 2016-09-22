@@ -12,7 +12,9 @@ const wrapperSource = {
 
 const wrapperTarget = {
   drop(props, monitor) {
-    console.log(props);
+    if (!monitor.didDrop()) {
+      console.log('add some children');
+    }
   },
   canDrop(props, monitor) {
     return true;
@@ -21,16 +23,16 @@ const wrapperTarget = {
 
 class Wrapper extends Component {
   render() {
-    const { connectDragSource, connectDropTarget, ...props } = this.props;
+    const { connectDragSource, connectDropTarget, row, ...props } = this.props;
     const style = styles(props);
     return connectDragSource(connectDropTarget(
       <div style={style.container}>
-        This is a wrapper
         <div style={style.dropZones}>
-          <DropZone pos="top" onDrop={() => console.log('add before')}/>
+          <DropZone pos={row ? "left" : "top"} onDrop={() => console.log('add before')}/>
 
-          <DropZone pos="bottom" onDrop={() => console.log('add after')}/>
+          <DropZone pos={row ? "right" : "bottom"} onDrop={() => console.log('add after')}/>
         </div>
+        {props.children}
       </div>
     ));
   }
