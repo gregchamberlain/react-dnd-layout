@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import Layout, { Draggable } from '../src';
+import Layout, { Wrapper } from '../src';
 
 const components = [
   {props: {background: 'red', content: 'a'}},
@@ -15,15 +15,21 @@ const components = [
 class BasicExample extends Component {
   render() {
     return (
-      <div>
-        <div style={{display: 'flex'}}>
-          <Draggable background="magenta"/>
-          <Draggable background="cyan" />
-          <Draggable background="grey" />
-        </div>
-        <Layout components={components.slice(0,2)}/>
-        <Layout components={components.slice(2)}/>
-      </div>
+      <Layout>
+        <Layout row id="1">
+          <div style={{color: 'white' }} id="2">a</div>
+          <div style={{color: 'white' }} id="3">b</div>
+          <div style={{color: 'white' }} id="4">c</div>
+        </Layout>
+        <Layout row id="5">
+          <div style={{color: 'white' }} id="6">d</div>
+          <div style={{color: 'white' }} id="7">e</div>
+          <div style={{color: 'white' }} id="8">f</div>
+        </Layout>
+        <Layout row id="9">
+          
+        </Layout>
+      </Layout>
     );
   }
 }

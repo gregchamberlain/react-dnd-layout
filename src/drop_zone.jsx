@@ -3,7 +3,7 @@ import { DropTarget } from 'react-dnd';
 
 const wrapperTarget = {
   drop(props, monitor) {
-    props.onDrop();
+    return props;
   },
   canDrop(props, monitor) {
     return true;
@@ -27,8 +27,8 @@ const styles = ({ isOver, canDrop, pos }) => ({
     minHeight: 25,
     opacity: isOver ? 1 : 0,
     position: 'absolute',
-    width: pos === 'left' || pos === 'right' ? 25 : '100%',
-    height: pos === 'left' || pos === 'right' ? '100%' : 25,
+    width: pos === 'left' || pos === 'right' ? '25%' : '100%',
+    height: pos === 'left' || pos === 'right' ? '100%' : '25%',
     top: pos === 'top' ? 0 : null,
     left: pos === 'left' ? 0 : null,
     right: pos === 'right' ? 0 : null,

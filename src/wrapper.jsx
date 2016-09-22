@@ -6,7 +6,14 @@ import DropZone from './drop_zone';
 
 const wrapperSource = {
   beginDrag(props) {
-    return {};
+    props.onDragStart();
+    return props.children;
+  },
+  endDrag(props, monitor, component) {
+    if (monitor.didDrop()) {
+      props.onDrop();
+      monitor.getDropResult().onDrop(monitor.getItem());
+    }
   }
 };
 
@@ -14,6 +21,7 @@ const wrapperTarget = {
   drop(props, monitor) {
     if (!monitor.didDrop()) {
       console.log('add some children');
+      return props;
     }
   },
   canDrop(props, monitor) {
@@ -28,9 +36,9 @@ class Wrapper extends Component {
     return connectDragSource(connectDropTarget(
       <div style={style.container}>
         <div style={style.dropZones}>
-          <DropZone pos={row ? "left" : "top"} onDrop={() => console.log('add before')}/>
+          <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
 
-          <DropZone pos={row ? "right" : "bottom"} onDrop={() => console.log('add after')}/>
+          <DropZone pos={row ? "right" : "bottom"} onDrop={props.addAfter}/>
         </div>
         {props.children}
       </div>
@@ -40,11 +48,12 @@ class Wrapper extends Component {
 
 const styles = ({ isDragging, isOver, canDrop }) => ({
   container: {
+    flex: 1,
     position: 'relative',
+    border: '1px dashed #ccc',
+    margin: 5,
     minHeight: 75,
-    opacity: isDragging ? 0 : 1,
-    background: canDrop ? isOver ? 'green' : 'yellow' : 'red',
-    transition: 'background 0.2s ease-in'
+    background: '#444'
   },
   dropZones: {
     display: canDrop ? 'block' : 'none',
@@ -56,7 +65,7 @@ const styles = ({ isDragging, isOver, canDrop }) => ({
   }
 });
 
-export default flow(
+const WrapperContainer = flow(
   DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
@@ -67,3 +76,12 @@ export default flow(
     isDragging: monitor.isDragging(),
   }))
 )(Wrapper);
+
+WrapperContainer.defaultProps = {
+  addBefore: () => {},
+  addAfter: () => {},
+  onDragStart: () => {},
+  onDrop: () => {},
+};
+
+export default WrapperContainer;

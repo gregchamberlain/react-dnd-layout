@@ -4,5 +4,5 @@ import BasicExample from './basic';
 import WrapperExample from './wrapper';
 
 render(
-  <WrapperExample />,
+  <BasicExample />,
 document.getElementById('root'));
