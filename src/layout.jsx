@@ -81,9 +81,6 @@ class Layout extends Component {
 const styles = ({ row }) => ({
   container: {
     display: row ? 'flex' : 'block',
-    flex: 1,
-    height: '100%',
-    width: '100%',
   },
 });
 
