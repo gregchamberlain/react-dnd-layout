@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-// import {} from '../src'
+import BasicExample from './basic';
 
 render(
-
-document.getElementById('root'))
+  <BasicExample />,
+document.getElementById('root'));
