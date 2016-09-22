@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import Draggable from './draggabe';
-import Layout from '../src';
+import Layout, { Draggable } from '../src';
 
 const components = [
   {props: {background: 'red'}},
@@ -18,9 +17,9 @@ class BasicExample extends Component {
     return (
       <div>
         <div style={{display: 'flex'}}>
-          <Draggable />
-          <Draggable />
-          <Draggable />
+          <Draggable background="magenta"/>
+          <Draggable background="cyan" />
+          <Draggable background="grey" />
         </div>
         <Layout components={components}/>
       </div>

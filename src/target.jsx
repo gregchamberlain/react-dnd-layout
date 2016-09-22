@@ -2,8 +2,8 @@ import React from 'react';
 import { DropTarget } from 'react-dnd';
 
 const target = {
-  drop(props) {
-    console.log(props);
+  drop(props, monitor) {
+    props.onDrop(monitor.getItem());
   }
 };
 
@@ -27,11 +27,11 @@ const Target = ({ connectDropTarget, isOver }) => connectDropTarget(
 const style = ({ isOver }) => ({
   container: {
     width: 0,
-    position: 'relative'
+    position: 'relative',
   },
   target: {
     position: 'absolute',
-    width: 150,
+    width: 50,
     height: '100%',
     // background: '#eee',
     // border: '1px solid black',
