@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { DropTarget } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
+import { flow } from 'lodash';
 
 const wrapperTarget = {
   drop(props, monitor) {
@@ -10,22 +11,32 @@ const wrapperTarget = {
   }
 };
 
+const wrapperSource = {
+  beginDrag() {
+
+  },
+  canDrag() {
+    return false;
+  }
+};
+
 class DropZone extends Component {
   render() {
     const { connectDragSource, connectDropTarget, ...props } = this.props;
     const style = styles(props);
-    return connectDropTarget(
+    return connectDragSource(connectDropTarget(
       <div style={style.container}>
         <div style={style.line}></div>
       </div>
-    );
+    ));
   }
 }
 
 const styles = ({ isOver, canDrop, pos }) => ({
   container: {
+    background: 'rgba(255, 255, 255, 0.5)',
     minHeight: 25,
-    opacity: isOver ? 1 : 0,
+    // opacity: isOver ? 1 : 0,
     position: 'absolute',
     width: pos === 'left' || pos === 'right' ? '25%' : '100%',
     height: pos === 'left' || pos === 'right' ? '100%' : '25%',
@@ -48,11 +59,17 @@ const styles = ({ isOver, canDrop, pos }) => ({
   }
 });
 
-const DropZoneContainer = DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-  canDrop: monitor.canDrop()
-}))(DropZone);
+const DropZoneContainer = flow(
+  DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop()
+  })),
+  DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  }))
+)(DropZone);
 
 DropZoneContainer.defaultProps = {
   onDrop: () => console.log('dropped')

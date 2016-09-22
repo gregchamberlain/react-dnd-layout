@@ -33,7 +33,7 @@ class Wrapper extends Component {
   render() {
     const { connectDragSource, connectDropTarget, row, ...props } = this.props;
     const style = styles(props);
-    return connectDragSource(connectDropTarget(
+    return connectDragSource(
       <div style={style.container}>
         <div style={style.dropZones}>
           <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
@@ -42,7 +42,7 @@ class Wrapper extends Component {
         </div>
         {props.children}
       </div>
-    ));
+    );
   }
 }
 
@@ -56,7 +56,7 @@ const styles = ({ isDragging, isOver, canDrop }) => ({
     background: '#444'
   },
   dropZones: {
-    display: canDrop ? 'block' : 'none',
+    // display: canDrop ? 'block' : 'none',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -65,17 +65,10 @@ const styles = ({ isDragging, isOver, canDrop }) => ({
   }
 });
 
-const WrapperContainer = flow(
-  DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
-  })),
-  DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  }))
-)(Wrapper);
+const WrapperContainer = DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+}))(Wrapper);
 
 WrapperContainer.defaultProps = {
   addBefore: () => {},
