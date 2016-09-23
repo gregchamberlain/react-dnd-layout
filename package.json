@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "lodash": "^4.16.1",
+    "normalizr": "^2.2.1",
     "radium": "^0.18.1",
     "react": "^15.3.0",
     "react-dnd": "^2.1.4",

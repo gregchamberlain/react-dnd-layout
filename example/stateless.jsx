@@ -4,16 +4,30 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import Layout, { Wrapper } from '../src';
 
+import { item } from '../src/redux/schema';
+import { mergeItems } from '../src/redux/utils';
+import { normalize } from 'normalizr';
+
 const component = {
   type: 'Layout',
   id: 1,
   props: {
     row: false
   },
-  children: [
-
+  items: [
+    {type: 'div', id: 2, props: {children: "a"}},
+    {type: 'div', id: 3, props: {children: "b"}},
+    {type: 'div', id: 4, props: {children: "c"}},
+    {type: 'Layout', id: 5, props: { row: true }, items: [
+      {type: 'div', id: 6, props: {children: "d"}},
+      {type: 'div', id: 7, props: {children: "e"}},
+    ]}
   ]
 };
+
+const items = normalize(component, item).entities.items;
+// console.log(items[1]);
+console.log(mergeItems(items, 1));
 
 const components = [
   <div id="1">Hello</div>,

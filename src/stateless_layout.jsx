@@ -30,7 +30,7 @@ const Layout = (props) => {
     <Wrapper
       key={item.props.id}
       onDragStart={() => setTimeout(removeItem(idx), 50)}>
-      {item}
+      {item.type}
     </Wrapper>
   ));
 
