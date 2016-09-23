@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 const LayoutContainer = connect(mapStateToProps, mapDispatchToProps)(Layout);
 LayoutContainer.defaultProps = {
-  children: []
+  children: [],
+  style: {
+    flex: 1,
+  }
 };
 export default LayoutContainer;

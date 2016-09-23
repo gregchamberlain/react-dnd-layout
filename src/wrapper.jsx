@@ -31,7 +31,7 @@ class Wrapper extends Component {
   render() {
     const { connectDragPreview, connectDragSource, connectDropTarget, row, ...props } = this.props;
     const hovered = Radium.getState(this.state, 'main', ':hover');
-    const childStyle = props.children._owner._renderedComponent._previousStyleCopy;
+    const childStyle = props.children.props.style || {};
     const style = styles(props, hovered, childStyle);
     return connectDragPreview(
       <div style={style.container}>
@@ -51,7 +51,7 @@ class Wrapper extends Component {
 
 const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
   container: {
-    // flex: 1,
+    flex: child.flex,
     position: 'relative',
     border: '1px solid transparent',
     ":hover": {
@@ -60,7 +60,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
     boxSizing: 'border-box',
     // minHeight: 75,
     // background: '#444',
-    display: isDragging ? 'none' : 'block'
+    display: isDragging ? 'none' : 'flex'
   },
   dropZones: {
     // display: canDrop ? 'block' : 'none',

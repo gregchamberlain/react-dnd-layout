@@ -50,6 +50,7 @@ const style = ({ row, isOverCurrent, children }) => ({
     minHeight: children.length ? null : 75,
     padding: 20,
     display: 'flex',
+    flex: 1,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
     background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : null,
