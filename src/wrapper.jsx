@@ -13,7 +13,7 @@ const wrapperSource = {
   endDrag(props, monitor, component) {
     if (monitor.didDrop()) {
       props.onDrop(monitor.getDropResult());
-      monitor.getDropResult().onDrop(monitor.getItem());
+      // monitor.getDropResult().onDrop(monitor.getItem());
     }
   }
 };
@@ -34,7 +34,7 @@ class Wrapper extends Component {
     const style = styles(props, hovered);
     return connectDragPreview(
       <div style={style.container}>
-        {connectDragSource(<div style={style.handle}></div>)}
+        {connectDragSource(<div style={style.handle}>DRAG</div>)}
         {/* <div style={style.dropZones}>
           <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
 
@@ -50,12 +50,12 @@ const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
   container: {
     flex: 1,
     position: 'relative',
-    border: '1px solid #eee',
+    border: '1px solid transparent',
     ":hover": {
-      border: '1px solid #ccc',
+      border: '1px solid #35b5e5',
     },
     padding: 10,
-    // margin: 1,
+    margin: 3,
     boxSizing: 'border-box',
     minHeight: 75,
     background: '#444',
@@ -70,13 +70,16 @@ const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
     height: '100%'
   },
   handle: {
-    display: hovered ? 'block' : 'none',
+    display: hovered ? 'flex' : 'none',
     cursor: 'move',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 10,
     position: 'absolute',
     background: '#eee',
-    borderRadius: 5,
-    top: -4,
-    height: 8,
+    borderRadius: 2,
+    top: -8,
+    height: 16,
     width: 50,
     left: '50%',
     transform: 'translateX(-50%)'

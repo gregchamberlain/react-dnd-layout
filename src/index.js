@@ -1,4 +1,4 @@
-import Layout from './layout';
+import Layout from './stateless_layout';
 
 export default Layout;
 
