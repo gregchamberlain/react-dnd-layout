@@ -26,10 +26,6 @@ const component = {
   ]
 };
 
-const items = normalize(component, item).entities.items;
-// console.log(items[1]);
-console.log(mergeItems(items, 1));
-
 const components = [
   <div id="1">Hello</div>,
   <div id="2">Hola</div>,

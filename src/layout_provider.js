@@ -6,6 +6,9 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { item } from './redux/schema';
 import { normalize } from 'normalizr';
 import Layout from './stateless_layout_container';
+import CatalogItem from './catalog/catalog_item';
+
+window.PropTypes = PropTypes;
 
 
 class LayoutProvider extends  Component {
@@ -23,18 +26,44 @@ class LayoutProvider extends  Component {
 
   render() {
 
-    const { rootItem } = this.props;
-    const Root = DragDropContext(HTML5Backend)(Layout);
+    const { rootItem, components } = this.props;
     return (
       <Provider store={this.store}>
-        <Root id={rootItem.id}/>
+        <div>
+          <div style={styles.sidebar}>
+            {Object.keys(components).map(c => {
+              if (c === 'Layout') return "";
+              const Comp = components[c];
+              return (
+                <CatalogItem Comp={Comp} key={c}/>
+              );
+            })}
+          </div>
+          <div style={styles.content}>
+            <Layout id={rootItem.id}/>
+          </div>
+        </div>
       </Provider>
     );
   }
 }
 
+const styles = {
+  sidebar: {
+    position: 'fixed',
+    width: 200,
+    top: 0,
+    left: 0,
+    background: '#444',
+    height: '100%'
+  },
+  content: {
+    marginLeft: 200
+  }
+};
+
 LayoutProvider.childContextTypes = {
   components: PropTypes.object
 };
 
-export default LayoutProvider;
+export default DragDropContext(HTML5Backend)(LayoutProvider);

@@ -10,6 +10,9 @@ import { item } from '../src/redux/schema';
 import { mergeItems } from '../src/redux/utils';
 import { normalize } from 'normalizr';
 const Text = ({children}) => <div>{children}</div>;
+Text.defaultProps = {
+  children: 'asdasdasd'
+};
 const component = {
   type: 'Layout',
   id: 1,

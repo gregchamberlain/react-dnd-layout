@@ -7,7 +7,6 @@ import Wrapper from './wrapper';
 const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
-      console.log(monitor.getItem());
       props.onChange(
         update(props.items, {
           $splice: [
@@ -26,7 +25,6 @@ const Layout = (props, { components }) => {
   const removeItem = idx => () => {
     onChange(update(props.items, {$splice: [[idx, 1]]}));
   };
-  // console.log(items);
   const renderItems = items.map((item, idx) => {
     const Comp = components[item.type];
     return (
