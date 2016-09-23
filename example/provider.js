@@ -23,6 +23,10 @@ const component = {
     {type: 'Layout', id: 5, props: { row: true }, items: [
       {type: 'Text', id: 6, props: {children: "d"}},
       {type: 'Text', id: 7, props: {children: "e"}},
+      {type: 'Layout', id: 8, props: {row: false}, items: [
+        {type: 'Text', id: 9, props: {children: "f"}},
+        {type: 'Text', id: 10, props: {children: "g"}},
+      ]},
     ]}
   ]
 };

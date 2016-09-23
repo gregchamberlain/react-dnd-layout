@@ -47,12 +47,13 @@ const Layout = (props, { components }) => {
   );
 };
 
-const style = ({ row, isOverCurrent }) => ({
+const style = ({ row, isOverCurrent, items }) => ({
   container: {
-    minHeight: 75,
+    minHeight: items.length ? null : 75,
     height: '100%',
     padding: 5,
     display: row ? 'flex' : 'block',
+    flexWrap: 'wrap',
     background: isOverCurrent ? '#35b5e5' : '#333',
     // background: '#333'
   },

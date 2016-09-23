@@ -35,6 +35,8 @@ class Wrapper extends Component {
     return connectDragPreview(
       <div style={style.container}>
         {connectDragSource(<div style={style.handle}>DRAG</div>)}
+        <div style={style.remove} onClick={props.onDragStart}>&times;</div>
+        <div style={style.settings} onClick={() => console.log('settings!')}>⚙</div>
         {/* <div style={style.dropZones}>
           <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
 
@@ -57,7 +59,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
     padding: 10,
     margin: 3,
     boxSizing: 'border-box',
-    minHeight: 75,
+    // minHeight: 75,
     background: '#444',
     display: isDragging ? 'none' : 'block'
   },
@@ -83,6 +85,36 @@ const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
     width: 50,
     left: '50%',
     transform: 'translateX(-50%)'
+  },
+  remove: {
+    display: hovered ? 'flex' : 'none',
+    cursor: 'pointer',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 10,
+    position: 'absolute',
+    background: '#eee',
+    borderRadius: 8,
+    top: -8,
+    height: 16,
+    width: 16,
+    right: -8,
+    zIndex: 1,
+  },
+  settings: {
+    display: hovered ? 'flex' : 'none',
+    cursor: 'pointer',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 10,
+    position: 'absolute',
+    background: '#eee',
+    borderRadius: 8,
+    top: -8,
+    height: 16,
+    width: 16,
+    left: -8,
+    zIndex: 1,
   }
 });
 
