@@ -11,8 +11,7 @@ const wrapperSource = {
   },
   endDrag(props, monitor, component) {
     if (monitor.didDrop()) {
-      console.log('DROPPER', monitor.getDropResult());
-      props.onDrop();
+      props.onDrop(monitor.getDropResult());
       monitor.getDropResult().onDrop(monitor.getItem());
     }
   }
@@ -33,11 +32,11 @@ class Wrapper extends Component {
     const style = styles(props);
     return connectDragSource(
       <div style={style.container}>
-        {/* <div style={style.dropZones}>
+        <div style={style.dropZones}>
           <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
 
           <DropZone pos={row ? "right" : "bottom"} onDrop={props.addAfter}/>
-        </div> */}
+        </div>
         {props.children}
       </div>
     );
@@ -48,8 +47,10 @@ const styles = ({ isDragging, isOver, canDrop }) => ({
   container: {
     flex: 1,
     position: 'relative',
-    border: '1px dashed #ccc',
-    margin: 5,
+    border: '2px solid #ccc',
+    padding: 10,
+    // margin: 1,
+    boxSizing: 'border-box',
     minHeight: 75,
     background: '#444',
     display: isDragging ? 'none' : 'block'

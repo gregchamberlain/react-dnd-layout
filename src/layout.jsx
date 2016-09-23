@@ -6,9 +6,14 @@ import { merge } from 'lodash';
 import { DropTarget } from 'react-dnd';
 
 const layoutTarget = {
-  drop(props, monitor) {
+  drop(props, monitor, component) {
     if (!monitor.didDrop()) {
+      const children = component.state.children.concat(monitor.getItem());
+      console.log(children);
+      component.setState({children});
       return props;
+    } else {
+      console.log(monitor.getDropResult());
     }
   },
   canDrop(props, monitor) {
@@ -36,13 +41,36 @@ class Layout extends Component {
   }
 
   onDrop = id => () => {
-    console.log(this.props.id);
+    console.log('removing');
     const children = this.state.children.filter(child => child.props.id !== id);
     this.setState({children});
   }
 
+  addBefore = idx => item => {
+    console.log('before', idx);
+    this.setState(update(this.state, {
+      children: {
+        $splice: [
+          [idx, 0, item]
+        ]
+      }
+    }));
+  }
+
+  addAfter = idx => item => {
+    console.log('after', idx);
+    this.setState(update(this.state, {
+      children: {
+        $splice: [
+          [idx+1, 0, item]
+        ]
+      }
+    }));
+  }
+
   removeAndAdd = idx => item => {
-    console.log(this.state.children.includes(item));
+    if (this.state.children.includes(item)) return;
+    console.log('adding');
     this.setState(update(this.state, {
       children: {
         $splice: [
@@ -53,18 +81,26 @@ class Layout extends Component {
   }
 
   renderChildren = () => {
-    const children =  this.state.children.map((child, idx) => {
+    let children =  this.state.children.map((child, idx) => {
       return (
         <Wrapper
           key={child.props.id}
-          row={this.props.row}>
+          row={this.props.row}
+          addBefore={this.addBefore(idx)}
+          addAfter={this.addAfter(idx)}
+          onDrop={this.onDrop(child.props.id)}>
           {child}
         </Wrapper>
       );
     });
-    return this.props.isOver ? intersperse(children, idx => (
-      <Target key={`target${idx}`} onDrop={this.removeAndAdd(idx)} />)
-    ) : children;
+    // if (this.props.isOver) {
+    //   children = intersperse(children, idx => (
+    //     <Target index={idx} key={`target${idx}`} onDrop={(this.removeAndAdd(idx))} vertical={!this.props.row}/>)
+    //   );
+    //   children.push(<Target key={`target${children.length}`} onDrop={(this.removeAndAdd(children.length))} vertical={!this.props.row}/>);
+    //   children.unshift(<Target key={`target${0}`} onDrop={(this.removeAndAdd(0))} vertical={!this.props.row}/>);
+    // }
+    return children;
   }
 
   render() {
@@ -83,9 +119,11 @@ class Layout extends Component {
 
 const styles = ({ row, isOver, isOverCurrent }) => ({
   container: {
+    minHeight: 75,
+    height: '100%',
     display: row ? 'flex' : 'block',
-    // background: isOverCurrent ? '#eee' : '#333'
-    background: '#333'
+    background: isOverCurrent ? '#eee' : '#333',
+    // background: '#333'
   },
 });
 

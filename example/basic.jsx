@@ -17,8 +17,10 @@ class BasicExample extends Component {
     return (
       <Layout>
         <Layout row id="1">
-          <div style={{color: 'white' }} id="2">a</div>
-          <div style={{color: 'white' }} id="3">b</div>
+          <Layout id="10">
+            <div style={{color: 'white' }} id="2">a</div>
+            <div style={{color: 'white' }} id="3">b</div>
+          </Layout>
           <div style={{color: 'white' }} id="4">c</div>
         </Layout>
         <Layout row id="5">
@@ -27,7 +29,7 @@ class BasicExample extends Component {
           <div style={{color: 'white' }} id="8">f</div>
         </Layout>
         <Layout row id="9">
-          
+
         </Layout>
       </Layout>
     );
