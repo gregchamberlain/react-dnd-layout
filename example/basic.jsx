@@ -4,13 +4,16 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import Layout, { Wrapper } from '../src';
 
-const components = [
-  {props: {background: 'red', content: 'a'}},
-  {props: {background: 'green'}},
-  {props: {background: 'blue'}},
-  {props: {background: 'pink'}},
-  {props: {background: 'yellow'}},
-];
+const component = {
+  type: 'Layout',
+  id: 1,
+  props: {
+    row: false
+  },
+  children: [
+
+  ]
+};
 
 class BasicExample extends Component {
   render() {

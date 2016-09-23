@@ -9,15 +9,18 @@ const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
       const children = component.state.children.concat(monitor.getItem());
-      console.log(children);
       component.setState({children});
       return props;
     } else {
-      console.log(monitor.getDropResult());
     }
   },
   canDrop(props, monitor) {
     return true;
+  },
+  hover(props, monitor) {
+    if (monitor.isOver({shallow: true})) {
+      console.log(props);
+    }
   }
 };
 
@@ -25,6 +28,7 @@ const wrapChildren = (children, props) => (
   children.map((child, idx) => (
     <Wrapper
       key={child.props.id}
+      onDragStart={() => console.log('dragging...')}
       row={this.props.row}>
       {child}
     </Wrapper>
@@ -41,9 +45,10 @@ class Layout extends Component {
   }
 
   onDrop = id => () => {
-    console.log('removing');
-    const children = this.state.children.filter(child => child.props.id !== id);
-    this.setState({children});
+    // this.setState({draggingItem: null}, () => console.log(this.state));
+    // console.log('removing');
+    // const children = this.state.children.filter(child => child.props.id !== id);
+    // this.setState({children});
   }
 
   addBefore = idx => item => {
@@ -68,6 +73,17 @@ class Layout extends Component {
     }));
   }
 
+  startDrag = idx => () => {
+    const item = this.state.children[idx];
+    this.setState(update(this.state, {
+      children: {
+        $splice: [
+          [idx, 1]
+        ]
+      }
+    }), () => console.log(this.state));
+  }
+
   removeAndAdd = idx => item => {
     if (this.state.children.includes(item)) return;
     console.log('adding');
@@ -86,6 +102,7 @@ class Layout extends Component {
         <Wrapper
           key={child.props.id}
           row={this.props.row}
+          onDragStart={() => setTimeout(this.startDrag(idx), 50)}
           addBefore={this.addBefore(idx)}
           addAfter={this.addAfter(idx)}
           onDrop={this.onDrop(child.props.id)}>
@@ -112,6 +129,13 @@ class Layout extends Component {
     return connectDropTarget(
       <div style={style.container}>
         {this.renderChildren()}
+        {this.state.draggingItem ? (
+          <div style={{display: 'none'}}>
+            <Wrapper>
+              {this.state.draggingItem}
+            </Wrapper>
+          </div>
+        ) : ""}
       </div>
     );
   }
@@ -144,7 +168,7 @@ const LayoutContainer = DropTarget('COMPONENT', layoutTarget, (connect, monitor)
 }))(Layout);
 
 LayoutContainer.defaultProps = {
-  onDrop: item => console.log('should add', item)
+  onDrop: item => {}
 };
 
 export default LayoutContainer;
