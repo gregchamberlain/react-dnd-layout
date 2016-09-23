@@ -31,7 +31,7 @@ const Layout = (props, { components }) => {
       <Wrapper
         key={item.id}
         onDragStart={() => setTimeout(removeItem(idx), 50)}>
-        <Comp id={item.id} {...item.props}/>
+        <Comp id={item.id} {...item.props} type={item.type} />
       </Wrapper>
     );
   });
@@ -48,11 +48,11 @@ const Layout = (props, { components }) => {
 const style = ({ row, isOverCurrent, children }) => ({
   container: {
     minHeight: children.length ? null : 75,
-    height: '100%',
-    padding: 5,
-    display: row ? 'flex' : 'block',
+    padding: 20,
+    display: 'flex',
+    flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
-    background: isOverCurrent ? '#35b5e5' : '#333',
+    background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : null,
     // background: '#333'
   },
 });

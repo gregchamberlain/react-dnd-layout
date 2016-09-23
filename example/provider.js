@@ -10,31 +10,39 @@ const Text = ({children}) => <div>{children}</div>;
 Text.defaultProps = {
   children: 'asdasdasd'
 };
+// const component = {
+//   type: 'Layout',
+//   id: 1,
+//   props: {
+//     row: false,
+//     children: [
+//       {type: 'Text', id: 2, props: {children: "a"}},
+//       {type: 'Text', id: 3, props: {children: "b"}},
+//       {type: 'Text', id: 4, props: {children: "c"}},
+//       {type: 'Layout', id: 5, props: { row: true, children: [
+//         {type: 'Text', id: 6, props: {children: "d"}},
+//         {type: 'Text', id: 7, props: {children: "e"}},
+//         {type: 'Layout', id: 8, props: {row: false, children: [
+//           {type: 'Text', id: 9, props: {children: "f"}},
+//           {type: 'Text', id: 10, props: {children: "g"}},
+//           ]}},
+//         ]},
+//       },
+//     ]
+//   }
+// };
+
 const component = {
-  type: 'Layout',
+  type: 'ColumnLayout',
   id: 1,
   props: {
     row: false,
-    children: [
-      {type: 'Text', id: 2, props: {children: "a"}},
-      {type: 'Text', id: 3, props: {children: "b"}},
-      {type: 'Text', id: 4, props: {children: "c"}},
-      {type: 'Layout', id: 5, props: { row: true, children: [
-        {type: 'Text', id: 6, props: {children: "d"}},
-        {type: 'Text', id: 7, props: {children: "e"}},
-        {type: 'Layout', id: 8, props: {row: false, children: [
-          {type: 'Text', id: 9, props: {children: "f"}},
-          {type: 'Text', id: 10, props: {children: "g"}},
-          ]}},
-        ]},
-      },
-    ]
+    children: []
   }
 };
 
 const comps = {
   Text,
-  Layout,
   RowLayout,
   ColumnLayout
 };

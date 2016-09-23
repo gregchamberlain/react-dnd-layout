@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { item } from './redux/schema';
 import { normalize } from 'normalizr';
 import Layout from './stateless_layout_container';
+import ColumnLayout from './layouts/column';
 import CatalogItem from './catalog/catalog_item';
 
 window.PropTypes = PropTypes;
@@ -32,16 +33,13 @@ class LayoutProvider extends  Component {
         <div>
           <div style={styles.sidebar}>
             {Object.keys(components).map(c => {
-              // if (c === 'Layout') return "";
               const Comp = components[c];
               Comp.type = c;
-              return (
-                <CatalogItem key={c} type={c} Comp={Comp}/>
-              );
+              return <CatalogItem key={c} type={c} Comp={Comp}/>;
             })}
           </div>
           <div style={styles.content}>
-            <Layout id={rootItem.id}/>
+            <ColumnLayout id={rootItem.id}/>
           </div>
         </div>
       </Provider>

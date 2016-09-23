@@ -31,10 +31,11 @@ class Wrapper extends Component {
   render() {
     const { connectDragPreview, connectDragSource, connectDropTarget, row, ...props } = this.props;
     const hovered = Radium.getState(this.state, 'main', ':hover');
-    const style = styles(props, hovered);
+    const childStyle = props.children._owner._renderedComponent._previousStyleCopy;
+    const style = styles(props, hovered, childStyle);
     return connectDragPreview(
       <div style={style.container}>
-        {connectDragSource(<div style={style.handle}>DRAG</div>)}
+        {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
         <div style={style.remove} onClick={props.onDragStart}>&times;</div>
         <div style={style.settings} onClick={() => console.log('settings!')}>⚙</div>
         {/* <div style={style.dropZones}>
@@ -48,19 +49,17 @@ class Wrapper extends Component {
   }
 }
 
-const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
+const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
   container: {
-    flex: 1,
+    // flex: 1,
     position: 'relative',
     border: '1px solid transparent',
     ":hover": {
       border: '1px solid #35b5e5',
     },
-    padding: 10,
-    margin: 3,
     boxSizing: 'border-box',
     // minHeight: 75,
-    background: '#444',
+    // background: '#444',
     display: isDragging ? 'none' : 'block'
   },
   dropZones: {
@@ -82,7 +81,8 @@ const styles = ({ isDragging, isOver, canDrop }, hovered) => ({
     borderRadius: 2,
     top: -8,
     height: 16,
-    width: 50,
+    minWidth: 50,
+    padding: '0 10px',
     left: '50%',
     transform: 'translateX(-50%)'
   },
