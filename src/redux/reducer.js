@@ -1,12 +1,13 @@
-import { CHANGE } from './actions';
+import { CHANGE, UPDATE_PROPS } from './actions';
 import update from 'react/lib/update';
 import { merge } from 'lodash';
 
+let nextState;
 const Reducer = (state = {}, action) => {
   switch (action.type) {
     case CHANGE:
       console.log(action.items);
-      const nextState = merge({}, state);
+      nextState = merge({}, state);
       action.items.forEach(item => {
         if (!nextState[item.id])
           nextState[item.id] = item;
@@ -17,6 +18,10 @@ const Reducer = (state = {}, action) => {
             $set: action.items.map(item => item.id)
           }
         }
+      }});
+    case UPDATE_PROPS:
+      return update(state, {[action.id]: {
+        props: { $set: action.props }
       }});
     default:
       return state;

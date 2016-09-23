@@ -6,5 +6,6 @@ const RowLayout = (props) => (
 );
 
 RowLayout.defaultProps = Layout.defaultProps;
+RowLayout.propInputs = Layout.propInputs;
 
 export default RowLayout;

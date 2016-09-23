@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { flow } from 'lodash';
 import Radium from 'radium';
+import { connect } from 'react-redux';
+import * as ACTIONS from './redux/actions';
 
 import DropZone from './drop_zone';
 
@@ -28,21 +30,40 @@ const wrapperTarget = {
 };
 
 class Wrapper extends Component {
+  constructor(props) {
+    super(props);
+    this.state ={
+      editorOpen: false,
+      props: props.item.props,
+    };
+  }
+
+  toggleEditor = () => {
+    this.setState({editorOpen: !this.state.editorOpen});
+  }
+
+  updateProps = props => {
+    this.setState({props});
+  }
+
   render() {
-    const { connectDragPreview, connectDragSource, connectDropTarget, row, ...props } = this.props;
-    const hovered = Radium.getState(this.state, 'main', ':hover');
+    const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
+    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen;
     const childStyle = props.children.props.style || {};
     const style = styles(props, hovered, childStyle);
     return connectDragPreview(
       <div style={style.container}>
         {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
         <div style={style.remove} onClick={props.onDragStart}>&times;</div>
-        <div style={style.settings} onClick={() => console.log('settings!')}>⚙</div>
-        {/* <div style={style.dropZones}>
-          <DropZone pos={row ? "left" : "top"} onDrop={props.addBefore}/>
-
-          <DropZone pos={row ? "right" : "bottom"} onDrop={props.addAfter}/>
-        </div> */}
+        { Form ? (
+          <div style={style.settings} onClick={this.toggleEditor}>⚙</div>
+        ) : ""}
+        {this.state.editorOpen ? (
+          <div style={style.propEditor}>
+            <Form value={props.item.props} onChange={props.updateProps}/>
+          </div>
+        ) : ""}
+        {/* <Form value={props.item.props} onChange={val => console.log(val)}/> */}
         {props.children}
       </div>
     );
@@ -53,74 +74,59 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
   container: {
     flex: child.flex,
     position: 'relative',
-    border: '1px solid transparent',
-    ":hover": {
-      border: '1px solid #35b5e5',
-    },
+    outline: hovered ? '1px solid #35b5e5' : 'none',
     boxSizing: 'border-box',
+    ':hover': {
+
+    },
     // minHeight: 75,
     // background: '#444',
     display: isDragging ? 'none' : 'flex'
   },
-  dropZones: {
-    // display: canDrop ? 'block' : 'none',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%'
-  },
   handle: {
-    display: hovered ? 'flex' : 'none',
-    cursor: 'move',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 10,
-    position: 'absolute',
-    background: '#eee',
+    ...actionStyle(hovered),
     borderRadius: 2,
-    top: -8,
-    height: 16,
     minWidth: 50,
     padding: '0 10px',
     left: '50%',
     transform: 'translateX(-50%)'
   },
-  remove: {
-    display: hovered ? 'flex' : 'none',
-    cursor: 'pointer',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 10,
-    position: 'absolute',
-    background: '#eee',
-    borderRadius: 8,
-    top: -8,
-    height: 16,
-    width: 16,
+  remove: {...actionStyle(hovered),
     right: -8,
-    zIndex: 1,
   },
   settings: {
-    display: hovered ? 'flex' : 'none',
-    cursor: 'pointer',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: 10,
-    position: 'absolute',
-    background: '#eee',
-    borderRadius: 8,
-    top: -8,
-    height: 16,
-    width: 16,
+    ...actionStyle(hovered),
     left: -8,
-    zIndex: 1,
+  },
+  propEditor: {
+    position: 'absolute',
+    top: 8,
+    left: -8,
+    background: '#444',
+    padding: 5,
+    zIndex: 1
   }
 });
 
-const WrapperContainer = DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview(),
+const actionStyle = hovered => ({
+  display: hovered ? 'flex' : 'none',
+  boxShadow: '0 0 4px #888',
+  cursor: 'pointer',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: 10,
+  position: 'absolute',
+  background: '#eee',
+  borderRadius: 8,
+  top: -8,
+  height: 16,
+  width: 16,
+  zIndex: 1,
+});
+
+const WrapperContainer = DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
+  connectDragSource: conn.dragSource(),
+  connectDragPreview: conn.dragPreview(),
   isDragging: monitor.isDragging(),
 }))(Radium(Wrapper));
 
@@ -131,4 +137,8 @@ WrapperContainer.defaultProps = {
   onDrop: () => {},
 };
 
-export default WrapperContainer;
+const mapDispatchToProps = (dispatch, props) => ({
+  updateProps: newProps => dispatch(ACTIONS.updateProps(props.children.props.id, newProps))
+});
+
+export default connect(null, mapDispatchToProps)(WrapperContainer);

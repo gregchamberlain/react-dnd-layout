@@ -1,15 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import Image from './components/image';
+import Title from './components/title';
+import Text from './components/text';
 
 // import Layout, { Wrapper } from '../src';
 import Layout from '../src/stateless_layout_container';
 import LayoutProvider from '../src/layout_provider';
 import { RowLayout, ColumnLayout } from '../src';
-const Text = ({children}) => <div>{children}</div>;
-Text.defaultProps = {
-  children: 'asdasdasd'
-};
 // const component = {
 //   type: 'Layout',
 //   id: 1,
@@ -44,7 +43,9 @@ const component = {
 const comps = {
   Text,
   RowLayout,
-  ColumnLayout
+  ColumnLayout,
+  Image,
+  Title,
 };
 
 

@@ -9,9 +9,7 @@ const layoutTarget = {
     if (!monitor.didDrop()) {
       props.onChange(
         update(props.children , {
-          $splice: [
-            [0,0,monitor.getItem()]
-          ]
+          $push: [monitor.getItem()]
         })
       );
       return props;
@@ -30,13 +28,15 @@ const Layout = (props, { components }) => {
     return (
       <Wrapper
         key={item.id}
+        Form={Comp.propInputs}
+        item={item}
         onDragStart={() => setTimeout(removeItem(idx), 50)}>
         <Comp id={item.id} {...item.props} type={item.type} />
       </Wrapper>
     );
   });
 
-  const styles = style(props);
+  const styles = styler(props);
 
   return connectDropTarget(
     <div style={styles.container}>
@@ -45,15 +45,13 @@ const Layout = (props, { components }) => {
   );
 };
 
-const style = ({ row, isOverCurrent, children }) => ({
+const styler = ({ row, isOverCurrent, children, style }) => ({
   container: {
+    ...style,
     minHeight: children.length ? null : 75,
-    padding: 20,
-    display: 'flex',
-    flex: 1,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
-    background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : null,
+    background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
 });

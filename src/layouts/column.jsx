@@ -5,6 +5,8 @@ const ColumnLayout = props => (
   <Layout {...props} />
 );
 
-ColumnLayout.defaultProps = Layout.defaultProps;
+ColumnLayout.defaultProps = {...Layout.defaultProps};
+ColumnLayout.defaultProps.style = {...Layout.defaultProps.style, ...{display: 'block'}};
+ColumnLayout.propInputs = Layout.propInputs;
 
 export default ColumnLayout;
