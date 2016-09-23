@@ -7,6 +7,7 @@ import Wrapper from './wrapper';
 const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
+      console.log(monitor.getItem());
       props.onChange(
         update(props.items, {
           $splice: [
@@ -19,20 +20,23 @@ const layoutTarget = {
   }
 };
 
-const Layout = (props) => {
+const Layout = (props, { components }) => {
   const { onChange, connectDropTarget, items } = props;
 
   const removeItem = idx => () => {
     onChange(update(props.items, {$splice: [[idx, 1]]}));
   };
-
-  const renderItems = items.map((item, idx) => (
-    <Wrapper
-      key={item.props.id}
-      onDragStart={() => setTimeout(removeItem(idx), 50)}>
-      {item.type}
-    </Wrapper>
-  ));
+  // console.log(items);
+  const renderItems = items.map((item, idx) => {
+    const Comp = components[item.type];
+    return (
+      <Wrapper
+        key={item.id}
+        onDragStart={() => setTimeout(removeItem(idx), 50)}>
+        <Comp id={item.id} {...item.props}/>
+      </Wrapper>
+    );
+  });
 
   const styles = style(props);
 
@@ -53,6 +57,11 @@ const style = ({ row, isOverCurrent }) => ({
     // background: '#333'
   },
 });
+
+Layout.contextTypes = {
+  components: React.PropTypes.object
+};
+
 
 const LayoutContainer = DropTarget('COMPONENT', layoutTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),

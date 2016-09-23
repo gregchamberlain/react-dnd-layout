@@ -8,7 +8,7 @@ import DropZone from './drop_zone';
 const wrapperSource = {
   beginDrag(props) {
     props.onDragStart();
-    return props.children;
+    return props.children.props;
   },
   endDrag(props, monitor, component) {
     if (monitor.didDrop()) {

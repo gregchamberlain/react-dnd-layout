@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import Layout, { Wrapper } from '../src';
+import LayoutProvider from '../src/layout_provider';
 
 import { item } from '../src/redux/schema';
 import { mergeItems } from '../src/redux/utils';

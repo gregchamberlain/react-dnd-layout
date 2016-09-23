@@ -5,3 +5,5 @@ const configureStore = (preloadedState) => createStore(
   Reducer,
   preloadedState
 );
+
+export default configureStore;
