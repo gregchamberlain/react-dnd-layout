@@ -1,1 +1,1 @@
-export const mergeItems = (state, id) => state[id].items.map(cId => state[cId]);
+export const mergeItems = (state, id) => state[id].props.children.map(cId => state[cId]);

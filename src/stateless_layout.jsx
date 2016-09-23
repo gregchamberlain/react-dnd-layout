@@ -8,7 +8,7 @@ const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
       props.onChange(
-        update(props.items, {
+        update(props.children , {
           $splice: [
             [0,0,monitor.getItem()]
           ]
@@ -20,12 +20,12 @@ const layoutTarget = {
 };
 
 const Layout = (props, { components }) => {
-  const { onChange, connectDropTarget, items } = props;
+  const { onChange, connectDropTarget, children } = props;
 
   const removeItem = idx => () => {
-    onChange(update(props.items, {$splice: [[idx, 1]]}));
+    onChange(update(props.children, {$splice: [[idx, 1]]}));
   };
-  const renderItems = items.map((item, idx) => {
+  const renderItems = children.map((item, idx) => {
     const Comp = components[item.type];
     return (
       <Wrapper
@@ -45,9 +45,9 @@ const Layout = (props, { components }) => {
   );
 };
 
-const style = ({ row, isOverCurrent, items }) => ({
+const style = ({ row, isOverCurrent, children }) => ({
   container: {
-    minHeight: items.length ? null : 75,
+    minHeight: children.length ? null : 75,
     height: '100%',
     padding: 5,
     display: row ? 'flex' : 'block',
@@ -68,8 +68,8 @@ const LayoutContainer = DropTarget('COMPONENT', layoutTarget, (connect, monitor)
 }))(Layout);
 
 LayoutContainer.defaultProps = {
-  items: [],
-  onChange: items => console.log(items)
+  children: [],
+  onChange: children => console.log(children)
 };
 
 export default LayoutContainer;

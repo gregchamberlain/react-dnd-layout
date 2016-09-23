@@ -32,10 +32,11 @@ class LayoutProvider extends  Component {
         <div>
           <div style={styles.sidebar}>
             {Object.keys(components).map(c => {
-              if (c === 'Layout') return "";
+              // if (c === 'Layout') return "";
               const Comp = components[c];
+              Comp.type = c;
               return (
-                <CatalogItem Comp={Comp} key={c}/>
+                <CatalogItem key={c} type={c} Comp={Comp}/>
               );
             })}
           </div>

@@ -4,11 +4,15 @@ import { mergeItems } from './redux/utils';
 import { change } from './redux/actions';
 
 const mapStateToProps = (state, props) => ({
-  items: mergeItems(state, props.id)
+  children: state[props.id] ? mergeItems(state, props.id) : []
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  onChange: items => dispatch(change(props.id, items))
+  onChange: children => dispatch(change(props.id, children))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+const LayoutContainer = connect(mapStateToProps, mapDispatchToProps)(Layout);
+LayoutContainer.defaultProps = {
+  children: []
+};
+export default LayoutContainer;

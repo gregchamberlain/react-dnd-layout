@@ -3,23 +3,40 @@ import { DragSource } from 'react-dnd';
 
 const itemSource = {
   beginDrag(props) {
-    return generateNewItem(props.Comp);
+    return generateNewItem(props);
   }
 };
 
-const generateNewItem = comp => ({
-  type: comp.name,
+const generateNewItem = props => ({
+  type: props.type,
   id: Math.random().toString().slice(2),
-  props: comp.defaultProps
+  props: props.Comp.defaultProps
 });
 
-const CatalogItem = ({ Comp, connectDragSource }) => {
+const CatalogItem = ({ type, Comp, connectDragSource }) => {
 
   return connectDragSource(
-    <div>
-      <Comp />
+    <div style={styles.container}>
+      <div style={styles.preview}>
+        <Comp />
+      </div>
+      {type}
     </div>
   );
+};
+
+const styles = {
+  container: {
+    cursor: 'move',
+    margin: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    textAlign: 'center'
+  },
+  preview: {
+    background: '#333',
+  }
 };
 
 export default DragSource('COMPONENT', itemSource, (connect, monitor) => ({
