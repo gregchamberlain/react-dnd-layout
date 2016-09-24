@@ -70,7 +70,7 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
     position: 'relative',
     boxSizing: 'border-box',
     paddingBottom: canDrop && root ? 40 : style.padding,
-    background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : style.background,
+    background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
 });
@@ -89,7 +89,7 @@ const LayoutContainer = DropTarget('COMPONENT', layoutTarget, (connect, monitor)
 
 LayoutContainer.defaultProps = {
   children: [],
-  onChange: children => console.log(children)
+  onChange: children => {}
 };
 
 export default LayoutContainer;

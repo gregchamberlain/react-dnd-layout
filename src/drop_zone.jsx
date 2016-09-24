@@ -4,6 +4,14 @@ import { flow } from 'lodash';
 
 const wrapperTarget = {
   drop(props, monitor) {
+    if (monitor.isOver({shallow: true})) {
+      const index = (props.pos === 'left' || props.pos === 'top') ?
+      props.index : props.index + 1;
+      props.addItem(
+        index,
+        monitor.getItem()
+      );
+    }
     return props;
   },
   canDrop(props, monitor) {
@@ -32,19 +40,19 @@ class DropZone extends Component {
   }
 }
 
-const styles = ({ isOver, canDrop, pos }) => ({
+const styles = ({ isOver, canDrop, pos, layout }) => ({
   container: {
     background: 'rgba(255, 255, 255, 0.2)',
     minHeight: 25,
     // opacity: isOver ? 1 : 0,
     position: 'absolute',
-    width: pos === 'left' || pos === 'right' ? '25%' : '100%',
-    height: pos === 'left' || pos === 'right' ? '100%' : '25%',
+    width: pos === 'left' || pos === 'right' ? layout ? '25%' : '50%' : '100%',
+    height: pos === 'left' || pos === 'right' ? '100%' : layout ? '25%' : '50%',
     top: pos === 'top' ? 0 : null,
     left: pos === 'left' ? 0 : null,
     right: pos === 'right' ? 0 : null,
     bottom: pos === 'bottom' ? 0 : null,
-    zIndex: 2
+    zIndex: 1
   },
   line: {
     background: '#35b5e6',

@@ -85,7 +85,7 @@ LayoutProvider.childContextTypes = {
 };
 
 LayoutProvider.defaultProps = {
-  onChange: items => console.log('CHANGED: ', items)
+  onChange: items => {}
 };
 
 export default DragDropContext(HTML5Backend)(LayoutProvider);

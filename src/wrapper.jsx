@@ -36,11 +36,12 @@ const wrapperTarget = {
     }
     if (dropClient < dropMiddle) {
       props.addItem(props.index, monitor.getItem());
-      console.log(props.index);
     } else {
       props.addItem(props.index + 1, monitor.getItem());
-      console.log(props.index + 1);
     }
+  },
+  canDrop() {
+    return false;
   }
 };
 
@@ -64,11 +65,16 @@ class Wrapper extends Component {
 
   render() {
     const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
+    const lout = props.component.categories && props.component.categories.includes('layout');
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && props.component.categories && props.component.categories.includes('layout'));
     const childStyle = props.children.props.style || {};
     const style = styles(props, hovered, childStyle, this.state);
     return connectDragPreview(connectDropTarget(
-      <div style={style.container}>
+      <div style={style.container} ref={c => {this.container = c;}}>
+        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
+          <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.addItem} layout={lout}/>
+          <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.addItem} layout={lout}/>
+        </div>
         {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
         <div style={style.remove} onClick={props.onDragStart}>&times;</div>
         { Form ? (
@@ -140,7 +146,7 @@ const actionStyle = hovered => ({
   top: -10,
   height: 20,
   width: 20,
-  zIndex: 1,
+  zIndex: 2,
 });
 
 // const WrapperContainer = DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
@@ -156,6 +162,7 @@ const WrapperContainer = flow(
   })),
   DropTarget('COMPONENT', wrapperTarget, (conn, monitor) => ({
     connectDropTarget: conn.dropTarget(),
+    monitor: monitor,
     isOver: monitor.isOver()
   }))
 )(Radium(Wrapper));
