@@ -9,6 +9,7 @@ Title.defaultProps = {
     fontWeight: 'bold',
     padding: 10,
     textAlign: 'left',
+    boxSizing: 'border-box',
     margin: 0,
     color: 'black',
     textShadow: 'none'

@@ -11,6 +11,7 @@ Image.defaultProps = {
     background: 'url(http://www.jqueryscript.net/images/Simplest-Responsive-jQuery-Image-Lightbox-Plugin-simple-lightbox.jpg)',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+    boxSizing: 'border-box',
     minWidth: 64,
     minHeight: 64,
   }

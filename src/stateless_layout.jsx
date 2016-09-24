@@ -17,7 +17,7 @@ const layoutTarget = {
   }
 };
 
-const Layout = (props, { components }) => {
+const Layout = (props, { components, editable }) => {
   const { onChange, connectDropTarget, children } = props;
 
   const removeItem = idx => () => {
@@ -25,7 +25,7 @@ const Layout = (props, { components }) => {
   };
   const renderItems = children.map((item, idx) => {
     const Comp = components[item.type];
-    return (
+    return editable ? (
       <Wrapper
         key={item.id}
         Form={Comp.propInputs}
@@ -33,12 +33,18 @@ const Layout = (props, { components }) => {
         onDragStart={() => setTimeout(removeItem(idx), 50)}>
         <Comp id={item.id} {...item.props} type={item.type} />
       </Wrapper>
+    ) : (
+      <div key={item.id} style={{flex: item.props.style.flex, display: 'flex'}}>
+        <Comp id={item.id} {...item.props} type={item.type} />
+      </div>
     );
   });
 
   const styles = styler(props);
 
-  return connectDropTarget(
+  const wrap = editable ? connectDropTarget : item => item;
+
+  return wrap(
     <div style={styles.container}>
       {renderItems}
     </div>
@@ -51,6 +57,8 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
     minHeight: children.length ? null : 75,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
+    position: 'relative',
+    boxSizing: 'border-box',
     paddingBottom: canDrop && root ? 40 : style.padding,
     background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
@@ -58,7 +66,8 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
 });
 
 Layout.contextTypes = {
-  components: React.PropTypes.object
+  components: React.PropTypes.object,
+  editable: React.PropTypes.bool
 };
 
 

@@ -75,7 +75,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
     flex: child.flex,
     position: 'relative',
     outline: hovered ? '1px solid #35b5e5' : 'none',
-    boxSizing: 'border-box',
+    // boxSizing: 'border-box',
     ':hover': {
 
     },

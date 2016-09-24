@@ -1,5 +1,6 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
+import { ObjectID } from 'bson';
 
 const itemSource = {
   beginDrag(props) {
@@ -9,7 +10,7 @@ const itemSource = {
 
 const generateNewItem = props => ({
   type: props.type,
-  id: Math.random().toString().slice(2),
+  id: new ObjectID().toString(),
   props: props.Comp.defaultProps
 });
 

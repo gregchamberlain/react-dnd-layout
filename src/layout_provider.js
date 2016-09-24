@@ -21,7 +21,8 @@ class LayoutProvider extends  Component {
 
   getChildContext() {
     return {
-      components: this.props.components
+      components: this.props.components,
+      editable: true
     };
   }
 
@@ -68,7 +69,8 @@ const styles = {
 };
 
 LayoutProvider.childContextTypes = {
-  components: PropTypes.object
+  components: PropTypes.object,
+  editable: PropTypes.bool
 };
 
 export default DragDropContext(HTML5Backend)(LayoutProvider);

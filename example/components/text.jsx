@@ -8,6 +8,7 @@ Text.defaultProps = {
     flex: 1,
     fontSize: 16,
     fontWeight: 'normal',
+    boxSizing: 'border-box',
     padding: 10,
     textAlign: 'left',
     color: 'black',
