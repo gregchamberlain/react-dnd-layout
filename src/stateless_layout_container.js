@@ -23,6 +23,9 @@ LayoutContainer.defaultProps = {
     backgroundPosition: 'center',
     background: 'transparent',
     padding: 20,
+    textAlign: 'inherit',
+    color: 'inherit',
+    fontSize: 16
   }
 };
 
@@ -34,6 +37,9 @@ LayoutContainer.propInputs = object({
     flex: number({label: 'Flex'}),
     background: string({label: 'Background'}),
     padding: number({label: 'Padding'}),
+    color: string({label: 'Font Color'}),
+    fontSize: number({label: 'Font Size'}),
+    textAlign: string({label: 'Text Align'})
   }, {label: 'Style'})
 });
 

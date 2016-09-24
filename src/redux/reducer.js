@@ -7,6 +7,7 @@ const Reducer = (state = {}, action) => {
   switch (action.type) {
     case CHANGE:
       nextState = merge({}, state);
+      console.log('changin');
       action.items.forEach(item => {
         if (!nextState[item.id])
           nextState[item.id] = item;

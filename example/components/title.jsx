@@ -1,20 +1,20 @@
 import React from 'react';
 import { string, number, boolean, object, array, text } from 'react-formulate';
 
-const Title = ({children, style}) => <h1 style={style}>{children}</h1>;
+const Title = ({content, style}) => <h1 style={style}>{content}</h1>;
 
 Title.defaultProps = {
   style: {
     flex: 1,
     fontWeight: 'bold',
     padding: 10,
-    textAlign: 'left',
+    textAlign: 'inherit',
     boxSizing: 'border-box',
     margin: 0,
-    color: 'black',
+    color: 'inherit',
     textShadow: 'none'
   },
-  children: 'asdasdasd'
+  content: 'Title'
 };
 
 Title.propInputs = object({
@@ -26,7 +26,7 @@ Title.propInputs = object({
     color: string({label: 'Font Color'}),
     textShadow: string({label: 'Text Shadow'})
   }, {label: 'Style'}),
-  children: text({label: 'Content'})
+  content: text({label: 'Content'})
 });
 
 export default Title;

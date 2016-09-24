@@ -15,8 +15,11 @@ const wrapperSource = {
   },
   endDrag(props, monitor, component) {
     if (monitor.didDrop()) {
+      console.log('readding...');
       props.onDrop(monitor.getDropResult());
       // monitor.getDropResult().onDrop(monitor.getItem());
+    } else {
+      console.log('deleting...');
     }
   }
 };
@@ -129,7 +132,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     left: -10,
     background: '#444',
     padding: 5,
-    zIndex: 1
+    zIndex: 2
   }
 });
 
@@ -143,6 +146,7 @@ const actionStyle = hovered => ({
   position: 'absolute',
   background: '#eee',
   borderRadius: 10,
+  color: '#333',
   top: -10,
   height: 20,
   width: 20,

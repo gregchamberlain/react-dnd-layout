@@ -4,7 +4,11 @@ import { ObjectID } from 'bson';
 
 const itemSource = {
   beginDrag(props) {
-    return generateNewItem(props);
+    const item = generateNewItem(props);
+    console.log(item);
+    return item;
+  },
+  endDrag() {
   }
 };
 
@@ -14,13 +18,13 @@ const generateNewItem = props => ({
   props: props.Comp.defaultProps
 });
 
-const CatalogItem = ({ type, Comp, connectDragSource }) => {
+const CatalogItem = ({ type, Comp, connectDragSource, connectDragPreview }) => {
 
   return connectDragSource(
     <div style={styles.container}>
-      <div style={styles.preview}>
+      {connectDragPreview(<div style={styles.preview}>
         <Comp />
-      </div>
+      </div>)}
       {type}
     </div>
   );
@@ -42,4 +46,5 @@ const styles = {
 
 export default DragSource('COMPONENT', itemSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
+  connectDragPreview: connect.dragPreview()
 }))(CatalogItem);

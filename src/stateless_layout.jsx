@@ -14,9 +14,6 @@ const layoutTarget = {
       );
       return props;
     }
-  },
-  canDrop(props) {
-    return !props.children.length;
   }
 };
 

@@ -42,7 +42,7 @@ class DropZone extends Component {
 
 const styles = ({ isOver, canDrop, pos, layout }) => ({
   container: {
-    background: 'rgba(255, 255, 255, 0.2)',
+    // background: 'rgba(255, 255, 255, 0.2)',
     minHeight: 25,
     // opacity: isOver ? 1 : 0,
     position: 'absolute',
