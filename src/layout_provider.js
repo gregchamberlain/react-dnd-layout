@@ -30,7 +30,7 @@ class LayoutProvider extends  Component {
     const { rootItem, components } = this.props;
     return (
       <Provider store={this.store}>
-        <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', overflow: 'auto', background: '#eee'}}>
+        <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: '#eee'}}>
           <div style={styles.sidebar}>
             {Object.keys(components).map(c => {
               const Comp = components[c];
@@ -41,7 +41,8 @@ class LayoutProvider extends  Component {
           <div style={styles.content}>
             <ColumnLayout
               id={rootItem.id}
-              style={{...ColumnLayout.defaultProps.style, ...{margin: 10, display: 'block', padding: 0, paddingBottom: 40, background: '#fff'}}}/>
+              root
+              style={{...ColumnLayout.defaultProps.style, ...{margin: 20, display: 'block', padding: 0, paddingBottom: 40, background: '#fff'}}}/>
           </div>
         </div>
       </Provider>
@@ -51,6 +52,7 @@ class LayoutProvider extends  Component {
 
 const styles = {
   sidebar: {
+    overflow: 'auto',
     position: 'fixed',
     width: 200,
     top: 0,
@@ -60,6 +62,7 @@ const styles = {
   },
   content: {
     height: '100%',
+    overflow: 'auto',
     marginLeft: 200
   }
 };

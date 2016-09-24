@@ -1,12 +1,12 @@
 import React from 'react';
 import Layout from '../stateless_layout_container';
 
-const ColumnLayout = props => (
+const Column = props => (
   <Layout {...props} />
 );
 
-ColumnLayout.defaultProps = {...Layout.defaultProps};
-ColumnLayout.defaultProps.style = {...Layout.defaultProps.style, ...{display: 'block'}};
-ColumnLayout.propInputs = Layout.propInputs;
+Column.defaultProps = {...Layout.defaultProps};
+Column.defaultProps.style = {...Layout.defaultProps.style, ...{display: 'block'}};
+Column.propInputs = Layout.propInputs;
 
-export default ColumnLayout;
+export default Column;

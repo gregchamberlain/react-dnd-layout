@@ -8,31 +8,9 @@ import Text from './components/text';
 // import Layout, { Wrapper } from '../src';
 import Layout from '../src/stateless_layout_container';
 import LayoutProvider from '../src/layout_provider';
-import { RowLayout, ColumnLayout } from '../src';
-// const component = {
-//   type: 'Layout',
-//   id: 1,
-//   props: {
-//     row: false,
-//     children: [
-//       {type: 'Text', id: 2, props: {children: "a"}},
-//       {type: 'Text', id: 3, props: {children: "b"}},
-//       {type: 'Text', id: 4, props: {children: "c"}},
-//       {type: 'Layout', id: 5, props: { row: true, children: [
-//         {type: 'Text', id: 6, props: {children: "d"}},
-//         {type: 'Text', id: 7, props: {children: "e"}},
-//         {type: 'Layout', id: 8, props: {row: false, children: [
-//           {type: 'Text', id: 9, props: {children: "f"}},
-//           {type: 'Text', id: 10, props: {children: "g"}},
-//           ]}},
-//         ]},
-//       },
-//     ]
-//   }
-// };
-
+import { Row, Column } from '../src';
 const component = {
-  type: 'ColumnLayout',
+  type: 'Column',
   id: 1,
   props: {
     row: false,
@@ -42,8 +20,8 @@ const component = {
 
 const comps = {
   Text,
-  RowLayout,
-  ColumnLayout,
+  Row,
+  Column,
   Image,
   Title,
 };

@@ -45,12 +45,13 @@ const Layout = (props, { components }) => {
   );
 };
 
-const styler = ({ row, isOverCurrent, children, style }) => ({
+const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
   container: {
     ...style,
     minHeight: children.length ? null : 75,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
+    paddingBottom: canDrop && root ? 40 : style.padding,
     background: isOverCurrent ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
@@ -63,7 +64,8 @@ Layout.contextTypes = {
 
 const LayoutContainer = DropTarget('COMPONENT', layoutTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOverCurrent: monitor.isOver({shallow: true})
+  isOverCurrent: monitor.isOver({shallow: true}),
+  canDrop: monitor.canDrop()
 }))(Layout);
 
 LayoutContainer.defaultProps = {

@@ -1,11 +1,11 @@
 import React from 'react';
 import Layout from '../stateless_layout_container';
 
-const RowLayout = (props) => (
+const Row = (props) => (
   <Layout {...props} row />
 );
 
-RowLayout.defaultProps = Layout.defaultProps;
-RowLayout.propInputs = Layout.propInputs;
+Row.defaultProps = Layout.defaultProps;
+Row.propInputs = Layout.propInputs;
 
-export default RowLayout;
+export default Row;

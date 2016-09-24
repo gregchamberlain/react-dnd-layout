@@ -10,7 +10,8 @@ Title.defaultProps = {
     padding: 10,
     textAlign: 'left',
     margin: 0,
-    color: 'black'
+    color: 'black',
+    textShadow: 'none'
   },
   children: 'asdasdasd'
 };
@@ -21,7 +22,8 @@ Title.propInputs = object({
     fontWeight: string({label: 'Font Weight'}),
     padding: number({label: 'Padding'}),
     textAlign: string({label: 'Text Align'}),
-    color: string({label: 'Font Color'})
+    color: string({label: 'Font Color'}),
+    textShadow: string({label: 'Text Shadow'})
   }, {label: 'Style'}),
   children: text({label: 'Content'})
 });

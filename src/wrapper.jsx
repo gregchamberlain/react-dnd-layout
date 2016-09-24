@@ -25,7 +25,7 @@ const wrapperTarget = {
     console.log('DROP RES', monitor.getDropResult());
   },
   canDrop(props, monitor) {
-    return true;
+    return false;
   }
 };
 
@@ -48,10 +48,10 @@ class Wrapper extends Component {
 
   render() {
     const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
-    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen;
+    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || props.isOver;
     const childStyle = props.children.props.style || {};
     const style = styles(props, hovered, childStyle);
-    return connectDragPreview(
+    return connectDropTarget(connectDragPreview(
       <div style={style.container}>
         {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
         <div style={style.remove} onClick={props.onDragStart}>&times;</div>
@@ -66,7 +66,7 @@ class Wrapper extends Component {
         {/* <Form value={props.item.props} onChange={val => console.log(val)}/> */}
         {props.children}
       </div>
-    );
+    ));
   }
 }
 
@@ -85,23 +85,25 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
   },
   handle: {
     ...actionStyle(hovered),
+    cursor: 'move',
+    fontSize: 12,
     borderRadius: 2,
-    minWidth: 50,
+    minWidth: 60,
     padding: '0 10px',
     left: '50%',
     transform: 'translateX(-50%)'
   },
   remove: {...actionStyle(hovered),
-    right: -8,
+    right: -10,
   },
   settings: {
     ...actionStyle(hovered),
-    left: -8,
+    left: -10,
   },
   propEditor: {
     position: 'absolute',
-    top: 8,
-    left: -8,
+    top: 10,
+    left: -10,
     background: '#444',
     padding: 5,
     zIndex: 1
@@ -114,21 +116,32 @@ const actionStyle = hovered => ({
   cursor: 'pointer',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: 10,
+  fontSize: 14,
   position: 'absolute',
   background: '#eee',
-  borderRadius: 8,
-  top: -8,
-  height: 16,
-  width: 16,
+  borderRadius: 10,
+  top: -10,
+  height: 20,
+  width: 20,
   zIndex: 1,
 });
 
-const WrapperContainer = DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
-  connectDragSource: conn.dragSource(),
-  connectDragPreview: conn.dragPreview(),
-  isDragging: monitor.isDragging(),
-}))(Radium(Wrapper));
+// const WrapperContainer = DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
+//   connectDragSource: conn.dragSource(),
+//   connectDragPreview: conn.dragPreview(),
+//   isDragging: monitor.isDragging(),
+// }))(Radium(Wrapper));
+const WrapperContainer = flow(
+  DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
+    connectDragSource: conn.dragSource(),
+    connectDragPreview: conn.dragPreview(),
+    isDragging: monitor.isDragging(),
+  })),
+  DropTarget('COMPONENT', wrapperTarget, (conn, monitor) => ({
+    connectDropTarget: conn.dropTarget(),
+    isOver: monitor.isOver()
+  }))
+)(Radium(Wrapper));
 
 WrapperContainer.defaultProps = {
   addBefore: () => {},

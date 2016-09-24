@@ -6,10 +6,12 @@ const Text = ({children, style}) => <div style={style}>{children}</div>;
 Text.defaultProps = {
   style: {
     flex: 1,
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: 'normal',
     padding: 10,
-    textAlign: 'left'
+    textAlign: 'left',
+    color: 'black',
+    textShadow: 'none'
   },
   children: 'asdasdasd'
 };
@@ -20,7 +22,9 @@ Text.propInputs = object({
     fontSize: number({label: 'Font Size'}),
     fontWeight: string({label: 'Font Weight'}),
     padding: number({label: 'Padding'}),
-    textAlign: string({label: 'Text Align'})
+    textAlign: string({label: 'Text Align'}),
+    color: string({label: 'Font Color'}),
+    textShadow: string({label: 'Text Shadow'})
   }, {label: 'Style'}),
   children: text({label: 'Content'})
 });

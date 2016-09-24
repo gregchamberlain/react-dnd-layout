@@ -30,6 +30,7 @@ LayoutContainer.propInputs = object({
     display: string({label: 'Display'}),
     flex: number({label: 'Flex'}),
     background: string({label: 'Background'}),
+    padding: number({label: 'Padding'}),
   }, {label: 'Style'})
 });
 
