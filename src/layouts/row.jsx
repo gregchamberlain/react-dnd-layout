@@ -7,5 +7,6 @@ const Row = (props) => (
 
 Row.defaultProps = Layout.defaultProps;
 Row.propInputs = Layout.propInputs;
+Row.categories = Layout.categories;
 
 export default Row;

@@ -25,6 +25,9 @@ LayoutContainer.defaultProps = {
     padding: 20,
   }
 };
+
+LayoutContainer.categories = ['layout'];
+
 LayoutContainer.propInputs = object({
   style: object({
     display: string({label: 'Display'}),

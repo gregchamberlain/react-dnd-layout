@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
 import { flow } from 'lodash';
 import Radium from 'radium';
+import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import * as ACTIONS from './redux/actions';
 
@@ -21,11 +22,25 @@ const wrapperSource = {
 };
 
 const wrapperTarget = {
-  drop(props, monitor) {
-    console.log('DROP RES', monitor.getDropResult());
-  },
-  canDrop(props, monitor) {
-    return false;
+  drop(props, monitor, component) {
+    if (monitor.didDrop()) return;
+    const dropBoundingRect = findDOMNode(component).getBoundingClientRect();
+    const clientOffset = monitor.getClientOffset();
+    let dropMiddle, dropClient;
+    if (props.row) {
+      dropMiddle = (dropBoundingRect.right - dropBoundingRect.left) / 2;
+      dropClient = clientOffset.x - dropBoundingRect.left;
+    } else {
+      dropMiddle = (dropBoundingRect.bottom - dropBoundingRect.top) / 2;
+      dropClient = clientOffset.y - dropBoundingRect.top;
+    }
+    if (dropClient < dropMiddle) {
+      props.addItem(props.index, monitor.getItem());
+      console.log(props.index);
+    } else {
+      props.addItem(props.index + 1, monitor.getItem());
+      console.log(props.index + 1);
+    }
   }
 };
 
@@ -35,6 +50,7 @@ class Wrapper extends Component {
     this.state ={
       editorOpen: false,
       props: props.item.props,
+      style: {}
     };
   }
 
@@ -48,10 +64,10 @@ class Wrapper extends Component {
 
   render() {
     const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
-    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || props.isOver;
+    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && props.component.categories && props.component.categories.includes('layout'));
     const childStyle = props.children.props.style || {};
-    const style = styles(props, hovered, childStyle);
-    return connectDropTarget(connectDragPreview(
+    const style = styles(props, hovered, childStyle, this.state);
+    return connectDragPreview(connectDropTarget(
       <div style={style.container}>
         {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
         <div style={style.remove} onClick={props.onDragStart}>&times;</div>
@@ -70,11 +86,12 @@ class Wrapper extends Component {
   }
 }
 
-const styles = ({ isDragging, isOver, canDrop }, hovered, child) => ({
+const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
   container: {
     flex: child.flex,
     position: 'relative',
     outline: hovered ? '1px solid #35b5e5' : 'none',
+    ...(state.style),
     // boxSizing: 'border-box',
     ':hover': {
 

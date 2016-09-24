@@ -8,5 +8,6 @@ const Column = props => (
 Column.defaultProps = {...Layout.defaultProps};
 Column.defaultProps.style = {...Layout.defaultProps.style, ...{display: 'block'}};
 Column.propInputs = Layout.propInputs;
+Column.categories = Layout.categories;
 
 export default Column;

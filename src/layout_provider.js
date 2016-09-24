@@ -17,13 +17,23 @@ class LayoutProvider extends  Component {
   constructor(props) {
     super(props);
     this.store = window.store = configureStore(normalize(props.rootItem, item).entities.items);
+    this.store.subscribe(() => {
+      props.onChange(this.store.getState());
+    });
+    this.state = {
+      locked: false
+    };
   }
 
   getChildContext() {
     return {
       components: this.props.components,
-      editable: true
+      editable: !this.state.locked
     };
+  }
+
+  toggleLock = () => {
+    this.setState({locked: !this.state.locked});
   }
 
   render() {
@@ -40,6 +50,7 @@ class LayoutProvider extends  Component {
             })}
           </div>
           <div style={styles.content}>
+            <button onClick={this.toggleLock}>{this.state.locked ? "Unlock" : "Lock"}</button>
             <ColumnLayout
               id={rootItem.id}
               root
@@ -71,6 +82,10 @@ const styles = {
 LayoutProvider.childContextTypes = {
   components: PropTypes.object,
   editable: PropTypes.bool
+};
+
+LayoutProvider.defaultProps = {
+  onChange: items => console.log('CHANGED: ', items)
 };
 
 export default DragDropContext(HTML5Backend)(LayoutProvider);
