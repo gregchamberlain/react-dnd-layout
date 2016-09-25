@@ -27,13 +27,13 @@ class LayoutProvider extends  Component {
     this.forceUpdate();
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', this.update);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.update);
-  }
+  // componentDidMount() {
+  //   window.addEventListener('resize', this.update);
+  // }
+  //
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.update);
+  // }
 
   getChildContext() {
     return {
