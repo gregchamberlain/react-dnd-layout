@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { string, number, boolean, object, array } from 'react-formulate';
+import { string, number, boolean, object, array, select } from 'react-formulate';
 
 const Link = ({ href, text, style }) => (
   <a href={href} style={style}>{text}</a>
@@ -22,7 +22,7 @@ Link.defaultProps = {
   href: '#'
 };
 
-Link.propInputs = object({
+Link.propInputs = info => object({
   text: string({label: 'Content'}),
   href: string({label: 'To'}),
   style: object({

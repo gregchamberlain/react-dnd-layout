@@ -20,7 +20,7 @@ Image.defaultProps = {
   }
 };
 
-Image.propInputs = object({
+Image.propInputs = () => object({
   style: object({
     flex: number({label: 'Flex'}),
     background: string({label: 'Background'}),

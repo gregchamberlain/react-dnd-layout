@@ -107,7 +107,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
   handle: {
     ...actionStyle(hovered),
     cursor: 'move',
-    fontSize: 12,
+    fontSize: 16,
     borderRadius: 2,
     minWidth: 60,
     padding: '0 10px',
@@ -115,17 +115,17 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     transform: 'translateX(-50%)'
   },
   remove: {...actionStyle(hovered),
-    right: -10,
+    right: -11,
   },
   settings: {
     ...actionStyle(hovered),
-    left: -10,
+    left: -11,
   },
   propEditor: {
     position: 'absolute',
     width: 200,
-    top: 10,
-    left: -10,
+    top: 11,
+    left: -11,
     background: '#444',
     padding: 5,
     zIndex: 2
@@ -133,20 +133,21 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
 });
 
 const actionStyle = hovered => ({
+  fontFamily: 'Arial',
   display: hovered ? 'flex' : 'none',
   boxShadow: '0 0 4px #888',
   cursor: 'pointer',
   alignItems: 'center',
   justifyContent: 'center',
-  fontSize: 14,
+  fontSize: 20,
   position: 'absolute',
   textShadow: 'none',
   background: '#eee',
-  borderRadius: 10,
+  borderRadius: 11,
   color: '#333',
-  top: -10,
-  height: 20,
-  width: 20,
+  top: -11,
+  height: 22,
+  width: 22,
   zIndex: 2,
 });
 

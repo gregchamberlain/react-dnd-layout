@@ -5,8 +5,16 @@ import { change } from './redux/actions';
 import { isEqual } from 'lodash';
 import { string, number, boolean, object, array } from 'react-formulate';
 
+const getChildren = (state, id) => {
+  if (state[id] && state[id].props && state[id].props.children) {
+    return mergeItems(state, id);
+  } else {
+    return [];
+  }
+};
+
 const mapStateToProps = (state, props) => ({
-  children: state[props.id] ? mergeItems(state, props.id) : []
+  children: getChildren(state, props.id)
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -34,7 +42,7 @@ LayoutContainer.defaultProps = {
 
 LayoutContainer.categories = ['layout'];
 
-LayoutContainer.propInputs = object({
+LayoutContainer.propInputs = () => object({
   style: object({
     display: string({label: 'Display'}),
     flex: number({label: 'Flex'}),

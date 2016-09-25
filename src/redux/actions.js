@@ -2,6 +2,7 @@ export const CHANGE = 'CHANGE';
 export const UPDATE_PROPS = 'UPDATE_PROPS';
 export const ADD_ITEM = 'ADD_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
+export const REPLACE_STATE = 'REPLACE_STATE';
 
 export const change = (id, items) => ({
   type: CHANGE,
@@ -24,4 +25,9 @@ export const removeItem = (id, parentId) => ({
   type: REMOVE_ITEM,
   id,
   parentId
+});
+
+export const replaceState = state =>({
+  type: REPLACE_STATE,
+  state
 });

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import DragDropLayout, { RootLayout, Row, Column, Title, Link, Image, Text } from '../src';
-import Items from './pages/page1.json';
+import Items from './pages/page2.json';
 
 const comps = {
   Row,
@@ -13,12 +13,75 @@ const comps = {
 
 
 class StatelessExample extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      locked: false,
+      items: Items,
+      layout: Items,
+    };
+  }
+
+  toggleLock = () => {
+    this.setState({locked: !this.state.locked});
+  }
+
+  layoutChange = layout => {
+    this.setState({layout});
+  }
+
+  setItems = items => () => {
+    this.setState({items});
+  }
 
   render() {
     return (
-      <RootLayout items={Items} components={comps} onChange={i => console.log(i)}/>
+      <div>
+        <div style={styles.toolbar}>
+          <button onClick={this.setItems(Items)}>
+            Page1
+          </button>
+          <button onClick={this.setItems({root: {id: 'root', props:{}}})}>
+            Empty
+          </button>
+          <button onClick={this.toggleLock}>
+            {this.state.locked ? 'Unlock' : 'Lock'}
+          </button>
+        </div>
+        <div style={styles.content}>
+          <DragDropLayout
+            items={this.state.items}
+            components={comps}
+            rootId="root"
+            locked={this.state.locked}
+            onChange={i => console.log(i)}/>
+        </div>
+      </div>
     );
   }
 }
+
+const styles = {
+  toolbar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: 56,
+    background: '#333',
+    boxSizing: 'border-box',
+    justifyContent: 'flex-end',
+    padding: 10,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  content: {
+    position: 'absolute',
+    top: 56,
+    left: 0,
+    bottom: 0,
+    right: 0
+  }
+};
 
 export default StatelessExample;

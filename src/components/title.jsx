@@ -17,7 +17,7 @@ Title.defaultProps = {
   content: 'Title'
 };
 
-Title.propInputs = object({
+Title.propInputs = () => object({
   style: object({
     flex: number({label: 'Flex'}),
     fontWeight: string({label: 'Font Weight'}),
