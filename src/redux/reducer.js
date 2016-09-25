@@ -25,7 +25,6 @@ const Reducer = (state = {}, action) => {
       nextState[action.item.id] = action.item;
       return nextState;
     case REMOVE_ITEM:
-      console.log(action);
       if (action.parentId) {
         const idx = state[action.parentId].props.children.indexOf(action.id);
         nextState = update(state, {[action.parentId]: {

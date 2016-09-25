@@ -84,7 +84,6 @@ class Wrapper extends Component {
             <Form value={props.item.props} onChange={props.updateProps}/>
           </div>
         ) : ""}
-        {/* <Form value={props.item.props} onChange={val => console.log(val)}/> */}
         {props.children}
       </div>
     ));

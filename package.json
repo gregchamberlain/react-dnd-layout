@@ -11,7 +11,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "hjs-dev-server",
-    "build": "NODE_ENV=production webpack --progress",
+    /*"build": "NODE_ENV=production webpack --progress",*/
+    "build": "./scripts/build.sh",
     "prepublish": "npm run build"
   },
   "repository": {

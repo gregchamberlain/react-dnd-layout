@@ -39,10 +39,6 @@ class Layout extends Component {
     }
   }
 
-  componentDidUpdate() {
-    console.log('updated');
-  }
-
   render() {
   const { onChange, connectDropTarget, children } = this.props;
   const { components, editable } = this.context;
@@ -136,7 +132,6 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
     position: 'relative',
     boxSizing: 'border-box',
     padding: root ? 0 : style.padding,
-    paddingBottom: canDrop && root ? 40 : root ? 0 : style.padding,
     background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
