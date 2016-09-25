@@ -7,6 +7,7 @@ import { string, number, boolean, object, array } from 'react-formulate';
 
 const mapStateToProps = (state, props) => ({
   a: state[props.id] ? console.log(isEqual(state[props.id].props.children, props.children)) : null,
+  childrenIds: state[props.id] && state[props.id].props.children,
   children: state[props.id] ? mergeItems(state, props.id) : []
 });
 
