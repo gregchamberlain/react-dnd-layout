@@ -54,6 +54,7 @@ class LayoutProvider extends  Component {
             <ColumnLayout
               id={rootItem.id}
               root
+              {...rootItem.props}
               style={{...ColumnLayout.defaultProps.style, ...{margin: 20, display: 'block', padding: 0, paddingBottom: 40, background: '#fff'}}}/>
           </div>
         </div>
