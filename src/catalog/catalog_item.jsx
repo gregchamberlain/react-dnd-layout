@@ -1,6 +1,5 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
-// import { ObjectID } from 'bson';
 import ObjectID from 'bson-objectid';
 import { connect } from 'react-redux';
 import { addItem, removeItem } from '../redux/actions';
