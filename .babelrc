@@ -1,5 +1,12 @@
 {
   "presets": ["es2015", "react", "stage-0"],
+  "plugins": [["transform-es2015-modules-commonjs", {
+      "allowTopLevelThis": false,
+      "strict": false,
+      "loose": false
+    }], "transform-class-properties", ["transform-es2015-classes", {
+      "loose": true
+    }]],
   "env": {
     "development": {
       "presets": ["react-hmre"]

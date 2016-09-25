@@ -7,10 +7,23 @@ var config = getConfig({
   output: {
     filename: 'bundle.js'
   },
-  clearBeforeBuild: true
+  clearBeforeBuild: true,
 });
 
 if (process.env.NODE_ENV === "production"){
+  // config.externals = [{
+  //   react: {
+  //     root: 'React',
+  //     commonjs2: 'react',
+  //     commonjs: 'react',
+  //     amd: 'react'
+  //   }
+  // }];
+  // config.output = {
+  //   filename: 'bundle.js',
+  //   libraryTarget: 'umd',
+  //   library: 'ReactDnDLayout'
+  // };
   config.output.libraryTarget = "commonjs2";
 }
 module.exports = config;

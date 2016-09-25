@@ -8,7 +8,7 @@
     "dnd",
     "layout"
   ],
-  "main": "dist/bundle.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "hjs-dev-server",
     "build": "NODE_ENV=production webpack --progress",
@@ -25,15 +25,20 @@
   },
   "homepage": "https://github.com/gregchamberlain/react-dnd-layout#readme",
   "devDependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.5.2",
     "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.3",
+    "babel-plugin-transform-es2015-classes": "^6.14.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.0",
     "babel-preset-stage-0": "^6.5.0",
     "eslint": "^3.3.0",
-    "hjs-webpack": "^7.2.1"
+    "hjs-webpack": "^7.2.1",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
   },
   "peerDependencies": {
     "react": "^15.3.0",
@@ -44,10 +49,8 @@
     "lodash": "^4.16.1",
     "normalizr": "^2.2.1",
     "radium": "^0.18.1",
-    "react": "^15.3.0",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
-    "react-dom": "^15.3.0",
     "react-formulate": "^0.2.2",
     "react-frame-component": "^0.6.5",
     "react-redux": "^4.4.5",
