@@ -8,19 +8,14 @@ let nextState;
 const Reducer = (state = {}, action) => {
   switch (action.type) {
     case CHANGE:
-      nextState = merge({}, state);
-      console.log('changin');
-      action.items.forEach(item => {
-        if (!nextState[item.id])
-          nextState[item.id] = item;
-      });
-      return update(nextState, {[action.id]: {
+      nextState = update(state, {[action.id]: {
         props: {
           children: {
             $set: action.items.map(item => item.id)
           }
         }
       }});
+      return nextState;
     case UPDATE_PROPS:
       return update(state, {[action.id]: {
         props: { $set: action.props }

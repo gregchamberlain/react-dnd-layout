@@ -2,9 +2,11 @@ import Layout from './stateless_layout';
 import { connect } from 'react-redux';
 import { mergeItems } from './redux/utils';
 import { change } from './redux/actions';
+import { isEqual } from 'lodash';
 import { string, number, boolean, object, array } from 'react-formulate';
 
 const mapStateToProps = (state, props) => ({
+  a: state[props.id] ? console.log(isEqual(state[props.id].props.children, props.children)) : null,
   children: state[props.id] ? mergeItems(state, props.id) : []
 });
 

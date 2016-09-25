@@ -14,12 +14,13 @@ class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
-    this.store = window.store = configureStore(normalize(props.rootItem, item).entities.items);
+    this.root = { id: 'root', props: { children: props.items }};
+    this.store = window.store = configureStore(normalize(this.root, item).entities.items);
     this.store.subscribe(() => {
       props.onChange(this.store.getState());
     });
     this.state = {
-      locked: false
+      locked: props.locked || false
     };
   }
 
@@ -37,19 +38,19 @@ class LayoutProvider extends  Component {
   render() {
 
     const { rootItem, components } = this.props;
-    const Comp = components[rootItem.type];
+
     return (
       <Provider store={this.store}>
-        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', background: '#eee'}}>
+        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#eee', overflow: 'hidden'}}>
           <div style={styles.sidebar}>
             <Catalog components={components} />
           </div>
           <div style={styles.content}>
             <button onClick={this.toggleLock}>{this.state.locked ? "Unlock" : "Lock"}</button>
             <ColumnLayout
-              id={rootItem.id}
+              id={"root"}
               root
-              {...rootItem.props}
+              {...this.root.props}
               style={{...ColumnLayout.defaultProps.style, ...{margin: 20, display: 'block', padding: 0, paddingBottom: 40, background: '#fff'}}}/>
           </div>
         </div>
@@ -61,7 +62,7 @@ class LayoutProvider extends  Component {
 const styles = {
   sidebar: {
     overflow: 'auto',
-    position: 'fixed',
+    position: 'absolute',
     width: 200,
     top: 0,
     left: 0,
@@ -69,6 +70,8 @@ const styles = {
     height: '100%'
   },
   content: {
+    height: '100%',
+    overflow: 'auto',
     marginLeft: 200
   }
 };
