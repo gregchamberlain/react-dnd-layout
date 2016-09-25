@@ -20,9 +20,9 @@ const layoutTarget = {
 
 class Layout extends Component {
 
-  shouldComponentUpdate(props) {
+  shouldComponentUpdate(props, state, context) {
     if (isEqual(props.children, this.props.children)) {
-      if (props.isOverCurrent === this.props.isOverCurrent) {
+      if (props.isOverCurrent === this.props.isOverCurrent && context.editable === this.context.editable) {
         return false;
       } else {
         return true;
