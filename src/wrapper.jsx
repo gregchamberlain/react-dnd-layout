@@ -141,6 +141,7 @@ const actionStyle = hovered => ({
   justifyContent: 'center',
   fontSize: 14,
   position: 'absolute',
+  textShadow: 'none',
   background: '#eee',
   borderRadius: 10,
   color: '#333',

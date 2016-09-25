@@ -33,7 +33,7 @@ class StatelessExample extends Component {
 
   render() {
     return (
-      <LayoutProvider rootItem={component} components={comps}/>
+      <LayoutProvider rootItem={component} components={comps} onChange={items => console.log(items)}/>
     );
   }
 }

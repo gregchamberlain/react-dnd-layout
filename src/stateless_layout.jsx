@@ -51,7 +51,6 @@ const Layout = (props, { components, editable }) => {
   const styles = styler(props);
 
   const wrap = editable ? connectDropTarget : item => item;
-
   return wrap(
     <div style={styles.container}>
       {renderItems}
