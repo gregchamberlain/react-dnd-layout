@@ -35,6 +35,7 @@ const Layout = (props, { components, editable }) => {
         Form={Comp.propInputs}
         row={props.row}
         addItem={addItem}
+        parentId={props.id}
         item={item}
         component={Comp}
         onDragStart={() => setTimeout(removeItem(idx), 50)}>
@@ -61,7 +62,7 @@ const Layout = (props, { components, editable }) => {
 const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
   container: {
     ...style,
-    minHeight: children.length ? null : 75,
+    minHeight: children.length ? null : 100,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
     position: 'relative',

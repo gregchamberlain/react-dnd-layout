@@ -1,14 +1,19 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 import { ObjectID } from 'bson';
+import { connect } from 'react-redux';
+import { addItem, removeItem } from '../redux/actions';
 
 const itemSource = {
   beginDrag(props) {
     const item = generateNewItem(props);
-    console.log(item);
+    props.add(item);
     return item;
   },
-  endDrag() {
+  endDrag(props, monitor) {
+    if (!monitor.didDrop()) {
+      props.remove(monitor.getItem().id);
+    }
   }
 };
 
@@ -44,7 +49,14 @@ const styles = {
   }
 };
 
-export default DragSource('COMPONENT', itemSource, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
-  connectDragPreview: connect.dragPreview()
-}))(CatalogItem);
+const mapDispatchToProps = dispatch => ({
+  add: item => dispatch(addItem(item)),
+  remove: id => dispatch(removeItem(id)),
+});
+
+export default connect(null, mapDispatchToProps)(
+  DragSource('COMPONENT', itemSource, (conn, monitor) => ({
+    connectDragSource: conn.dragSource(),
+    connectDragPreview: conn.dragPreview()
+  })
+)(CatalogItem));

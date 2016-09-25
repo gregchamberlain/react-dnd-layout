@@ -12,15 +12,21 @@ Image.defaultProps = {
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     boxSizing: 'border-box',
+    width: 'auto',
+    height: 'auto',
     minWidth: 64,
     minHeight: 64,
+    borderRadius: 0,
   }
 };
 
 Image.propInputs = object({
   style: object({
     flex: number({label: 'Flex'}),
-    background: string({label: 'Background'})
+    background: string({label: 'Background'}),
+    minWidth: number({label: 'Width'}),
+    minHeight: number({label: 'Height'}),
+    borderRadius: number({label: 'Border Radius'})
   }, {label: 'Style'})
 });
 

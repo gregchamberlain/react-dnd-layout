@@ -14,12 +14,8 @@ const wrapperSource = {
     return props.children.props;
   },
   endDrag(props, monitor, component) {
-    if (monitor.didDrop()) {
-      console.log('readding...');
-      props.onDrop(monitor.getDropResult());
-      // monitor.getDropResult().onDrop(monitor.getItem());
-    } else {
-      console.log('deleting...');
+    if (!monitor.didDrop()) {
+      props.removeItem(monitor.getItem().id);
     }
   }
 };
@@ -79,7 +75,7 @@ class Wrapper extends Component {
           <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.addItem} layout={lout}/>
         </div>
         {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
-        <div style={style.remove} onClick={props.onDragStart}>&times;</div>
+        <div style={style.remove} onClick={() => props.removeItem(props.item.id, props.parentId)}>&times;</div>
         { Form ? (
           <div style={style.settings} onClick={this.toggleEditor}>⚙</div>
         ) : ""}
@@ -128,6 +124,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
   },
   propEditor: {
     position: 'absolute',
+    width: 200,
     top: 10,
     left: -10,
     background: '#444',
@@ -179,7 +176,8 @@ WrapperContainer.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  updateProps: newProps => dispatch(ACTIONS.updateProps(props.children.props.id, newProps))
+  updateProps: newProps => dispatch(ACTIONS.updateProps(props.children.props.id, newProps)),
+  removeItem: (id, parentId) => dispatch(ACTIONS.removeItem(id, parentId))
 });
 
 export default connect(null, mapDispatchToProps)(WrapperContainer);

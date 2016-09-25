@@ -12,7 +12,7 @@ Title.defaultProps = {
     boxSizing: 'border-box',
     margin: 0,
     color: 'inherit',
-    textShadow: 'none'
+    textShadow: 'inherit'
   },
   content: 'Title'
 };

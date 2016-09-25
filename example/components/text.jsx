@@ -12,7 +12,7 @@ Text.defaultProps = {
     padding: 10,
     textAlign: 'inherit',
     color: 'inherit',
-    textShadow: 'none'
+    textShadow: 'inherit'
   },
   content: 'Text'
 };

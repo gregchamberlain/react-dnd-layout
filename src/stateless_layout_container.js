@@ -25,7 +25,9 @@ LayoutContainer.defaultProps = {
     padding: 20,
     textAlign: 'inherit',
     color: 'inherit',
-    fontSize: 16
+    fontSize: 16,
+    textShadow: 'inherit',
+    fontFamily: 'inherit'
   }
 };
 
@@ -39,7 +41,9 @@ LayoutContainer.propInputs = object({
     padding: number({label: 'Padding'}),
     color: string({label: 'Font Color'}),
     fontSize: number({label: 'Font Size'}),
-    textAlign: string({label: 'Text Align'})
+    textAlign: string({label: 'Text Align'}),
+    textShadow: string({label: 'Text Shadown'}),
+    fontFamily: string({label: 'Font Family'}),
   }, {label: 'Style'})
 });
 
