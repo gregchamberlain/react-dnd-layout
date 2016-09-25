@@ -1,5 +1,5 @@
-import Layout from './stateless_layout';
+import DragDropLayout from './layout_provider';
 export Column from './layouts/column';
 export Row from './layouts/row';
 
-export default Layout;
+export default DragDropLayout;

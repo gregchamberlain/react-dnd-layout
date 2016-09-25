@@ -19,20 +19,13 @@ class LayoutProvider extends  Component {
     this.store.subscribe(() => {
       props.onChange(this.store.getState());
     });
-    this.state = {
-      locked: props.locked || false
-    };
   }
 
   getChildContext() {
     return {
       components: this.props.components,
-      editable: !this.state.locked
+      editable: !this.props.locked
     };
-  }
-
-  toggleLock = () => {
-    this.setState({locked: !this.state.locked});
   }
 
   render() {
@@ -46,7 +39,6 @@ class LayoutProvider extends  Component {
             <Catalog components={components} />
           </div>
           <div style={styles.content}>
-            <button onClick={this.toggleLock}>{this.state.locked ? "Unlock" : "Lock"}</button>
             <ColumnLayout
               id={"root"}
               root

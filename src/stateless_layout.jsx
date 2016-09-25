@@ -22,7 +22,11 @@ class Layout extends Component {
 
   shouldComponentUpdate(props, state, context) {
     if (isEqual(props.children, this.props.children)) {
-      if (props.isOverCurrent === this.props.isOverCurrent && context.editable === this.context.editable) {
+      if (
+        props.isOverCurrent === this.props.isOverCurrent &&
+        context.editable === this.context.editable &&
+        isEqual(props.style, this.props.style)
+      ) {
         return false;
       } else {
         return true;

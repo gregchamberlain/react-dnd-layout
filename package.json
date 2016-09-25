@@ -1,10 +1,12 @@
 {
-  "name": "react-component-skeleton",
+  "name": "react-dnd-layout",
   "version": "0.1.0",
-  "description": "A simple responsive sidebar component for React",
+  "description": "A Drag and Drop Layout Builder and Prop Editor for React Components",
   "keywords": [
     "react",
-    "react-component"
+    "react-component",
+    "dnd",
+    "layout"
   ],
   "main": "dist/bundle.js",
   "scripts": {
@@ -14,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gregchamberlain/react-component-skeleton.git"
+    "url": "git+https://github.com/gregchamberlain/react-dnd-layout.git"
   },
   "author": "Greg Chamberlain <gregchamberlain94@gmail.com> (https://gregchamberlain.github.io)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gregchamberlain/react-component-skeleton/issues"
+    "url": "https://github.com/gregchamberlain/react-dnd-layout/issues"
   },
-  "homepage": "https://github.com/gregchamberlain/react-component-skeleton#readme",
+  "homepage": "https://github.com/gregchamberlain/react-dnd-layout#readme",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-eslint": "^6.1.2",
