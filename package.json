@@ -11,7 +11,7 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "hjs-dev-server",
-    "build": "./scripts/build.sh",
+    "build": "NODE_ENV=production ./scripts/build.sh",
     "prepublish": "npm run build"
   },
   "repository": {
