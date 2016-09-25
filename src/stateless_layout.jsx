@@ -123,7 +123,7 @@ class Layout extends Component {
 //   );
 // };
 
-const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
+const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
   container: {
     ...style,
     minHeight: children.length ? null : 100,
@@ -131,7 +131,6 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
     flexWrap: 'wrap',
     position: 'relative',
     boxSizing: 'border-box',
-    padding: root ? 0 : style.padding,
     background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
