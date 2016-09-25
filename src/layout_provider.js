@@ -8,9 +8,7 @@ import { normalize } from 'normalizr';
 import Layout from './stateless_layout_container';
 import ColumnLayout from './layouts/column';
 import CatalogItem from './catalog/catalog_item';
-
-window.PropTypes = PropTypes;
-
+import Catalog from './catalog/catalog';
 
 class LayoutProvider extends  Component {
 
@@ -43,11 +41,7 @@ class LayoutProvider extends  Component {
       <Provider store={this.store}>
         <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: '#eee'}}>
           <div style={styles.sidebar}>
-            {Object.keys(components).map(c => {
-              const Comp = components[c];
-              Comp.type = c;
-              return <CatalogItem key={c} type={c} Comp={Comp}/>;
-            })}
+            <Catalog components={components} />
           </div>
           <div style={styles.content}>
             <button onClick={this.toggleLock}>{this.state.locked ? "Unlock" : "Lock"}</button>
