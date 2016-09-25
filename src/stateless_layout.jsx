@@ -66,7 +66,8 @@ const styler = ({ row, isOverCurrent, children, style, canDrop, root }) => ({
     flexWrap: 'wrap',
     position: 'relative',
     boxSizing: 'border-box',
-    paddingBottom: canDrop && root ? 40 : style.padding,
+    padding: root ? 0 : style.padding,
+    paddingBottom: canDrop && root ? 40 : root ? 0 : style.padding,
     background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },

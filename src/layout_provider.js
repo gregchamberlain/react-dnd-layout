@@ -37,9 +37,10 @@ class LayoutProvider extends  Component {
   render() {
 
     const { rootItem, components } = this.props;
+    const Comp = components[rootItem.type];
     return (
       <Provider store={this.store}>
-        <div style={{position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: '#eee'}}>
+        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', background: '#eee'}}>
           <div style={styles.sidebar}>
             <Catalog components={components} />
           </div>
@@ -68,8 +69,6 @@ const styles = {
     height: '100%'
   },
   content: {
-    height: '100%',
-    overflow: 'auto',
     marginLeft: 200
   }
 };
