@@ -16,7 +16,7 @@ class StatelessExample extends Component {
 
   render() {
     return (
-      <RootLayout items={Items} components={comps} onChange={i => console.log(i)}/>
+      <DragDropLayout items={Items} components={comps} onChange={i => console.log(i)}/>
     );
   }
 }
