@@ -28,7 +28,7 @@ const CatalogItem = ({ type, Comp, connectDragSource, connectDragPreview }) => {
   return connectDragSource(
     <div style={styles.container}>
       {connectDragPreview(<div style={styles.preview}>
-        <Comp />
+        { Comp.Icon || <Comp /> }
       </div>)}
       {type}
     </div>
@@ -37,15 +37,22 @@ const CatalogItem = ({ type, Comp, connectDragSource, connectDragPreview }) => {
 
 const styles = {
   container: {
+    fontFamily: 'Arial',
     cursor: 'move',
-    margin: 10,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    textAlign: 'center'
+    width: '44%',
+    margin: 5,
+    textAlign: 'center',
+    color: '#eee'
   },
   preview: {
     background: '#333',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#eee',
+    marginBottom: 5,
+    borderRadius: 2,
+    height: 64
   }
 };
 

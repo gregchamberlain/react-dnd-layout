@@ -95,9 +95,9 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
   container: {
     flex: child.flex,
     position: 'relative',
-    outline: hovered ? '1px solid #35b5e5' : 'none',
+    boxShadow: hovered ? 'inset 1px 1px 0 #35b5e5, inset -1px -1px 0 #35b5e5' : 'none',
     ...(state.style),
-    // boxSizing: 'border-box',
+    boxSizing: 'border-box',
     ':hover': {
 
     },
@@ -182,3 +182,6 @@ const mapDispatchToProps = (dispatch, props) => ({
 });
 
 export default connect(null, mapDispatchToProps)(WrapperContainer);
+
+
+'0 1px 3px 0 rgba(0,0,0,0.2),0 1px 1px 0 rgba(0,0,0,0.14),0 2px 1px -1px rgba(0,0,0,0.12)';

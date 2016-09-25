@@ -29,4 +29,11 @@ Title.propInputs = object({
   content: text({label: 'Content'})
 });
 
+Title.Icon = (
+  <svg fill="#eee" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 4v3h5.5v12h3V7H19V4z"/>
+    <path d="M0 0h24v24H0V0z" fill="none"/>
+  </svg>
+);
+
 export default Title;
