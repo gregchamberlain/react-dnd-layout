@@ -30,16 +30,20 @@ class LayoutProvider extends  Component {
     });
     this.store = window.store = configureStore(props.items);
     this.store.subscribe(() => {
+      if (this.receivedData) return (this.receivedData = false);
       props.onChange(this.store.getState());
     });
   }
 
   update = () => {
+    this.containerWidth = this.refs.container.getBoundingClientRect().width;
     this.forceUpdate();
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.update);
+    this.containerWidth = this.refs.container.getBoundingClientRect().width;
+    this.forceUpdate();
   }
 
   componentWillUnmount() {
@@ -56,6 +60,7 @@ class LayoutProvider extends  Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.items, this.props.items)) {
+      this.receivedData = true;
       this.store.dispatch(replaceState(nextProps.items));
     }
   }
@@ -64,7 +69,7 @@ class LayoutProvider extends  Component {
 
     const { rootId, components, items } = this.props;
     const rootItem = items[rootId];
-    const scale = (window.innerWidth - 250) / window.innerWidth;
+    const scale = ((this.containerWidth - 50) || (window.innerWidth - 250)) / window.innerWidth;
     const style = styles(scale);
     return (
       <Provider store={this.store}>
@@ -72,7 +77,7 @@ class LayoutProvider extends  Component {
           <div style={style.sidebar}>
             <Catalog components={components} />
           </div>
-          <div style={style.content}>
+          <div style={style.content} ref="container">
             <div style={style.layout}>
               <ColumnLayout
                 id={rootId}
