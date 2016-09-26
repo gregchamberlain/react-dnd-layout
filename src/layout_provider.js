@@ -29,7 +29,7 @@ class LayoutProvider extends  Component {
       }
     });
     this.store = window.store = configureStore(props.items);
-    this.store.subscribe(() => {
+    this.unsubscribe = this.store.subscribe(() => {
       if (this.receivedData) return (this.receivedData = false);
       props.onChange(this.store.getState());
     });
@@ -60,6 +60,11 @@ class LayoutProvider extends  Component {
 
   componentWillReceiveProps(nextProps) {
     if (!isEqual(nextProps.items, this.props.items)) {
+      this.unsubscribe();
+      this.unsubscribe = this.store.subscribe(() => {
+        if (this.receivedData) return (this.receivedData = false);
+        nextProps.onChange(this.store.getState());
+      });
       this.receivedData = true;
       this.store.dispatch(replaceState(nextProps.items));
     }
