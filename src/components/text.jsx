@@ -17,7 +17,7 @@ Text.defaultProps = {
   content: 'Text'
 };
 
-Text.propInputs = () => object({
+Text.propInputs = object({
   style: object({
     flex: number({label: 'Flex'}),
     fontSize: number({label: 'Font Size'}),

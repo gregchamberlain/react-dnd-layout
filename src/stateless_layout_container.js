@@ -42,7 +42,7 @@ LayoutContainer.defaultProps = {
 
 LayoutContainer.categories = ['layout'];
 
-LayoutContainer.propInputs = () => object({
+LayoutContainer.propInputs = object({
   style: object({
     display: string({label: 'Display'}),
     flex: number({label: 'Flex'}),

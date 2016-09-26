@@ -41,7 +41,7 @@ const Reducer = (state = {}, action) => {
       }
       return deepRemove(nextState, action.id);
     case REPLACE_STATE:
-      return action.state;
+      return merge({}, action.state);
     default:
       return state;
   }

@@ -22,7 +22,7 @@ Link.defaultProps = {
   href: '#'
 };
 
-Link.propInputs = info => object({
+Link.propInputs = object({
   text: string({label: 'Content'}),
   href: string({label: 'To'}),
   style: object({

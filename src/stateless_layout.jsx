@@ -55,7 +55,7 @@ class Layout extends Component {
       <Wrapper
         key={item.id}
         index={idx}
-        Form={Comp.propInputs(info)}
+        Form={Comp.propInputs}
         row={this.props.row}
         addItem={addItem}
         parentId={this.props.id}
