@@ -1,5 +1,5 @@
 import {
-  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM
+  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE
  } from './actions';
 import update from 'react/lib/update';
 import { merge } from 'lodash';
@@ -40,6 +40,8 @@ const Reducer = (state = {}, action) => {
         nextState = merge({}, state);
       }
       return deepRemove(nextState, action.id);
+    case REPLACE_STATE:
+      return merge({}, action.state);
     default:
       return state;
   }

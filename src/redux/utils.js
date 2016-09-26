@@ -2,7 +2,7 @@ import { merge } from 'lodash';
 
 export const mergeItems = (state, id) => state[id].props.children.map(cId => state[cId]);
 
-export const deepMerge = window.deepMerge = (state, id) => {
+export const deepMerge = (state, id) => {
   let item = merge({}, state[id]);
   let children = item.props.children;
   if (Array.isArray(children)) {

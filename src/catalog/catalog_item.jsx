@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { addItem, removeItem } from '../redux/actions';
 
 const itemSource = {
-  beginDrag(props) {
+  beginDrag(props, monitor) {
     const item = generateNewItem(props);
     props.add(item);
     return item;

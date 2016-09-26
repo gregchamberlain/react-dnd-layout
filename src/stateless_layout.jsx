@@ -41,7 +41,7 @@ class Layout extends Component {
 
   render() {
   const { onChange, connectDropTarget, children } = this.props;
-  const { components, editable } = this.context;
+  const { components, editable, info } = this.context;
 
   const removeItem = idx => () => {
     onChange(update(children, {$splice: [[idx, 1]]}));
@@ -138,7 +138,8 @@ const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
 
 Layout.contextTypes = {
   components: React.PropTypes.object,
-  editable: React.PropTypes.bool
+  editable: React.PropTypes.bool,
+  info: React.PropTypes.object
 };
 
 

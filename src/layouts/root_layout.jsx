@@ -5,54 +5,76 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { item } from '../redux/schema';
 import { normalize } from 'normalizr';
+import Layout from '../stateless_layout_container';
 import ColumnLayout from './column';
+import CatalogItem from '../catalog/catalog_item';
+import Catalog from '../catalog/catalog';
+import { isEqual } from 'lodash';
+import { replaceState } from '../redux/actions';
+import ObjectID from 'bson-objectid';
 
-class RootLayout extends  Component {
+class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
-    this.root = { id: 'root', props: { children: props.items }};
-    this.store = window.store = configureStore(normalize(this.root, item).entities.items);
+    this.store = window.store = configureStore(props.items);
   }
 
   getChildContext() {
     return {
       components: this.props.components,
-      editable: false
+      editable: false,
+      info: this.props.info || {}
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEqual(nextProps.items, this.props.items)) {
+      this.store.dispatch(replaceState(nextProps.items));
+    }
   }
 
   render() {
 
+    const { rootId, components, items } = this.props;
+    const rootItem = items[rootId];
     return (
       <Provider store={this.store}>
-        <div style={style}>
-            <ColumnLayout
-              id={"root"}
-              {...this.root.props}
-              style={{...ColumnLayout.defaultProps.style, ...{padding: 0}}}/>
+        <div style={styles.content}>
+          <ColumnLayout
+            id={rootId}
+            {...rootId.props}
+            style={{...ColumnLayout.defaultProps.style, ...{padding: 0}}}/>
         </div>
       </Provider>
     );
   }
 }
 
-const style = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  minHeight: '100%',
-  background: '#eee',
+const styles = {
+  content: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    minHeight: '100%'
+  }
 };
 
-RootLayout.childContextTypes = {
+LayoutProvider.childContextTypes = {
   components: PropTypes.object,
-  editable: PropTypes.bool
+  editable: PropTypes.bool,
+  info: PropTypes.object,
 };
 
-RootLayout.defaultProps = {
-  onChange: items => {}
+const defaultRootItem = {
+  id: ObjectID.generate(),
+  props: { children: [] },
 };
 
-export default DragDropContext(HTML5Backend)(RootLayout);
+LayoutProvider.defaultProps = {
+  rootId: defaultRootItem.id,
+  items: {[defaultRootItem.id]: defaultRootItem},
+};
+
+export default DragDropContext(HTML5Backend)(LayoutProvider);

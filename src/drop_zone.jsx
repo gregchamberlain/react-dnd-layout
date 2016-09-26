@@ -79,8 +79,4 @@ const DropZoneContainer = flow(
   }))
 )(DropZone);
 
-DropZoneContainer.defaultProps = {
-  onDrop: () => console.log('dropped')
-};
-
 export default DropZoneContainer;
