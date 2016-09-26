@@ -90,7 +90,7 @@ const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
     flexWrap: 'wrap',
     position: 'relative',
     boxSizing: 'border-box',
-    background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
+    backgroundColor: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     // background: '#333'
   },
 });
