@@ -82,47 +82,6 @@ class Layout extends Component {
   }
 }
 
-// const Layout = (props, { components, editable }) => {
-//   const { onChange, connectDropTarget, children } = props;
-//
-//   const removeItem = idx => () => {
-//     onChange(update(props.children, {$splice: [[idx, 1]]}));
-//   };
-//   const addItem = (idx, item) => {
-//     onChange(update(props.children, {$splice: [[idx, 0, item]]}));
-//   };
-//   const renderItems = children.map((item, idx) => {
-//     const Comp = components[item.type];
-//     return editable ? (
-//       <Wrapper
-//         key={item.id}
-//         index={idx}
-//         Form={Comp.propInputs}
-//         row={props.row}
-//         addItem={addItem}
-//         parentId={props.id}
-//         item={item}
-//         component={Comp}
-//         onDragStart={() => setTimeout(removeItem(idx), 50)}>
-//         <Comp id={item.id} {...item.props} type={item.type} />
-//       </Wrapper>
-//     ) : (
-//       <div key={item.id} style={{flex: item.props.style.flex, display: 'flex'}}>
-//         <Comp id={item.id} {...item.props} type={item.type} />
-//       </div>
-//     );
-//   });
-//
-//   const styles = styler(props);
-//
-//   const wrap = editable ? connectDropTarget : item => item;
-//   return wrap(
-//     <div style={styles.container}>
-//       {renderItems}
-//     </div>
-//   );
-// };
-
 const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
   container: {
     ...style,
