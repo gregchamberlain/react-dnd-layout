@@ -25,7 +25,7 @@ Link.defaultProps = {
 Link.generateInputs = info => {
   return object({
     text: string({label: 'Content'}),
-    href: select(info.pages, {label: 'To'}),
+    href: select(info.pages.map(page => ({value: page.id, name: page.name})), {label: 'To'}),
     style: object({
       flex: number({label: 'Flex'}),
       fontSize: number({label: 'Font Size'}),

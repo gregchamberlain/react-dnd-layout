@@ -52,7 +52,11 @@ class StatelessExample extends Component {
         </div>
         <div style={styles.content}>
           <DragDropLayout
-            info={{pages: ['#Home', '#Contact', '#About']}}
+            info={{pages: [
+              {id: '#home', name: 'Home'},
+              {id: '#about', name: 'About'},
+              {id: '#contact', name: 'Contact'},
+            ]}}
             items={this.state.items}
             components={comps}
             rootId="root"
