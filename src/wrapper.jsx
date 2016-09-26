@@ -126,6 +126,10 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     width: 200,
     top: 11,
     left: -11,
+    fontSize: 20,
+    borderRadius: 5,
+    boxShadow: '0 0 4px #888',
+    color: '#eee',
     background: '#444',
     padding: 5,
     zIndex: 2

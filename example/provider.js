@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import DragDropLayout, {
   RootLayout, Row, Column, Title, Link, Image, Text, generateEmptyLayout
- } from '../src';
+} from '../src';
 import Items from './pages/page2.json';
 
 const comps = {

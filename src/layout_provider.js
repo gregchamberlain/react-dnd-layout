@@ -18,7 +18,6 @@ class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
-    console.log(props.components);
     Object.keys(props.components).forEach(key => {
       const Comp = props.components[key];
       if (Comp.propInputs) return;
