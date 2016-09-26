@@ -4,6 +4,7 @@ import { string, number, boolean, object, array, text } from 'react-formulate';
 const Text = ({content, style}) => <div style={style}>{content}</div>;
 
 Text.defaultProps = {
+  content: 'Text',
   style: {
     flex: 1,
     fontSize: 16,
@@ -14,10 +15,10 @@ Text.defaultProps = {
     color: 'inherit',
     textShadow: 'inherit'
   },
-  content: 'Text'
 };
 
 Text.propInputs = object({
+  content: text({label: 'Content'}),
   style: object({
     flex: number({label: 'Flex'}),
     fontSize: number({label: 'Font Size'}),
@@ -27,7 +28,6 @@ Text.propInputs = object({
     color: string({label: 'Font Color'}),
     textShadow: string({label: 'Text Shadow'})
   }, {label: 'Style'}),
-  content: text({label: 'Content'})
 });
 
 Text.Icon = (

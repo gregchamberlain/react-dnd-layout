@@ -10,6 +10,7 @@ import ColumnLayout from './layouts/column';
 import CatalogItem from './catalog/catalog_item';
 import Catalog from './catalog/catalog';
 import { isEqual } from 'lodash';
+import { fromObject } from 'react-formulate';
 import { replaceState } from './redux/actions';
 import ObjectID from 'bson-objectid';
 
@@ -17,6 +18,16 @@ class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
+    console.log(props.components);
+    Object.keys(props.components).forEach(key => {
+      const Comp = props.components[key];
+      if (Comp.propInputs) return;
+      if (Comp.generateInputs) {
+        Comp.propInputs = Comp.generateInputs(props.info);
+      } else {
+        Comp.propInputs = fromObject(Comp.defaultProps);
+      }
+    });
     this.store = window.store = configureStore(props.items);
     this.store.subscribe(() => {
       props.onChange(this.store.getState());
@@ -116,6 +127,7 @@ const defaultRootItem = {
 
 LayoutProvider.defaultProps = {
   rootId: defaultRootItem.id,
+  info: {},
   items: {[defaultRootItem.id]: defaultRootItem},
   onChange: items => {}
 };

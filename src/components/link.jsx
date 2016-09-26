@@ -7,6 +7,8 @@ const Link = ({ href, text, style }) => (
 );
 
 Link.defaultProps = {
+  text: 'Link',
+  href: '#',
   style: {
     flex: 1,
     fontSize: 16,
@@ -18,23 +20,23 @@ Link.defaultProps = {
     textShadow: 'inherit',
     textDecoration: 'none',
   },
-  text: 'Link',
-  href: '#'
 };
 
-Link.propInputs = object({
-  text: string({label: 'Content'}),
-  href: string({label: 'To'}),
-  style: object({
-    flex: number({label: 'Flex'}),
-    fontSize: number({label: 'Font Size'}),
-    fontWeight: string({label: 'Font Weight'}),
-    padding: number({label: 'Padding'}),
-    textAlign: string({label: 'Text Align'}),
-    color: string({label: 'Font Color'}),
-    textShadow: string({label: 'Text Shadow'})
-  }, {label: 'Style'}),
-});
+Link.generateInputs = info => {
+  return object({
+    text: string({label: 'Content'}),
+    href: select(info.pages, {label: 'To'}),
+    style: object({
+      flex: number({label: 'Flex'}),
+      fontSize: number({label: 'Font Size'}),
+      fontWeight: string({label: 'Font Weight'}),
+      padding: number({label: 'Padding'}),
+      textAlign: string({label: 'Text Align'}),
+      color: string({label: 'Font Color'}),
+      textShadow: string({label: 'Text Shadow'})
+    }, {label: 'Style'}),
+  });
+};
 
 Link.Icon = (
   <svg fill="#eee" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">

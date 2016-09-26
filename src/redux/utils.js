@@ -1,4 +1,5 @@
 import { merge } from 'lodash';
+import ObjectID from 'bson-objectid';
 
 export const mergeItems = (state, id) => state[id].props.children.map(cId => state[cId]);
 
@@ -11,4 +12,16 @@ export const deepMerge = (state, id) => {
   }
   item.props.children = children;
   return item;
+};
+
+export const generateEmptyLayout = providedId => {
+  const id = providedId || ObjectID.generate();
+  return {
+    [id]: {
+      id,
+      props: {
+        children: []
+      }
+    }
+  };
 };

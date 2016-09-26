@@ -4,6 +4,7 @@ import { string, number, boolean, object, array, text } from 'react-formulate';
 const Title = ({content, style}) => <h1 style={style}>{content}</h1>;
 
 Title.defaultProps = {
+  content: 'Title',
   style: {
     flex: 1,
     fontWeight: 'bold',
@@ -14,10 +15,10 @@ Title.defaultProps = {
     color: 'inherit',
     textShadow: 'inherit'
   },
-  content: 'Title'
 };
 
 Title.propInputs = object({
+  content: text({label: 'Content'}),
   style: object({
     flex: number({label: 'Flex'}),
     fontWeight: string({label: 'Font Weight'}),
@@ -26,7 +27,6 @@ Title.propInputs = object({
     color: string({label: 'Font Color'}),
     textShadow: string({label: 'Text Shadow'})
   }, {label: 'Style'}),
-  content: text({label: 'Content'})
 });
 
 Title.Icon = (

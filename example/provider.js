@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import DragDropLayout, { RootLayout, Row, Column, Title, Link, Image, Text } from '../src';
+import DragDropLayout, {
+  RootLayout, Row, Column, Title, Link, Image, Text, generateEmptyLayout
+ } from '../src';
 import Items from './pages/page2.json';
 
 const comps = {
@@ -41,7 +43,7 @@ class StatelessExample extends Component {
           <button onClick={this.setItems(Items)}>
             Page1
           </button>
-          <button onClick={this.setItems({root: {id: 'root', props:{}}})}>
+          <button onClick={this.setItems(generateEmptyLayout('root'))}>
             Empty
           </button>
           <button onClick={this.toggleLock}>
@@ -50,6 +52,7 @@ class StatelessExample extends Component {
         </div>
         <div style={styles.content}>
           <DragDropLayout
+            info={{pages: ['#Home', '#Contact', '#About']}}
             items={this.state.items}
             components={comps}
             rootId="root"
