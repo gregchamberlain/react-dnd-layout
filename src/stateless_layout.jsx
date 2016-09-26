@@ -84,14 +84,13 @@ class Layout extends Component {
 
 const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
   container: {
+    background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
     ...style,
     minHeight: children.length ? null : 100,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
     position: 'relative',
     boxSizing: 'border-box',
-    backgroundColor: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
-    // background: '#333'
   },
 });
 
