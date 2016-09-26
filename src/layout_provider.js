@@ -86,7 +86,7 @@ class LayoutProvider extends  Component {
             <div style={style.layout}>
               <ColumnLayout
                 id={rootId}
-                {...rootId.props}
+                {...rootItem.props}
                 style={{...ColumnLayout.defaultProps.style, ...{ padding: 0, background: '#fff'}}}/>
             </div>
           </div>
