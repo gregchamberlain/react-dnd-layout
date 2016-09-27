@@ -70,7 +70,7 @@ class Wrapper extends Component {
     const style = styles(props, hovered, childStyle, this.state);
     return connectDragPreview(connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
-        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}>
+        <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: this.props.isOver ? 'block' : 'none'}}>
           <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.addItem} layout={lout}/>
           <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.addItem} layout={lout}/>
         </div>
@@ -169,6 +169,7 @@ const WrapperContainer = flow(
   DropTarget('COMPONENT', wrapperTarget, (conn, monitor) => ({
     connectDropTarget: conn.dropTarget(),
     monitor: monitor,
+    isOverCurrent: monitor.isOver({shallow: true}),
     isOver: monitor.isOver()
   }))
 )(Radium(Wrapper));
