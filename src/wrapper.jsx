@@ -59,10 +59,10 @@ class Wrapper extends Component {
   }
 
   render() {
-    const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
-    const lout = props.component.categories && props.component.categories.includes('layout');
-    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && props.component.categories && props.component.categories.includes('layout'));
-    const childStyle = props.children.props.style || {};
+    const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, Comp, item, ...props } = this.props;
+    const lout = Comp.categories && Comp.categories.includes('layout');
+    const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
+    const childStyle = item.props.style || {};
     const style = styles(props, hovered, childStyle, this.state);
     return connectDragPreview(connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
@@ -70,17 +70,17 @@ class Wrapper extends Component {
           <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.addItem} layout={lout}/>
           <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.addItem} layout={lout}/>
         </div>
-        {connectDragSource(<div style={style.handle}>{props.children.props.type}</div>)}
-        <div style={style.remove} onClick={() => props.removeItem(props.item.id, props.parentId)}>&times;</div>
+        {connectDragSource(<div style={style.handle}>{item.type}</div>)}
+        <div style={style.remove} onClick={() => props.removeItem(item.id, props.parentId)}>&times;</div>
         { Form ? (
           <div style={style.settings} onClick={this.toggleEditor}>⚙</div>
         ) : ""}
         {this.state.editorOpen ? (
           <div style={style.propEditor}>
-            <Form value={props.item.props} onChange={props.updateProps}/>
+            <Form value={item.props} onChange={props.updateProps}/>
           </div>
         ) : ""}
-        {props.children}
+        <Comp id={item.id} {...item.props} type={item.type} />
       </div>
     ));
   }
