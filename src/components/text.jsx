@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, number, boolean, object, array, text } from 'react-formulate';
 
-const Text = ({content, style}) => <div style={style}>{content}</div>;
+const Text = ({content, style}) => <div style={style} contentEditable onClick={e => console.log(e)}>{content}</div>;
 
 Text.defaultProps = {
   content: 'Text',
