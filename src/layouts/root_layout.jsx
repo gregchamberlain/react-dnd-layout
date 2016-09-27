@@ -30,8 +30,7 @@ class LayoutProvider extends  Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      !isEqual(nextProps.items, this.props.items) ||
-      !isEqual(nextProps.info, this.props.info)
+      !isEqual(nextProps.items, this.props.items)
     ) {
       this.store.dispatch(replaceState(nextProps.items));
     }
