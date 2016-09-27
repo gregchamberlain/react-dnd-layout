@@ -1,17 +1,35 @@
 import React, { Component, PropTypes } from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import { object } from 'react-formulate';
+import debounce from 'debounce';
 
 class RichText extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: props.content
+      editorState: props.content,
+      focused: false
     };
-    this.focus = () => this.refs.editor.focus();
+    this.saveChange = debounce(this._saveChange, 500);
+    this.focus = debounce(this._focus, 20);
+  }
+
+  blur = () => {
+    this.setState({focused: false});
+  }
+
+  _focus = () => {
+    this.setState({focused: true});
+    this.refs.editor.focus();
+  }
+
+  _saveChange = editorState => {
+    const raw = convertToRaw(editorState.getCurrentContent());
+    // console.log(raw);
   }
 
   onChange = editorState => {
+    this.saveChange(editorState);
     this.setState({editorState});
   }
 
@@ -50,12 +68,12 @@ class RichText extends Component {
 
   render() {
 
-    const { editorState } = this.state;
+    const { editorState, focused } = this.state;
     const { style } = this.props;
 
     return (
-      <div style={style} onClick={this.focus}>
-        {this.context.editable ? (
+      <div style={style} onMouseDown={this.focus} onBlur={this.blur}>
+        {this.context.editable && focused ? (
           <div>
             <BlockStyleControls
               editorState={editorState}

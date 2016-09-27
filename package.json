@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "bson-objectid": "^1.1.4",
+    "debounce": "^1.0.0",
     "draft-js": "^0.9.1",
     "lodash": "^4.16.1",
     "normalizr": "^2.2.1",

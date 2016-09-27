@@ -58,10 +58,6 @@ class Wrapper extends Component {
     this.setState({editorOpen: !this.state.editorOpen});
   }
 
-  updateProps = props => {
-    this.setState({props});
-  }
-
   render() {
     const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, ...props } = this.props;
     const lout = props.component.categories && props.component.categories.includes('layout');
