@@ -17,7 +17,7 @@ class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
-    this.store = window.store = configureStore(props.items);
+    this.store = configureStore(props.items);
   }
 
   getChildContext() {
@@ -29,7 +29,10 @@ class LayoutProvider extends  Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps.items, this.props.items)) {
+    if (
+      !isEqual(nextProps.items, this.props.items) ||
+      !isEqual(nextProps.info, this.props.info)
+    ) {
       this.store.dispatch(replaceState(nextProps.items));
     }
   }

@@ -18,16 +18,12 @@ class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
-    Object.keys(props.components).forEach(key => {
-      const Comp = props.components[key];
-      if (Comp.propInputs) return;
-      if (Comp.generateInputs) {
-        Comp.propInputs = Comp.generateInputs(props.info);
-      } else {
-        Comp.propInputs = fromObject(Comp.defaultProps);
-      }
-    });
-    this.store = window.store = configureStore(props.items);
+    this.generateInputs(props);
+    this.store = configureStore(props.items);
+    this.state = {
+      components: props.components,
+      scale: 0
+    };
     this.unsubscribe = this.store.subscribe(() => {
       if (this.receivedData) return (this.receivedData = false);
       props.onChange(this.store.getState());
@@ -35,14 +31,14 @@ class LayoutProvider extends  Component {
   }
 
   update = () => {
-    this.containerWidth = this.refs.container.getBoundingClientRect().width;
-    this.forceUpdate();
+    const containerWidth = this.refs.container.getBoundingClientRect().width;
+    const scale = ((containerWidth - 50) || (window.innerWidth - 250)) / window.innerWidth;
+    this.setState({scale});
   }
 
   componentDidMount() {
+    this.update();
     window.addEventListener('resize', this.update);
-    this.containerWidth = this.refs.container.getBoundingClientRect().width;
-    this.forceUpdate();
   }
 
   componentWillUnmount() {
@@ -51,10 +47,25 @@ class LayoutProvider extends  Component {
 
   getChildContext() {
     return {
-      components: this.props.components,
+      components: this.state.components,
       editable: !this.props.locked,
       info: this.props.info || {}
     };
+  }
+
+  generateInputs = props => {
+    console.log(props.components);
+    Object.keys(props.components).forEach(key => {
+      const Comp = props.components[key];
+      if (Comp.generateInputs) {
+        console.log('new inputs generated', key);
+        Comp.propInputs = Comp.generateInputs(props.info);
+      } else if (Comp.propInputs) {
+        return;
+      } else {
+        Comp.propInputs = fromObject(Comp.defaultProps);
+      }
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,14 +78,18 @@ class LayoutProvider extends  Component {
       this.receivedData = true;
       this.store.dispatch(replaceState(nextProps.items));
     }
+    if (!isEqual(nextProps.info, this.props.info)) {
+      this.generateInputs(nextProps);
+      this.setState({components: nextProps.components});
+    }
   }
 
   render() {
 
     const { rootId, components, items } = this.props;
     const rootItem = items[rootId];
-    const scale = ((this.containerWidth - 50) || (window.innerWidth - 250)) / window.innerWidth;
-    const style = styles(scale);
+
+    const style = styles(this.state.scale);
     return (
       <Provider store={this.store}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#eee', overflow: 'hidden'}}>

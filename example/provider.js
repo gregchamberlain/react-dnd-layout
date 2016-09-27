@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { renderToString } from 'react-dom/server';
 import DragDropLayout, {
   RootLayout, Row, Column, Title, Link, Image, Text, generateEmptyLayout
 } from '../src';
@@ -21,6 +22,11 @@ class StatelessExample extends Component {
       locked: false,
       items: Items,
       layout: Items,
+      info: {pages: [
+        {id: '#home', name: 'Home'},
+        {id: '#about', name: 'About'},
+        {id: '#contact', name: 'Contact'},
+      ]}
     };
   }
 
@@ -36,10 +42,21 @@ class StatelessExample extends Component {
     this.setState({items});
   }
 
+  changeInfo = () => {
+    this.setState({info: {pages: [
+      {id: '#home', name: 'Home'},
+      {id: '#services', name: 'Services'},
+      {id: '#products', name: 'Products'},
+    ]}});
+  }
+
   render() {
     return (
       <div>
         <div style={styles.toolbar}>
+          <button onClick={this.changeInfo}>
+            Change Info
+          </button>
           <button onClick={this.setItems(Items)}>
             Page1
           </button>
@@ -52,11 +69,7 @@ class StatelessExample extends Component {
         </div>
         <div style={styles.content}>
           <DragDropLayout
-            info={{pages: [
-              {id: '#home', name: 'Home'},
-              {id: '#about', name: 'About'},
-              {id: '#contact', name: 'Contact'},
-            ]}}
+            info={this.state.info}
             items={this.state.items}
             components={comps}
             rootId="root"
