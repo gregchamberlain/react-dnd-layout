@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import DragDropLayout, {
   RootLayout, Row, Column, Title, Link, Image, Text, generateEmptyLayout, renderToString
-} from '../lib';
+} from '../src';
 import Items from './pages/page2.json';
 
 const comps = {
@@ -50,7 +50,6 @@ class StatelessExample extends Component {
   }
 
   render() {
-    console.log(renderToString(this.state.items, "root", comps));
     return (
       <div>
         <div style={styles.toolbar}>
