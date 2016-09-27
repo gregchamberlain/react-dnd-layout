@@ -54,11 +54,9 @@ class LayoutProvider extends  Component {
   }
 
   generateInputs = props => {
-    console.log(props.components);
     Object.keys(props.components).forEach(key => {
       const Comp = props.components[key];
       if (Comp.generateInputs) {
-        console.log('new inputs generated', key);
         Comp.propInputs = Comp.generateInputs(props.info);
       } else if (Comp.propInputs) {
         return;

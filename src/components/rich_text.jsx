@@ -2,12 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import { object } from 'react-formulate';
 import debounce from 'debounce';
+import { merge } from 'lodash';
 
 class RichText extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: props.content,
+      editorState: EditorState.createWithContent(convertFromRaw(props.content)),
       focused: false
     };
     this.saveChange = debounce(this._saveChange, 500);
@@ -25,7 +26,9 @@ class RichText extends Component {
 
   _saveChange = editorState => {
     const raw = convertToRaw(editorState.getCurrentContent());
-    // console.log(raw);
+    const nextProps = merge({}, this.props);
+    nextProps.content = raw;
+    this.props.onChange(nextProps);
   }
 
   onChange = editorState => {
@@ -105,12 +108,13 @@ RichText.contextTypes = {
 };
 
 RichText.defaultProps = {
-  content: EditorState.createEmpty(),
+  content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
   style: {
     fontFamily: 'Arial',
+    flex: 1,
     minHeight: 200,
     cursor: 'text',
-    width: '100%',
+    // width: '100%',
     padding: 20
   }
 };

@@ -11,7 +11,7 @@ import DropZone from './drop_zone';
 const wrapperSource = {
   beginDrag(props) {
     props.onDragStart();
-    return props.children.props;
+    return props.item.props;
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -80,7 +80,7 @@ class Wrapper extends Component {
             <Form value={item.props} onChange={props.updateProps}/>
           </div>
         ) : ""}
-        <Comp id={item.id} {...item.props} type={item.type} />
+        <Comp id={item.id} {...item.props} type={item.type} onChange={props.updateProps}/>
       </div>
     ));
   }
@@ -128,7 +128,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     color: '#eee',
     background: '#444',
     padding: 5,
-    zIndex: 2
+    zIndex: 3
   }
 });
 
@@ -178,7 +178,7 @@ WrapperContainer.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  updateProps: newProps => dispatch(ACTIONS.updateProps(props.children.props.id, newProps)),
+  updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, newProps)),
   removeItem: (id, parentId) => dispatch(ACTIONS.removeItem(id, parentId))
 });
 
