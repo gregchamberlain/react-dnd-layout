@@ -12,14 +12,14 @@ class RichText extends Component {
       focused: false
     };
     this.saveChange = debounce(this._saveChange, 500);
-    this.focus = debounce(this._focus, 20);
+    // this.focus = debounce(this._focus, 5);
   }
 
   blur = () => {
     this.setState({focused: false});
   }
 
-  _focus = () => {
+  focus = () => {
     this.setState({focused: true});
     this.refs.editor.focus();
   }
@@ -75,9 +75,9 @@ class RichText extends Component {
     const { style } = this.props;
 
     return (
-      <div style={style} onMouseDown={this.focus} onBlur={this.blur}>
+      <div style={style} ref="container" onClick={this.focus} onBlur={this.blur}>
         {this.context.editable && focused ? (
-          <div>
+          <div style={controlStyle} onClick={this.focus}>
             <BlockStyleControls
               editorState={editorState}
               onToggle={this.toggleBlockType}
@@ -107,13 +107,24 @@ RichText.contextTypes = {
   editable: React.PropTypes.bool
 };
 
+const controlStyle = {
+  position: 'absolute',
+  padding: 10,
+  // margin: 15,
+  // background: 'rgba(255, 255, 255, 0.9)',
+  top: '100%',
+  left: 0
+};
+
 RichText.defaultProps = {
   content: convertToRaw(EditorState.createEmpty().getCurrentContent()),
   style: {
     fontFamily: 'Arial',
     flex: 1,
-    minHeight: 200,
+    // minHeight: 50,
     cursor: 'text',
+    position: 'relative',
+    zIndex: 1,
     // width: '100%',
     padding: 20
   }
@@ -156,7 +167,18 @@ class StyleButton extends Component {
     }
 
     return (
-      <span style={{color: this.props.active ? '#5890ff' : '#999', cursor: 'pointer', marginRight: 16, padding: '2px 0', display: 'inline-block'}} onMouseDown={this.onToggle}>
+      <span style={{
+        color: this.props.active ? '#35b5e5' : '#333',
+        cursor: 'pointer',
+        marginRight: 16,
+        // padding: '2px 0',
+        display: 'inline-block',
+        fontWeight: 'bold',
+        boxShadow: '0 0 10px black',
+        background: this.props.active ? '#444' : '#eee',
+        margin: 5,
+        borderRadius: 5,
+        padding: 10}} onMouseDown={this.onToggle}>
         {this.props.label}
       </span>
     );
