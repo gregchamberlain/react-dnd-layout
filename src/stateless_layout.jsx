@@ -42,7 +42,6 @@ class Layout extends Component {
   render() {
   const { onChange, connectDropTarget, children } = this.props;
   const { components, editable, info } = this.context;
-
   const removeItem = idx => () => {
     onChange(update(children, {$splice: [[idx, 1]]}));
   };
@@ -82,9 +81,9 @@ class Layout extends Component {
 
 const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
   container: {
-    background: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
-    minHeight: children.length ? null : 400,
     ...style,
+    backgroundColor: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
+    minHeight: children.length ? style.minHeight : 400,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
     position: 'relative',
