@@ -5,6 +5,7 @@ import { flow } from 'lodash';
 const wrapperTarget = {
   drop(props, monitor) {
     if (monitor.isOver({shallow: true})) {
+      console.log(monitor.getItem());
       const index = (props.pos === 'left' || props.pos === 'top') ?
       props.index : props.index + 1;
       props.addItem(

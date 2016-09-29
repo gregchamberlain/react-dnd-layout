@@ -27,6 +27,10 @@ LayoutContainer.defaultProps = {
   children: [],
   style: {
     flex: 1,
+    position: 'relative',
+    top: 'auto',
+    left: 'auto',
+    zIndex: 1,
     display: 'flex',
     background: 'transparent',
     backgroundRepeat: 'no-repeat',
@@ -49,6 +53,10 @@ LayoutContainer.propInputs = object({
   style: object({
     display: string({label: 'Display'}),
     flex: number({label: 'Flex'}),
+    position: string({label: 'Position'}),
+    top: string({label: 'Top'}),
+    left: string({label: 'Left'}),
+    zIndex: number({label: 'z-index'}),
     background: string({label: 'Background'}),
     backgroundSize: string({label: 'Background Size'}),
     backgroundRepeat: string({label: 'Background Repeat'}),

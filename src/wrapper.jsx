@@ -11,7 +11,7 @@ import DropZone from './drop_zone';
 const wrapperSource = {
   beginDrag(props) {
     props.onDragStart();
-    return props.item.props;
+    return props.item;
   },
   endDrag(props, monitor, component) {
     if (!monitor.didDrop()) {
@@ -89,15 +89,15 @@ class Wrapper extends Component {
 const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
   container: {
     flex: child.flex,
-    position: 'relative',
+    position: child.position || 'relative',
+    top: child.top,
+    left: child.left,
     boxShadow: hovered ? 'inset 1px 1px 0 #35b5e5, inset -1px -1px 0 #35b5e5' : 'none',
     ...(state.style),
     boxSizing: 'border-box',
     ':hover': {
 
     },
-    // minHeight: 75,
-    // background: '#444',
     display: isDragging ? 'none' : 'flex'
   },
   handle: {

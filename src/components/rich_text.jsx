@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
-import { object } from 'react-formulate';
+import { object, string, number } from 'react-formulate';
 import debounce from 'debounce';
 import { merge } from 'lodash';
 
@@ -131,6 +131,12 @@ RichText.defaultProps = {
 };
 
 RichText.propInputs = object({
+  style: object({
+    fontFamily: string({label: 'Font Family'}),
+    flex: number({label: 'Flex'}),
+    padding: number({label: 'Padding'}),
+    position: string({label: 'Position'})
+  },{label: 'Style'})
 });
 
 RichText.Icon = (
