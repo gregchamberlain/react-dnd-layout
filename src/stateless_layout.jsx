@@ -45,6 +45,9 @@ class Layout extends Component {
   const removeItem = idx => () => {
     onChange(update(children, {$splice: [[idx, 1]]}));
   };
+  const insertItem = (idx, item) => {
+    onChange(update(children, {$splice: [[idx, 0, item]]}));
+  };
   const addItem = (idx, item) => {
     onChange(update(children, {$splice: [[idx, 0, item]]}));
   };
@@ -56,6 +59,8 @@ class Layout extends Component {
         index={idx}
         Form={Comp.propInputs}
         row={this.props.row}
+        onInsertBefore={newItem => insertItem(idx, newItem)}
+        onInsertAfter={newItem => insertItem(idx + 1, newItem)}
         addItem={addItem}
         parentId={this.props.id}
         item={item}
@@ -63,7 +68,7 @@ class Layout extends Component {
         onDragStart={() => setTimeout(removeItem(idx), 50)} />
     ) : (
       <div key={item.id} style={{flex: item.props.style.flex, display: 'flex'}}>
-        <Comp id={item.id} {...item.props} type={item.type} />
+        <Comp id={item.id} {...item.props} type={item.type} ref="child" />
       </div>
     );
   });

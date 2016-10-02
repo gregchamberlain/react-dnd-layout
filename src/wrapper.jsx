@@ -64,11 +64,11 @@ class Wrapper extends Component {
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
     const childStyle = item.props.style || {};
     const style = styles(props, hovered, childStyle, this.state);
-    return connectDragPreview(connectDropTarget(
+    return connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: this.props.isOver ? 'block' : 'none'}}>
-          <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.addItem} layout={lout}/>
-          <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.addItem} layout={lout}/>
+          <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.onInsertBefore} layout={lout}/>
+          <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.onInsertAfter} layout={lout}/>
         </div>
         {connectDragSource(<div style={style.handle}>{item.type}</div>)}
         <div style={style.remove} onClick={() => props.removeItem(item.id, props.parentId)}>&times;</div>
@@ -80,9 +80,16 @@ class Wrapper extends Component {
             <Form value={item.props} onChange={props.updateProps}/>
           </div>
         ) : ""}
-        <Comp id={item.id} {...item.props} type={item.type} onChange={props.updateProps}/>
+        <Comp
+          id={item.id}
+          {...item.props}
+          type={item.type}
+          onChange={props.updateProps}
+          ref={instance => connectDragPreview(findDOMNode(instance))}
+        />
+        <div style={style.overlay}></div>
       </div>
-    ));
+    );
   }
 }
 
@@ -92,8 +99,6 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     position: child.position || 'relative',
     top: child.top,
     left: child.left,
-    boxShadow: hovered ? 'inset 1px 1px 0 #35b5e5, inset -1px -1px 0 #35b5e5' : 'none',
-    ...(state.style),
     boxSizing: 'border-box',
     ':hover': {
 
@@ -129,6 +134,15 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
     background: '#444',
     padding: 5,
     zIndex: 3
+  },
+  overlay: {
+    position: 'absolute',
+    pointerEvents: 'none',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    border: hovered ? '2px solid #ccc' : 'none'
   }
 });
 

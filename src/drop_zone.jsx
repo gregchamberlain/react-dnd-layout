@@ -9,7 +9,6 @@ const wrapperTarget = {
       const index = (props.pos === 'left' || props.pos === 'top') ?
       props.index : props.index + 1;
       props.addItem(
-        index,
         monitor.getItem()
       );
     }
@@ -33,11 +32,11 @@ class DropZone extends Component {
   render() {
     const { connectDragSource, connectDropTarget, ...props } = this.props;
     const style = styles(props);
-    return connectDragSource(connectDropTarget(
+    return connectDropTarget(
       <div style={style.container}>
         <div style={style.line}></div>
       </div>
-    ));
+    );
   }
 }
 
@@ -74,10 +73,10 @@ const DropZoneContainer = flow(
     isOver: monitor.isOver(),
     canDrop: monitor.canDrop()
   })),
-  DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  }))
+  // DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
+  //   connectDragSource: connect.dragSource(),
+  //   isDragging: monitor.isDragging(),
+  // }))
 )(DropZone);
 
 export default DropZoneContainer;
