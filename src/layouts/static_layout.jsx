@@ -13,7 +13,7 @@ import { isEqual } from 'lodash';
 import { replaceState } from '../redux/actions';
 import ObjectID from 'bson-objectid';
 
-class LayoutProvider extends  Component {
+class StaticLayout extends  Component {
 
   constructor(props) {
     super(props);
@@ -63,7 +63,7 @@ const styles = {
   }
 };
 
-LayoutProvider.childContextTypes = {
+StaticLayout.childContextTypes = {
   components: PropTypes.object,
   editable: PropTypes.bool,
   info: PropTypes.object,
@@ -74,9 +74,9 @@ const defaultRootItem = {
   props: { children: [] },
 };
 
-LayoutProvider.defaultProps = {
+StaticLayout.defaultProps = {
   rootId: defaultRootItem.id,
   items: {[defaultRootItem.id]: defaultRootItem},
 };
 
-export default DragDropContext(HTML5Backend)(LayoutProvider);
+export default DragDropContext(HTML5Backend)(StaticLayout);

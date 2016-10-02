@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import RootLayout from './layouts/root_layout';
+import StaticLayout from './layouts/static_layout';
 
 const renderToString = (items, rootId, comps = {}, info = {}) => ReactDOMServer.renderToString(
-  <RootLayout
+  <StaticLayout
     items={items}
     components={comps}
     rootId={rootId} />
