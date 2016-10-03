@@ -74,8 +74,7 @@ class StatelessExample extends Component {
             items={this.state.items}
             components={comps}
             rootId="root"
-            locked={this.state.locked}
-            onChange={i => console.log(i)}/>
+            locked={this.state.locked}/>
         </div>
       </div>
     );

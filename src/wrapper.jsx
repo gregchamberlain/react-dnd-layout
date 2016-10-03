@@ -59,7 +59,7 @@ class Wrapper extends Component {
   }
 
   render() {
-    const { connectDragPreview, connectDragSource, Form, connectDropTarget, row, Comp, item, ...props } = this.props;
+    const { connectDragSource, Form, connectDropTarget, row, Comp, item, ...props } = this.props;
     const lout = Comp.categories && Comp.categories.includes('layout');
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
     const childStyle = item.props.style || {};
@@ -85,7 +85,6 @@ class Wrapper extends Component {
           {...item.props}
           type={item.type}
           onChange={props.updateProps}
-          ref={instance => connectDragPreview(findDOMNode(instance))}
         />
         <div style={style.overlay}></div>
       </div>
@@ -173,7 +172,6 @@ const actionStyle = hovered => ({
 const WrapperContainer = flow(
   DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
     connectDragSource: conn.dragSource(),
-    connectDragPreview: conn.dragPreview(),
     isDragging: monitor.isDragging(),
   })),
   DropTarget('COMPONENT', wrapperTarget, (conn, monitor) => ({

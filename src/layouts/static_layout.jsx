@@ -3,8 +3,6 @@ import { Provider } from 'react-redux';
 import configureStore from '../redux/store';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { item } from '../redux/schema';
-import { normalize } from 'normalizr';
 import Layout from '../stateless_layout_container';
 import ColumnLayout from './column';
 import CatalogItem from '../catalog/catalog_item';

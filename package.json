@@ -49,12 +49,10 @@
     "debounce": "^1.0.0",
     "draft-js": "^0.9.1",
     "lodash": "^4.16.1",
-    "normalizr": "^2.2.1",
     "radium": "^0.18.1",
     "react-dnd": "^2.1.4",
     "react-dnd-html5-backend": "^2.1.2",
     "react-formulate": "^0.2.2",
-    "react-frame-component": "^0.6.5",
     "react-redux": "^4.4.5",
     "redux": "^3.6.0"
   }
