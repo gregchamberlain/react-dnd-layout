@@ -51,7 +51,7 @@ const styles = ({ isOver, canDrop, pos, layout }) => ({
     left: pos === 'left' ? 0 : null,
     right: pos === 'right' ? 0 : null,
     bottom: pos === 'bottom' ? 0 : null,
-    zIndex: 1
+    zIndex: 2
   },
   line: {
     background: '#35b5e6',

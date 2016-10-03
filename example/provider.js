@@ -4,6 +4,7 @@ import DragDropLayout, {
   Image, Text, generateEmptyLayout, renderToString
 } from '../src';
 import Items from './pages/page2.json';
+import Items2 from './pages/page1.json';
 
 const comps = {
   Row,
@@ -61,6 +62,9 @@ class StatelessExample extends Component {
           <button onClick={this.setItems(Items)}>
             Page1
           </button>
+          <button onClick={this.setItems(Items2)}>
+            Page 2
+          </button>
           <button onClick={this.setItems(generateEmptyLayout('root'))}>
             Empty
           </button>
@@ -74,7 +78,8 @@ class StatelessExample extends Component {
             items={this.state.items}
             components={comps}
             rootId="root"
-            locked={this.state.locked}/>
+            locked={this.state.locked}
+            onChange={i => console.log(i)}/>
         </div>
       </div>
     );
