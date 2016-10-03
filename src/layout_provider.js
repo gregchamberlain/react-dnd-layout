@@ -59,6 +59,7 @@ class LayoutProvider extends  Component {
       } else if (Comp.propInputs) {
         return;
       } else {
+        console.log('creting inputs');
         Comp.propInputs = fromObject(Comp.defaultProps);
       }
     });
