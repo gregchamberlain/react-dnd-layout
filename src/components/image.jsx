@@ -20,9 +20,6 @@ Image.defaultProps = {
   }
 };
 
-// Image.generateForm = info => {
-// };
-
 Image.propInputs = object({
   style: object({
     flex: number({label: 'Flex'}),
