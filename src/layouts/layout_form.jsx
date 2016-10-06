@@ -23,6 +23,9 @@ const StyleInput = ({ onChange, value = "0px", label }) => {
         <select value={unit} onChange={e => onChange(val + e.target.value)}>
           <option value="px">px</option>
           <option value="em">em</option>
+          <option value="%">%</option>
+          <option value="vw">vw</option>
+          <option value="vh">vh</option>
         </select>
       </div>
     </label>
@@ -32,6 +35,7 @@ const StyleInput = ({ onChange, value = "0px", label }) => {
 const LayoutForm = object({
   margin: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Margin"/>,
   padding: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Padding"/>,
+  height: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Height"/>,
   backgroundImage: string({label: 'Background Image'}),
   backgroundColor: string({label: 'Background Color'}),
   backgroundSize: string({label: 'Background Size'}),
