@@ -75,7 +75,7 @@ class Layout extends Component {
 
   const styles = styler(this.props);
 
-  const wrap = editable ? connectDropTarget : item => item;
+  const wrap = editable && !this.props.children.length ? connectDropTarget : item => item;
   return wrap(
     <div style={styles.container}>
       {renderItems}

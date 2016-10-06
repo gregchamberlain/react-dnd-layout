@@ -18,15 +18,6 @@ const wrapperTarget = {
   }
 };
 
-const wrapperSource = {
-  beginDrag() {
-
-  },
-  canDrag() {
-    return false;
-  }
-};
-
 class DropZone extends Component {
   render() {
     const { connectDragSource, connectDropTarget, ...props } = this.props;
@@ -41,7 +32,7 @@ class DropZone extends Component {
 
 const styles = ({ isOver, canDrop, pos, layout }) => ({
   container: {
-    background: 'rgba(255, 255, 255, 0.6)',
+    // background: 'rgba(255, 0, 0, 0.6)',
     minHeight: 25,
     // opacity: isOver ? 1 : 0,
     position: 'absolute',
@@ -51,7 +42,7 @@ const styles = ({ isOver, canDrop, pos, layout }) => ({
     left: pos === 'left' ? 0 : null,
     right: pos === 'right' ? 0 : null,
     bottom: pos === 'bottom' ? 0 : null,
-    // zIndex: 1
+    zIndex: 2
   },
   line: {
     background: '#35b5e6',
@@ -66,16 +57,10 @@ const styles = ({ isOver, canDrop, pos, layout }) => ({
   }
 });
 
-const DropZoneContainer = flow(
-  DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop()
-  })),
-  // DragSource('COMPONENT', wrapperSource, (connect, monitor) => ({
-  //   connectDragSource: connect.dragSource(),
-  //   isDragging: monitor.isDragging(),
-  // }))
-)(DropZone);
+const DropZoneContainer = DropTarget('COMPONENT', wrapperTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop()
+}))(DropZone);
 
 export default DropZoneContainer;

@@ -175,6 +175,7 @@ const actionStyle = hovered => ({
 //   isDragging: monitor.isDragging(),
 // }))(Radium(Wrapper));
 const WrapperContainer = flow(
+  Radium,
   DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({
     connectDragSource: conn.dragSource(),
     isDragging: monitor.isDragging(),
@@ -184,8 +185,8 @@ const WrapperContainer = flow(
     monitor: monitor,
     isOverCurrent: monitor.isOver({shallow: true}),
     isOver: monitor.isOver()
-  }))
-)(Radium(Wrapper));
+  })),
+)(Wrapper);
 
 WrapperContainer.defaultProps = {
   addBefore: () => {},

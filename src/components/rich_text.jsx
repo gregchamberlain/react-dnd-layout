@@ -121,11 +121,8 @@ RichText.defaultProps = {
   style: {
     fontFamily: 'Arial',
     flex: 1,
-    // minHeight: 50,
     cursor: 'text',
     position: 'relative',
-    zIndex: 1,
-    // width: '100%',
     padding: 20
   }
 };
