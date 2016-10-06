@@ -1,5 +1,5 @@
 import {
-  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE
+  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE, UPDATE_LAYOUT
  } from './actions';
 import update from 'react/lib/update';
 import { merge } from 'lodash';
@@ -19,6 +19,10 @@ const Reducer = (state = {}, action) => {
     case UPDATE_PROPS:
       return update(state, {[action.id]: {
         props: { $set: action.props }
+      }});
+    case UPDATE_LAYOUT:
+      return update(state, {[action.id]: {
+        layout: { $set: action.layout }
       }});
     case ADD_ITEM:
       nextState = merge({}, state);

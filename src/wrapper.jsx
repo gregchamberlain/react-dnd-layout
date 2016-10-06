@@ -4,6 +4,7 @@ import { flow } from 'lodash';
 import Radium from 'radium';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
+import LayoutForm from './layouts/layout_form';
 import * as ACTIONS from './redux/actions';
 
 import DropZone from './drop_zone';
@@ -63,7 +64,7 @@ class Wrapper extends Component {
     const lout = Comp.categories && Comp.categories.includes('layout');
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
     const childStyle = item.props.style || {};
-    const style = styles(props, hovered, childStyle, this.state);
+    const style = styles(props, hovered, childStyle, this.state, item.layout);
     return connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: this.props.isOver ? 'block' : 'none'}}>
@@ -77,6 +78,9 @@ class Wrapper extends Component {
         ) : ""}
         {this.state.editorOpen ? (
           <div style={style.propEditor}>
+            <div style={{border: '1px solid #ccc'}}>
+              <LayoutForm value={item.layout || {}} onChange={props.updateLayout} />
+            </div>
             <Form value={item.props} onChange={props.updateProps}/>
           </div>
         ) : ""}
@@ -92,8 +96,9 @@ class Wrapper extends Component {
   }
 }
 
-const styles = ({ isDragging, isOver, canDrop }, hovered, child, state) => ({
+const styles = ({ isDragging, isOver, canDrop }, hovered, child, state, layout = {}) => ({
   container: {
+    ...layout,
     flex: child.flex,
     position: child.position || 'relative',
     top: child.top,
@@ -191,6 +196,7 @@ WrapperContainer.defaultProps = {
 
 const mapDispatchToProps = (dispatch, props) => ({
   updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, newProps)),
+  updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, newLayout)),
   removeItem: (id, parentId) => dispatch(ACTIONS.removeItem(id, parentId))
 });
 
