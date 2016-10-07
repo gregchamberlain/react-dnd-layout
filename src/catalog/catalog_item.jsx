@@ -2,7 +2,7 @@ import React from 'react';
 import { DragSource } from 'react-dnd';
 import ObjectID from 'bson-objectid';
 import { connect } from 'react-redux';
-import { addItem, removeItem } from '../redux/actions';
+import { addItem, removeItem, moveItem } from '../redux/actions';
 
 const itemSource = {
   beginDrag(props, monitor) {
@@ -11,7 +11,9 @@ const itemSource = {
     return item;
   },
   endDrag(props, monitor) {
-    if (!monitor.didDrop()) {
+    if (monitor.didDrop()) {
+      props.move(null, monitor.getDropResult(), monitor.getItem().id);
+    } else {
       props.remove(monitor.getItem().id);
     }
   }
@@ -59,6 +61,7 @@ const styles = {
 const mapDispatchToProps = dispatch => ({
   add: item => dispatch(addItem(item)),
   remove: id => dispatch(removeItem(id)),
+  move: (from, to, item) => dispatch(moveItem(from, to, item))
 });
 
 export default connect(null, mapDispatchToProps)(

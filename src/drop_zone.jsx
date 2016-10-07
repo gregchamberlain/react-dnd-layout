@@ -10,8 +10,8 @@ const wrapperTarget = {
       props.addItem(
         monitor.getItem()
       );
+      return {id: props.parentId, index};
     }
-    return props;
   },
   canDrop(props, monitor) {
     return true;

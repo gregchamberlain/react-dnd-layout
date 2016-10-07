@@ -11,13 +11,18 @@ import DropZone from './drop_zone';
 
 const wrapperSource = {
   beginDrag(props) {
-    props.onDragStart();
+    // props.onDragStart();
     return props.item;
   },
   endDrag(props, monitor, component) {
-    if (!monitor.didDrop()) {
-      props.removeItem(monitor.getItem().id);
+    const from = { id: props.parentId, index: props.index };
+    const to = monitor.getDropResult();
+    if (monitor.didDrop()) {
+      props.moveItem(from, to, props.item.id);
     }
+    // if (!monitor.didDrop()) {
+    //   props.removeItem(monitor.getItem().id);
+    // }
   }
 };
 
@@ -68,8 +73,8 @@ class Wrapper extends Component {
     return connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: this.props.isOver ? 'block' : 'none'}}>
-          <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={props.onInsertBefore} layout={lout}/>
-          <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={props.onInsertAfter} layout={lout}/>
+          <DropZone pos={row ? 'left' : 'top'} index={props.index} addItem={() => {}} layout={lout} parentId={props.parentId}/>
+          <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={() => {}} layout={lout} parentId={props.parentId}/>
         </div>
         {connectDragSource(<div style={style.handle}>{item.type}</div>)}
         <div style={style.remove} onClick={() => props.removeItem(item.id, props.parentId)}>&times;</div>
@@ -101,8 +106,6 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state, layout =
     flex: 1,
     ...layout,
     position: 'relative',
-    // top: child.top,
-    // left: child.left,
     boxSizing: 'border-box',
     ':hover': {
 
@@ -196,6 +199,7 @@ WrapperContainer.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
+  moveItem: (from, to, item) => dispatch(ACTIONS.moveItem(from, to, item)),
   updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, newProps)),
   updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, newLayout)),
   removeItem: (id, parentId) => dispatch(ACTIONS.removeItem(id, parentId))

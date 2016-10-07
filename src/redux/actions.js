@@ -4,11 +4,19 @@ export const UPDATE_LAYOUT = 'UPDATE_LAYOUT';
 export const ADD_ITEM = 'ADD_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const REPLACE_STATE = 'REPLACE_STATE';
+export const MOVE_ITEM = 'MOVE_ITEM';
 
 export const change = (id, items) => ({
   type: CHANGE,
   id,
   items
+});
+
+export const moveItem = (from, to, item) => ({
+  type: MOVE_ITEM,
+  from,
+  to,
+  item
 });
 
 export const updateProps = (id, props) => ({

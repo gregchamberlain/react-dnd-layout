@@ -65,7 +65,8 @@ class Layout extends Component {
         parentId={this.props.id}
         item={item}
         Comp={Comp}
-        onDragStart={() => setTimeout(removeItem(idx), 50)} />
+        onDragStart={() => setTimeout(removeItem(idx), 50)}
+      />
     ) : (
       <div key={item.id} style={{flex: item.props.style.flex, display: 'flex', ...(item.layout || {})}}>
         <Comp id={item.id} {...item.props} type={item.type} />

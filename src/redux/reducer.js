@@ -1,5 +1,5 @@
 import {
-  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE, UPDATE_LAYOUT
+  CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE, UPDATE_LAYOUT, MOVE_ITEM
  } from './actions';
 import update from 'react/lib/update';
 import { merge } from 'lodash';
@@ -16,6 +16,22 @@ const Reducer = (state = {}, action) => {
         }
       }});
       return nextState;
+    case MOVE_ITEM:
+      if (!action.from) {
+        return update(state, {
+          [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}},
+        });
+      }
+      if (action.to.id === action.from.id) {
+        if (action.from.index <= action.to.index) action.to.index -= 1;
+        return update(state, {
+          [action.from.id]: { props: { children: { $splice: [[action.from.index, 1],[action.to.index, 0, action.item]]}}},
+        });
+      }
+      return update(state, {
+        [action.from.id]: { props: { children: { $splice: [[action.from.index, 1]]}}},
+        [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}}
+      });
     case UPDATE_PROPS:
       return update(state, {[action.id]: {
         props: { $set: action.props }
