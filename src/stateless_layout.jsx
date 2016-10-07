@@ -8,12 +8,12 @@ import Wrapper from './wrapper';
 const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
-      props.onChange(
-        update(props.children , {
-          $push: [monitor.getItem()]
-        })
-      );
-      return props;
+      // props.onChange(
+      //   update(props.children , {
+      //     $push: [monitor.getItem()]
+      //   })
+      // );
+      return {id: props.id, index: 0};
     }
   }
 };
