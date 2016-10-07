@@ -36,6 +36,7 @@ const LayoutForm = object({
   margin: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Margin"/>,
   padding: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Padding"/>,
   height: ({onChange, value}) => <StyleInput value={value} onChange={onChange} label="Height"/>,
+  flex: number({label: 'Flex'}),
   backgroundImage: string({label: 'Background Image'}),
   backgroundColor: string({label: 'Background Color'}),
   backgroundSize: string({label: 'Background Size'}),

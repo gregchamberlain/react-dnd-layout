@@ -98,11 +98,11 @@ class Wrapper extends Component {
 
 const styles = ({ isDragging, isOver, canDrop }, hovered, child, state, layout = {}) => ({
   container: {
+    flex: 1,
     ...layout,
-    flex: child.flex,
-    position: child.position || 'relative',
-    top: child.top,
-    left: child.left,
+    position: 'relative',
+    // top: child.top,
+    // left: child.left,
     boxSizing: 'border-box',
     ':hover': {
 
