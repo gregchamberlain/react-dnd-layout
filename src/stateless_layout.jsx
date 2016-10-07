@@ -8,11 +8,6 @@ import Wrapper from './wrapper';
 const layoutTarget = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
-      // props.onChange(
-      //   update(props.children , {
-      //     $push: [monitor.getItem()]
-      //   })
-      // );
       return {id: props.id, index: 0};
     }
   }
@@ -42,15 +37,6 @@ class Layout extends Component {
   render() {
   const { onChange, connectDropTarget, children } = this.props;
   const { components, editable, info } = this.context;
-  const removeItem = idx => () => {
-    onChange(update(children, {$splice: [[idx, 1]]}));
-  };
-  const insertItem = (idx, item) => {
-    onChange(update(children, {$splice: [[idx, 0, item]]}));
-  };
-  const addItem = (idx, item) => {
-    onChange(update(children, {$splice: [[idx, 0, item]]}));
-  };
   const renderItems = children.map((item, idx) => {
     const Comp = components[item.type];
     return editable ? (
@@ -59,13 +45,9 @@ class Layout extends Component {
         index={idx}
         Form={Comp.propInputs}
         row={this.props.row}
-        onInsertBefore={newItem => insertItem(idx, newItem)}
-        onInsertAfter={newItem => insertItem(idx + 1, newItem)}
-        addItem={addItem}
         parentId={this.props.id}
         item={item}
         Comp={Comp}
-        onDragStart={() => setTimeout(removeItem(idx), 50)}
       />
     ) : (
       <div key={item.id} style={{flex: item.props.style.flex, display: 'flex', ...(item.layout || {})}}>

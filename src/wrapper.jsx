@@ -11,7 +11,6 @@ import DropZone from './drop_zone';
 
 const wrapperSource = {
   beginDrag(props) {
-    // props.onDragStart();
     return props.item;
   },
   endDrag(props, monitor, component) {
@@ -20,30 +19,11 @@ const wrapperSource = {
     if (monitor.didDrop()) {
       props.moveItem(from, to, props.item.id);
     }
-    // if (!monitor.didDrop()) {
-    //   props.removeItem(monitor.getItem().id);
-    // }
   }
 };
 
 const wrapperTarget = {
   drop(props, monitor, component) {
-    if (monitor.didDrop()) return;
-    const dropBoundingRect = findDOMNode(component).getBoundingClientRect();
-    const clientOffset = monitor.getClientOffset();
-    let dropMiddle, dropClient;
-    if (props.row) {
-      dropMiddle = (dropBoundingRect.right - dropBoundingRect.left) / 2;
-      dropClient = clientOffset.x - dropBoundingRect.left;
-    } else {
-      dropMiddle = (dropBoundingRect.bottom - dropBoundingRect.top) / 2;
-      dropClient = clientOffset.y - dropBoundingRect.top;
-    }
-    if (dropClient < dropMiddle) {
-      props.addItem(props.index, monitor.getItem());
-    } else {
-      props.addItem(props.index + 1, monitor.getItem());
-    }
   },
   canDrop() {
     return false;
