@@ -11,13 +11,14 @@ import { isEqual } from 'lodash';
 import { fromObject } from 'react-formulate';
 import { replaceState } from './redux/actions';
 import ObjectID from 'bson-objectid';
+import { Map } from 'immutable';
 
 class LayoutProvider extends  Component {
 
   constructor(props) {
     super(props);
     this.generateInputs(props);
-    this.store = configureStore(props.items);
+    this.store = configureStore(Map(props.items));
     this.state = {
       components: props.components,
       scale: 0
@@ -84,7 +85,7 @@ class LayoutProvider extends  Component {
   render() {
 
     const { rootId, components, items } = this.props;
-    const rootItem = items[rootId];
+    const rootItem = items.get('root');
 
     const style = styles(this.state.scale);
     return (
@@ -97,7 +98,7 @@ class LayoutProvider extends  Component {
             <div style={style.layout}>
               <ColumnLayout
                 id={rootId}
-                {...rootItem.props}
+                {...rootItem.props.toJS()}
                 style={{...ColumnLayout.defaultProps.style, ...{ padding: 0, background: '#fff'}}}/>
             </div>
           </div>

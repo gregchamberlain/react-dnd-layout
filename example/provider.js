@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import DragDropLayout, {
   RootLayout, Row, Column, Title, Link, RichText,
-  Image, Text, generateEmptyLayout, renderToString
+  Image, Text, LayoutState, renderToString
 } from '../src';
 import Items from './pages/page2.json';
 import Items2 from './pages/page1.json';
@@ -22,7 +22,7 @@ class StatelessExample extends Component {
     super(props);
     this.state = {
       locked: false,
-      items: Items,
+      items: LayoutState.createEmpty(),
       layout: Items,
       info: {pages: [
         {id: '#home', name: 'Home'},
@@ -65,7 +65,7 @@ class StatelessExample extends Component {
           <button onClick={this.setItems(Items2)}>
             Page 2
           </button>
-          <button onClick={this.setItems(generateEmptyLayout('root'))}>
+          <button onClick={this.setItems(LayoutState.createEmpty())}>
             Empty
           </button>
           <button onClick={this.toggleLock}>

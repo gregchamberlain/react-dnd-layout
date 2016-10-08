@@ -1,11 +1,12 @@
 import {
   CHANGE, UPDATE_PROPS, ADD_ITEM, REMOVE_ITEM, REPLACE_STATE, UPDATE_LAYOUT, MOVE_ITEM
- } from './actions';
+} from './actions';
 import update from 'react/lib/update';
 import { merge } from 'lodash';
+import { Map } from 'immutable';
 
 let nextState;
-const Reducer = (state = {}, action) => {
+const Reducer = (state = Map({}), action) => {
   switch (action.type) {
     case CHANGE:
       nextState = update(state, {[action.id]: {
@@ -17,21 +18,14 @@ const Reducer = (state = {}, action) => {
       }});
       return nextState;
     case MOVE_ITEM:
-      if (!action.from) {
-        return update(state, {
-          [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}},
-        });
-      }
-      if (action.to.id === action.from.id) {
-        if (action.from.index <= action.to.index) action.to.index -= 1;
-        return update(state, {
-          [action.from.id]: { props: { children: { $splice: [[action.from.index, 1],[action.to.index, 0, action.item]]}}},
-        });
-      }
-      return update(state, {
-        [action.from.id]: { props: { children: { $splice: [[action.from.index, 1]]}}},
-        [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}}
-      });
+      if (action.to.id === action.from.id && action.from.index <= action.to.index) action.to.index -= 1;
+      nextState = state.updateIn([action.from.id, 'props', 'children'], c => c.splice(action.from.index, 1));
+      nextState = nextState.updateIn([action.to.id, 'props', 'children'], c => c.splice(action.to.index, 0, action.item));
+      return nextState;
+      // return update(state, {
+      //   [action.from.id]: { props: { children: { $splice: [[action.from.index, 1]]}}},
+      //   [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}}
+      // });
     case UPDATE_PROPS:
       return update(state, {[action.id]: {
         props: { $set: action.props }
@@ -41,9 +35,14 @@ const Reducer = (state = {}, action) => {
         layout: { $set: action.layout }
       }});
     case ADD_ITEM:
-      nextState = merge({}, state);
-      nextState[action.item.id] = action.item;
+      nextState = state.
+        set(action.item.id, action.item).
+        updateIn([action.id, 'props', 'children'], c => c.push(action.item.id));
       return nextState;
+      // nextState = merge({}, state);
+      // return state.set(action.item.get('id'), action.item);
+      // nextState[action.item.id] = action.item;
+      // return nextState;
     case REMOVE_ITEM:
       if (action.parentId) {
         const idx = state[action.parentId].props.children.indexOf(action.id);
@@ -59,7 +58,7 @@ const Reducer = (state = {}, action) => {
       } else {
         nextState = merge({}, state);
       }
-      return deepRemove(nextState, action.id);
+      return deepRemove(state, action.id);
     case REPLACE_STATE:
       return merge({}, action.state);
     default:
@@ -68,14 +67,14 @@ const Reducer = (state = {}, action) => {
 };
 
 const deepRemove = (state, id) => {
-  const item = state[id];
-  if (Array.isArray(item.props.children)) {
-    item.props.children.forEach(childId => {
-      state = deepRemove(state, childId);
+  const item = state.get(id);
+  const children = state.getIn([id, 'props', 'children']);
+  if (Array.isArray(children)) {
+    children.forEach(c => {
+      state = deepRemove(state, c);
     });
   }
-  delete state[id];
-  return state;
+  return state.delete(id);
 };
 
 export default Reducer;

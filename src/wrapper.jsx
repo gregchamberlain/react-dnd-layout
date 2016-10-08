@@ -11,7 +11,7 @@ import DropZone from './drop_zone';
 
 const wrapperSource = {
   beginDrag(props) {
-    return props.item;
+    return {id: props.item.id};
   },
   endDrag(props, monitor, component) {
     const from = { id: props.parentId, index: props.index };
@@ -35,7 +35,7 @@ class Wrapper extends Component {
     super(props);
     this.state ={
       editorOpen: false,
-      props: props.item.props,
+      props: props.item.get('props'),
       style: {}
     };
   }
@@ -48,7 +48,7 @@ class Wrapper extends Component {
     const { connectDragSource, Form, connectDropTarget, row, Comp, item, ...props } = this.props;
     const lout = Comp.categories && Comp.categories.includes('layout');
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
-    const childStyle = item.props.style || {};
+    const childStyle = item.get('props').style || {};
     const style = styles(props, hovered, childStyle, this.state, item.layout);
     return connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
@@ -66,12 +66,12 @@ class Wrapper extends Component {
             <div style={{border: '1px solid #ccc'}}>
               <LayoutForm value={item.layout || {}} onChange={props.updateLayout} />
             </div>
-            <Form value={item.props} onChange={props.updateProps}/>
+            <Form value={item.get('props')} onChange={props.updateProps}/>
           </div>
         ) : ""}
         <Comp
           id={item.id}
-          {...item.props}
+          {...item.get('props')}
           type={item.type}
           onChange={props.updateProps}
         />

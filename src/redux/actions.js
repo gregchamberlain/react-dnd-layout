@@ -31,8 +31,9 @@ export const updateLayout = (id, layout) => ({
   layout
 });
 
-export const addItem = item => ({
+export const addItem = (id, item) => ({
   type: ADD_ITEM,
+  id,
   item,
 });
 

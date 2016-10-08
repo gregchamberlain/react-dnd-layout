@@ -38,7 +38,7 @@ class Layout extends Component {
   const { onChange, connectDropTarget, children } = this.props;
   const { components, editable, info } = this.context;
   const renderItems = children.map((item, idx) => {
-    const Comp = components[item.type];
+    const Comp = components[item.get('type')];
     return editable ? (
       <Wrapper
         key={item.id}
@@ -50,8 +50,8 @@ class Layout extends Component {
         Comp={Comp}
       />
     ) : (
-      <div key={item.id} style={{flex: item.props.style.flex, display: 'flex', ...(item.layout || {})}}>
-        <Comp id={item.id} {...item.props} type={item.type} />
+      <div key={item.id} style={{flex: item.get('props').style.flex, display: 'flex', ...(item.layout || {})}}>
+        <Comp id={item.id} {...item.get('props')} type={item.type} />
       </div>
     );
   });

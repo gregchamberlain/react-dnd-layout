@@ -6,7 +6,7 @@ import { isEqual } from 'lodash';
 import { string, number, boolean, object, array } from 'react-formulate';
 
 const getChildren = (state, id) => {
-  if (state[id] && state[id].props && state[id].props.children) {
+  if (state.getIn([id, 'props']) && state.get(id).props.children) {
     return mergeItems(state, id);
   } else {
     return [];
@@ -14,7 +14,7 @@ const getChildren = (state, id) => {
 };
 
 const mapStateToProps = (state, props) => ({
-  children: getChildren(state, props.id)
+  children: state.getIn([props.id, 'props', 'children']).map(c => state.get(c))
 });
 
 const mapDispatchToProps = (dispatch, props) => ({

@@ -3,27 +3,28 @@ import { DragSource } from 'react-dnd';
 import generateRandomKey from '../utils/generateRandomKey';
 import { connect } from 'react-redux';
 import { addItem, removeItem, moveItem } from '../redux/actions';
+import { Record, Map, fromJS } from 'immutable';
+const ItemRecord = Record({ type: '', id: '', props: Map({}), layout: Map({})});
 
 const itemSource = {
   beginDrag(props, monitor) {
-    console.log(generateRandomKey());
-    const item = generateNewItem(props);
-    props.add(item);
-    return item;
+    return props;
   },
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
-      props.move(null, monitor.getDropResult(), monitor.getItem().id);
+      const item = generateNewItem(props);
+      props.add(monitor.getDropResult().id, item);
+      // props.move(null, monitor.getDropResult(), item.get('id'));
     } else {
-      props.remove(monitor.getItem().id);
+      // props.remove(monitor.getItem().id);
     }
   }
 };
 
-const generateNewItem = props => ({
+const generateNewItem = props => new ItemRecord({
   type: props.type,
   id: generateRandomKey(),
-  props: props.Comp.defaultProps
+  props: fromJS(props.Comp.defaultProps)
 });
 
 const CatalogItem = ({ type, Comp, connectDragSource, connectDragPreview }) => {
@@ -60,7 +61,7 @@ const styles = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  add: item => dispatch(addItem(item)),
+  add: (id, item) => dispatch(addItem(id, item)),
   remove: id => dispatch(removeItem(id)),
   move: (from, to, item) => dispatch(moveItem(from, to, item))
 });
