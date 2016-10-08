@@ -23,10 +23,6 @@ const Reducer = (state = Map({}), action) => {
       nextState = state.updateIn([action.from.id, 'props', 'children'], c => c.splice(action.from.index, 1));
       nextState = nextState.updateIn([action.to.id, 'props', 'children'], c => c.splice(action.to.index, 0, action.item));
       return nextState;
-      // return update(state, {
-      //   [action.from.id]: { props: { children: { $splice: [[action.from.index, 1]]}}},
-      //   [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}}
-      // });
     case UPDATE_PROPS:
       return state.setIn([action.id, 'props'], action.props);
     case UPDATE_LAYOUT:

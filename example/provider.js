@@ -6,6 +6,8 @@ import DragDropLayout, {
 import Items from './pages/page2.json';
 import Items2 from './pages/page1.json';
 
+window.Immutable = require('immutable');
+
 const comps = {
   Row,
   Column,
@@ -80,7 +82,7 @@ class StatelessExample extends Component {
             components={comps}
             rootId="root"
             locked={this.state.locked}
-            onChange={i => console.log(i)}
+            // onChange={i => console.log(i)}
           />
         </div>
       </div>

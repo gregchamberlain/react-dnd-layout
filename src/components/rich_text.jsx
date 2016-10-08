@@ -32,6 +32,7 @@ class RichText extends Component {
   }
 
   onChange = editorState => {
+    console.log(editorState._immutable.toJS());
     this.saveChange(editorState);
     this.setState({editorState});
   }
