@@ -30,9 +30,7 @@ const Reducer = (state = Map({}), action) => {
     case UPDATE_PROPS:
       return state.setIn([action.id, 'props'], action.props);
     case UPDATE_LAYOUT:
-      return update(state, {[action.id]: {
-        layout: { $set: action.layout }
-      }});
+      return state.setIn([action.id, 'layout'], action.layout);
     case ADD_ITEM:
       nextState = state.
         set(action.item.id, action.item).

@@ -4,7 +4,7 @@ import generateRandomKey from '../utils/generateRandomKey';
 import { connect } from 'react-redux';
 import { addItem, removeItem, moveItem } from '../redux/actions';
 import { Record, Map, fromJS } from 'immutable';
-const ItemRecord = Record({ type: '', id: '', props: Map({}), layout: Map({})});
+import Item from '../model/Item';
 
 const itemSource = {
   beginDrag(props, monitor) {
@@ -21,7 +21,7 @@ const itemSource = {
   }
 };
 
-const generateNewItem = props => new ItemRecord({
+const generateNewItem = props => new Item({
   type: props.type,
   id: generateRandomKey(),
   props: fromJS(props.Comp.defaultProps)

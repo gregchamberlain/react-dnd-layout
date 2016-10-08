@@ -6,6 +6,7 @@ import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux';
 import LayoutForm from './layouts/layout_form';
 import * as ACTIONS from './redux/actions';
+import { fromJS } from 'immutable';
 
 import DropZone from './drop_zone';
 
@@ -49,7 +50,7 @@ class Wrapper extends Component {
     const lout = Comp.categories && Comp.categories.includes('layout');
     const hovered = Radium.getState(this.state, 'main', ':hover') || this.state.editorOpen || (props.isOver && Comp.categories && Comp.categories.includes('layout'));
     const childStyle = item.get('props').style || {};
-    const style = styles(props, hovered, childStyle, this.state, item.layout);
+    const style = styles(props, hovered, childStyle, this.state, item.get('layout').toJS());
     return connectDropTarget(
       <div style={style.container} ref={c => {this.container = c;}}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', display: this.props.isOver ? 'block' : 'none'}}>
@@ -64,14 +65,14 @@ class Wrapper extends Component {
         {this.state.editorOpen ? (
           <div style={style.propEditor}>
             <div style={{border: '1px solid #ccc'}}>
-              <LayoutForm value={item.layout || {}} onChange={props.updateLayout} />
+              <LayoutForm value={item.get('layout').toJS()} onChange={props.updateLayout} />
             </div>
-            <Form value={item.get('props')} onChange={props.updateProps}/>
+            <Form value={item.get('props').toJS()} onChange={props.updateProps}/>
           </div>
         ) : ""}
         <Comp
           id={item.id}
-          {...item.get('props')}
+          {...item.get('props').toJS()}
           type={item.type}
           onChange={props.updateProps}
         />
@@ -129,7 +130,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state, layout =
     left: 0,
     bottom: 0,
     right: 0,
-    border: hovered ? '2px solid #ccc' : 'none'
+    border: hovered ? '2px solid #ccc' : '1px solid rgba(100, 100, 100, 0.1)'
   }
 });
 
@@ -180,8 +181,8 @@ WrapperContainer.defaultProps = {
 
 const mapDispatchToProps = (dispatch, props) => ({
   moveItem: (from, to, item) => dispatch(ACTIONS.moveItem(from, to, item)),
-  updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, newProps)),
-  updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, newLayout)),
+  updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, fromJS(newProps))),
+  updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, fromJS(newLayout))),
   removeItem: (id, parentId, index) => dispatch(ACTIONS.removeItem(id, parentId, index))
 });
 

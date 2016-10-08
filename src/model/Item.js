@@ -4,7 +4,9 @@ const Item = Record({
   type: '',
   id: '',
   props: Map({}),
-  layout: Map({})
+  layout: Map({
+    flex: 1
+  })
 });
 
 export default Item;
