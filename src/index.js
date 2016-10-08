@@ -3,6 +3,7 @@ export Column from './layouts/column';
 export Row from './layouts/row';
 export Title from './components/title';
 export Text from './components/text';
+export Space from './components/Space';
 export Image from './components/image';
 export Link from './components/link';
 export RichText from './components/rich_text';
