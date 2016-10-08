@@ -34,7 +34,7 @@ const Reducer = (state = Map({}), action) => {
     case ADD_ITEM:
       nextState = state.
         set(action.item.id, action.item).
-        updateIn([action.id, 'props', 'children'], c => c.push(action.item.id));
+        updateIn([action.id, 'props', 'children'], c => c.splice(action.index, 0, action.item.id));
       return nextState;
     case REMOVE_ITEM:
       nextState = state.updateIn([action.parentId, 'props', 'children'], c => c.splice(action.index, 1));

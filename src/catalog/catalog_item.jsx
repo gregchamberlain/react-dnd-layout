@@ -13,7 +13,9 @@ const itemSource = {
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
       const item = generateNewItem(props);
-      props.add(monitor.getDropResult().id, item);
+      console.log(monitor.getDropResult());
+      const dropResult = monitor.getDropResult();
+      props.add(dropResult.id, dropResult.index, item);
       // props.move(null, monitor.getDropResult(), item.get('id'));
     } else {
       // props.remove(monitor.getItem().id);
@@ -61,7 +63,7 @@ const styles = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  add: (id, item) => dispatch(addItem(id, item)),
+  add: (id, index, item) => dispatch(addItem(id, index, item)),
   remove: id => dispatch(removeItem(id)),
   move: (from, to, item) => dispatch(moveItem(from, to, item))
 });
