@@ -121,7 +121,7 @@ const styles = ({ isDragging, isOver, canDrop }, hovered, child, state, layout =
     color: '#eee',
     background: '#444',
     padding: 5,
-    zIndex: 3
+    zIndex: 4
   },
   overlay: {
     position: 'absolute',
@@ -150,7 +150,7 @@ const actionStyle = hovered => ({
   top: -11,
   height: 22,
   width: 22,
-  zIndex: 2,
+  zIndex: 3,
 });
 
 // const WrapperContainer = DragSource('COMPONENT', wrapperSource, (conn, monitor) => ({

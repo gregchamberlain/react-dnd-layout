@@ -50,8 +50,8 @@ class Layout extends Component {
         Comp={Comp}
       />
     ) : (
-      <div key={item.id} style={{flex: 1, display: 'flex', ...(item.layout || {})}}>
-        <Comp id={item.id} {...item.get('props')} type={item.type} />
+      <div key={item.id} style={{flex: 1, display: 'flex', ...(item.layout.toJS() || {})}}>
+        <Comp id={item.id} {...item.props.toJS()} type={item.type} />
       </div>
     );
   });

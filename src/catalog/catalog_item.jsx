@@ -13,12 +13,8 @@ const itemSource = {
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
       const item = generateNewItem(props);
-      console.log(monitor.getDropResult());
       const dropResult = monitor.getDropResult();
       props.add(dropResult.id, dropResult.index, item);
-      // props.move(null, monitor.getDropResult(), item.get('id'));
-    } else {
-      // props.remove(monitor.getItem().id);
     }
   }
 };
