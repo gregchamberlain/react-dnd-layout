@@ -28,9 +28,7 @@ const Reducer = (state = Map({}), action) => {
       //   [action.to.id]: { props: { children: { $splice: [[action.to.index, 0, action.item]]}}}
       // });
     case UPDATE_PROPS:
-      return update(state, {[action.id]: {
-        props: { $set: action.props }
-      }});
+      return state.setIn([action.id, 'props'], action.props);
     case UPDATE_LAYOUT:
       return update(state, {[action.id]: {
         layout: { $set: action.layout }

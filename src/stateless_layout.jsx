@@ -50,7 +50,7 @@ class Layout extends Component {
         Comp={Comp}
       />
     ) : (
-      <div key={item.id} style={{flex: item.get('props').style.flex, display: 'flex', ...(item.layout || {})}}>
+      <div key={item.id} style={{flex: 1, display: 'flex', ...(item.layout || {})}}>
         <Comp id={item.id} {...item.get('props')} type={item.type} />
       </div>
     );
@@ -71,7 +71,7 @@ const styler = ({ row, isOverCurrent, children, style, canDrop }) => ({
   container: {
     ...style,
     backgroundColor: isOverCurrent && canDrop ? 'rgba(53,181,229, 0.3)' : style.background,
-    minHeight: children.length ? style.minHeight : 400,
+    minHeight: children.size ? style.minHeight : 400,
     flexDirection: row ? 'row' : 'column',
     flexWrap: 'wrap',
     position: 'relative',
