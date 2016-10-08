@@ -1,11 +1,12 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
-import ObjectID from 'bson-objectid';
+import generateRandomKey from '../utils/generateRandomKey';
 import { connect } from 'react-redux';
 import { addItem, removeItem, moveItem } from '../redux/actions';
 
 const itemSource = {
   beginDrag(props, monitor) {
+    console.log(generateRandomKey());
     const item = generateNewItem(props);
     props.add(item);
     return item;
@@ -21,7 +22,7 @@ const itemSource = {
 
 const generateNewItem = props => ({
   type: props.type,
-  id: ObjectID.generate(),
+  id: generateRandomKey(),
   props: props.Comp.defaultProps
 });
 

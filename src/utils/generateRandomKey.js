@@ -1,11 +1,11 @@
 // @flow
 
 const usedKeys = {};
-const MULTIPLIER = Math.pow(2, 32);
+const MULTIPLIER = Math.pow(2, 24);
 
-function generateRandomKey(): string {
+function generateRandomKey() {
   let key;
-  while (key === undefined || usedKeys.hasOwnProperty(key) || isNaN(Number(key))) {
+  while (key === undefined || usedKeys.hasOwnProperty(key) || !isNaN(Number(key))) {
     key = Math.floor(Math.random() * MULTIPLIER).toString(32);
   }
   return key;
