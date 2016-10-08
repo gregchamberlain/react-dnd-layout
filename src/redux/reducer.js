@@ -4,6 +4,7 @@ import {
 import update from 'react/lib/update';
 import { merge } from 'lodash';
 import { Map } from 'immutable';
+import deepRemove from '../utils/deepRemove';
 
 let nextState;
 const Reducer = (state = Map({}), action) => {
@@ -39,42 +40,14 @@ const Reducer = (state = Map({}), action) => {
         set(action.item.id, action.item).
         updateIn([action.id, 'props', 'children'], c => c.push(action.item.id));
       return nextState;
-      // nextState = merge({}, state);
-      // return state.set(action.item.get('id'), action.item);
-      // nextState[action.item.id] = action.item;
-      // return nextState;
     case REMOVE_ITEM:
-      if (action.parentId) {
-        const idx = state[action.parentId].props.children.indexOf(action.id);
-        nextState = update(state, {[action.parentId]: {
-          props: {
-            children: {
-              $splice: [
-                [idx, 1]
-              ]
-            }
-          }
-        }});
-      } else {
-        nextState = merge({}, state);
-      }
-      return deepRemove(state, action.id);
+      nextState = state.updateIn([action.parentId, 'props', 'children'], c => c.splice(action.index, 1));
+      return deepRemove(nextState, action.id);
     case REPLACE_STATE:
       return merge({}, action.state);
     default:
       return state;
   }
-};
-
-const deepRemove = (state, id) => {
-  const item = state.get(id);
-  const children = state.getIn([id, 'props', 'children']);
-  if (Array.isArray(children)) {
-    children.forEach(c => {
-      state = deepRemove(state, c);
-    });
-  }
-  return state.delete(id);
 };
 
 export default Reducer;

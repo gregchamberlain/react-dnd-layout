@@ -57,7 +57,7 @@ class Wrapper extends Component {
           <DropZone pos={row ? 'right' : 'bottom'} index={props.index} addItem={() => {}} layout={lout} parentId={props.parentId}/>
         </div>
         {connectDragSource(<div style={style.handle}>{item.type}</div>)}
-        <div style={style.remove} onClick={() => props.removeItem(item.id, props.parentId)}>&times;</div>
+        <div style={style.remove} onClick={() => props.removeItem(item.id, props.parentId, props.index)}>&times;</div>
         { Form ? (
           <div style={style.settings} onClick={this.toggleEditor}>⚙</div>
         ) : ""}
@@ -182,7 +182,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   moveItem: (from, to, item) => dispatch(ACTIONS.moveItem(from, to, item)),
   updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, newProps)),
   updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, newLayout)),
-  removeItem: (id, parentId) => dispatch(ACTIONS.removeItem(id, parentId))
+  removeItem: (id, parentId, index) => dispatch(ACTIONS.removeItem(id, parentId, index))
 });
 
 export default connect(null, mapDispatchToProps)(WrapperContainer);

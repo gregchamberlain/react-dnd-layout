@@ -37,10 +37,11 @@ export const addItem = (id, item) => ({
   item,
 });
 
-export const removeItem = (id, parentId) => ({
+export const removeItem = (id, parentId, index) => ({
   type: REMOVE_ITEM,
   id,
-  parentId
+  parentId,
+  index
 });
 
 export const replaceState = state =>({

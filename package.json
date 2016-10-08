@@ -11,6 +11,7 @@
   "main": "lib/index.js",
   "scripts": {
     "start": "hjs-dev-server",
+    "test": "jest",
     "build": "NODE_ENV=production ./scripts/build.sh",
     "prepublish": "npm run build"
   },
@@ -28,9 +29,11 @@
     "babel-cli": "^6.14.0",
     "babel-core": "^6.5.2",
     "babel-eslint": "^6.1.2",
+    "babel-jest": "^16.0.0",
     "babel-loader": "^6.2.3",
     "babel-plugin-transform-es2015-classes": "^6.14.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.14.0",
+    "babel-polyfill": "^6.16.0",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.0",
@@ -38,6 +41,7 @@
     "eslint": "^3.3.0",
     "flow-bin": "^0.33.0",
     "hjs-webpack": "^7.2.1",
+    "jest-cli": "^16.0.1",
     "json-loader": "^0.5.4",
     "react": "^15.3.0",
     "react-dom": "^15.3.0"
