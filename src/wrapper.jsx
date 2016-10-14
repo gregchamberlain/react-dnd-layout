@@ -3,7 +3,8 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { flow } from 'lodash';
 import Radium from 'radium';
 import { findDOMNode } from 'react-dom';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import connect from './utils/connect.js';
 import LayoutForm from './layouts/layout_form';
 import * as ACTIONS from './redux/actions';
 import { fromJS } from 'immutable';
@@ -179,11 +180,12 @@ WrapperContainer.defaultProps = {
   onDrop: () => {},
 };
 
-const mapDispatchToProps = (dispatch, props) => ({
-  moveItem: (from, to, item) => dispatch(ACTIONS.moveItem(from, to, item)),
-  updateProps: newProps => dispatch(ACTIONS.updateProps(props.item.id, fromJS(newProps))),
-  updateLayout: newLayout => dispatch(ACTIONS.updateLayout(props.item.id, fromJS(newLayout))),
-  removeItem: (id, parentId, index) => dispatch(ACTIONS.removeItem(id, parentId, index))
+const mapStateToProps = ({ state, dispatch }, props) => ({
+  moveItem: (from, to, id) => dispatch(state.moveItem(from, to, id)),
+  updateProps: newProps => dispatch(state.updateProps(props.item.id, fromJS(newProps))),
+  updateLayout: newLayout => dispatch(state.updateLayout(props.item.id, fromJS(newLayout))),
+  removeItem: (id, parentId, index) => dispatch(state.removeItem(parentId, index))
 });
 
-export default connect(null, mapDispatchToProps)(WrapperContainer);
+
+export default connect(mapStateToProps)(WrapperContainer);

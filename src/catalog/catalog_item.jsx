@@ -1,7 +1,8 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 import generateRandomKey from '../utils/generateRandomKey';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import connect from '../utils/connect';
 import { addItem, removeItem, moveItem } from '../redux/actions';
 import { Record, Map, fromJS } from 'immutable';
 import Item from '../model/Item';
@@ -58,13 +59,17 @@ const styles = {
   }
 };
 
-const mapDispatchToProps = dispatch => ({
-  add: (id, index, item) => dispatch(addItem(id, index, item)),
-  remove: id => dispatch(removeItem(id)),
-  move: (from, to, item) => dispatch(moveItem(from, to, item))
+// const mapDispatchToProps = dispatch => ({
+//   add: (id, index, item) => dispatch(addItem(id, index, item)),
+//   remove: id => dispatch(removeItem(id)),
+//   move: (from, to, item) => dispatch(moveItem(from, to, item))
+// });
+
+const mapStateToProps = ({ state, dispatch }) => ({
+  add: (id, index, item) => dispatch(state.addItem(id, index, item))
 });
 
-export default connect(null, mapDispatchToProps)(
+export default connect(mapStateToProps)(
   DragSource('COMPONENT', itemSource, (conn, monitor) => ({
     connectDragSource: conn.dragSource(),
     connectDragPreview: conn.dragPreview()

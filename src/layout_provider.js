@@ -46,7 +46,9 @@ class LayoutProvider extends  Component {
 
   getChildContext() {
     return {
+      onChange: this.props.onChange,
       components: this.state.components,
+      layoutState: this.props.layoutState,
       editable: !this.props.locked,
       info: this.props.info || {}
     };
@@ -67,15 +69,15 @@ class LayoutProvider extends  Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps.items, this.props.items)) {
-      this.unsubscribe();
-      this.unsubscribe = this.store.subscribe(() => {
-        if (this.receivedData) return (this.receivedData = false);
-        nextProps.onChange(this.store.getState());
-      });
-      this.receivedData = true;
-      this.store.dispatch(replaceState(nextProps.items));
-    }
+    // if (!isEqual(nextProps.items, this.props.items)) {
+    //   this.unsubscribe();
+    //   this.unsubscribe = this.store.subscribe(() => {
+    //     if (this.receivedData) return (this.receivedData = false);
+    //     nextProps.onChange(this.store.getState());
+    //   });
+    //   this.receivedData = true;
+    //   this.store.dispatch(replaceState(nextProps.items));
+    // }
     if (!isEqual(nextProps.info, this.props.info)) {
       this.generateInputs(nextProps);
       this.setState({components: nextProps.components});
@@ -84,12 +86,12 @@ class LayoutProvider extends  Component {
 
   render() {
 
-    const { rootId, components, items } = this.props;
-    const rootItem = items.get('root');
+    const { rootId, components, layoutState } = this.props;
+    const rootItem = layoutState.getItem('root');
 
     const style = styles(this.state.scale);
     return (
-      <Provider store={this.store}>
+      // <Provider store={this.store}>
         <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: '#eee', overflow: 'hidden'}}>
           <div style={style.sidebar}>
             <Catalog components={components} />
@@ -97,13 +99,13 @@ class LayoutProvider extends  Component {
           <div style={style.content} ref="container">
             <div style={style.layout}>
               <ColumnLayout
-                id={rootId}
+                id="root"
                 {...rootItem.props.toJS()}
                 style={{...ColumnLayout.defaultProps.style, ...{ padding: 0, background: '#fff'}}}/>
             </div>
           </div>
         </div>
-      </Provider>
+      // </Provider>
     );
   }
 }
@@ -139,6 +141,8 @@ const styles = scale => ({
 LayoutProvider.childContextTypes = {
   components: PropTypes.object,
   editable: PropTypes.bool,
+  layoutState: PropTypes.object,
+  onChange: PropTypes.func,
   info: PropTypes.object,
 };
 

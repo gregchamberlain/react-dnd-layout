@@ -1,5 +1,6 @@
 import Layout from './stateless_layout';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
+import connect from './utils/connect.js';
 import { mergeItems } from './redux/utils';
 import { change } from './redux/actions';
 import { isEqual } from 'lodash';
@@ -13,15 +14,19 @@ const getChildren = (state, id) => {
   }
 };
 
-const mapStateToProps = (state, props) => ({
-  children: state.getIn([props.id, 'props', 'children']).map(c => state.get(c))
+// const mapStateToProps = (state, props) => ({
+//   children: state.getIn([props.id, 'props', 'children']).map(c => state.get(c))
+// });
+//
+// const mapDispatchToProps = (dispatch, props) => ({
+//   onChange: children => dispatch(change(props.id, children))
+// });
+
+const mapStateToProps = ({ state }, props) => ({
+  children: state.getIn(['items', props.id, 'props', 'children']).map(c => state.getItem(c))
 });
 
-const mapDispatchToProps = (dispatch, props) => ({
-  onChange: children => dispatch(change(props.id, children))
-});
-
-const LayoutContainer = connect(mapStateToProps, mapDispatchToProps)(Layout);
+const LayoutContainer = connect(mapStateToProps)(Layout);
 
 LayoutContainer.defaultProps = {
   children: [],

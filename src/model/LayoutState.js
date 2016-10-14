@@ -10,6 +10,10 @@ const defaultRecord = {
 const LayoutStateRecord = Record(defaultRecord);
 class LayoutState extends LayoutStateRecord {
 
+  getItem(id) {
+    return this.getIn(['items', id]);
+  }
+
   addItem(parent, index, item) {
     return this.
       setIn(['items', item.id], item).

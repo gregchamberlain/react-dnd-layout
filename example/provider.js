@@ -25,7 +25,7 @@ class StatelessExample extends Component {
     super(props);
     this.state = {
       locked: false,
-      items: LayoutState.createEmpty(),
+      layoutState: new LayoutState(),
       layout: Items,
       info: {pages: [
         {id: '#home', name: 'Home'},
@@ -44,7 +44,12 @@ class StatelessExample extends Component {
   }
 
   setItems = items => () => {
-    this.setState({items});
+    // this.setState({items});
+  }
+
+  updateLayoutState = layoutState => {
+    console.log(layoutState.toJS());
+    this.setState({layoutState});
   }
 
   changeInfo = () => {
@@ -78,7 +83,8 @@ class StatelessExample extends Component {
         <div style={styles.content}>
           <DragDropLayout
             info={this.state.info}
-            items={this.state.items}
+            layoutState={this.state.layoutState}
+            onChange={this.updateLayoutState}
             components={comps}
             rootId="root"
             locked={this.state.locked}

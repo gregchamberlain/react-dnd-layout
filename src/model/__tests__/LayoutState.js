@@ -12,6 +12,13 @@ const items = Map({
 });
 let layoutState = new LayoutState({items});
 
+describe('getItem', () => {
+  it('gets an item by id', () => {
+    const item = layoutState.getItem('asd2');
+    expect(is(item, asd2)).toBe(true);
+  });
+});
+
 describe('addItem', () => {
   const nextState = layoutState.addItem('root', 0, asd3);
   it('adds an item to the layout', () => {
