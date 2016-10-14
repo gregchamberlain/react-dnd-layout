@@ -35,6 +35,9 @@ describe('moveItem', () => {
   it('inserts the item into the "to" items children', () => {
     expect(nextState.getIn(['items', 'root', 'props', 'children', 1])).toBe('asd2');
   });
+  it('doesn\'t mutate the original state', () => {
+    expect(is(layoutState, new LayoutState({items}))).toBe(true);
+  });
 });
 
 describe('removeItem', () => {
@@ -48,6 +51,9 @@ describe('removeItem', () => {
   it('removes items children from items', () => {
     expect(nextState.getIn(['items', 'asd2'])).toBe(undefined);
   });
+  it('doesn\'t mutate the original state', () => {
+    expect(is(layoutState, new LayoutState({items}))).toBe(true);
+  });
 });
 
 describe('updateProps', () => {
@@ -55,11 +61,17 @@ describe('updateProps', () => {
   it('updates the items props', () => {
     expect(nextState.getIn(['items', 'asd2', 'props', 'color'])).toBe('red');
   });
+  it('doesn\'t mutate the original state', () => {
+    expect(is(layoutState, new LayoutState({items}))).toBe(true);
+  });
 });
 
 describe('updateLayout', () => {
   const nextState = layoutState.updateLayout('asd2', fromJS({flex: 2}));
   it('updates the items layout', () => {
     expect(nextState.getIn(['items', 'asd2', 'layout', 'flex'])).toBe(2);
+  });
+  it('doesn\'t mutate the original state', () => {
+    expect(is(layoutState, new LayoutState({items}))).toBe(true);
   });
 });
