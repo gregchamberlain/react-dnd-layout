@@ -14,14 +14,6 @@ const getChildren = (state, id) => {
   }
 };
 
-// const mapStateToProps = (state, props) => ({
-//   children: state.getIn([props.id, 'props', 'children']).map(c => state.get(c))
-// });
-//
-// const mapDispatchToProps = (dispatch, props) => ({
-//   onChange: children => dispatch(change(props.id, children))
-// });
-
 const mapStateToProps = ({ state }, props) => ({
   children: state.getIn(['items', props.id, 'props', 'children']).map(c => state.getItem(c))
 });
