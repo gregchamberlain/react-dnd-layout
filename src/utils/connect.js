@@ -7,6 +7,10 @@ const connect = mapStateToProps => WrappedComponent => {
       const mapProps = mapStateToProps({ state: this.context.layoutState, dispatch: this.context.onChange}, this.props);
       const nextMapProps = mapStateToProps({ state: layoutState, dispatch: onChange }, props);
       const keys = Object.keys(mapProps);
+      if (mapProps.children) {
+        console.log('CURRENT: ', mapProps);
+        console.log('NEXT: ', nextMapProps);
+      }
       for (let i=0;i<keys.length;i++) {
         if (!is(mapProps[keys[i]], nextMapProps[keys[i]])) return true;
       }

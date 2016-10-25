@@ -48,6 +48,7 @@ class StatelessExample extends Component {
   }
 
   updateLayoutState = layoutState => {
+    window.state = layoutState;
     this.setState({layoutState});
   }
 

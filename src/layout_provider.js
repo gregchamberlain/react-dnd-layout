@@ -11,7 +11,7 @@ import { isEqual } from 'lodash';
 import { fromObject } from 'react-formulate';
 import { replaceState } from './redux/actions';
 import ObjectID from 'bson-objectid';
-import { Map } from 'immutable';
+import { Map, is } from 'immutable';
 
 class LayoutProvider extends  Component {
 
@@ -84,7 +84,16 @@ class LayoutProvider extends  Component {
     }
   }
 
+  shouldComponentUpdate(props) {
+    if (!is(props.layoutState, this.props.layoutState)) {
+      return true;
+    } else {
+      return true;
+    }
+  }
+
   render() {
+
 
     const { rootId, components, layoutState } = this.props;
     const rootItem = layoutState.getItem('root');
