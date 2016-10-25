@@ -41,6 +41,7 @@ class MyComponent extends Component {
 The Editor is the default export of this package and is the component used to create the interfaces using drop and drop. It accepts the folling props.
 
 |Property|Type|Required|Description|
+|-----|-----|-----|-------|
 |items|`LayoutState`|x|Represents the current state of the layout|
 |components|Object|x|The components to make available in the catalog for drag and drop building|
 |rootId|String|x|The id of the root component used in the `LayoutState`, default is 'root'|
