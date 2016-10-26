@@ -21,7 +21,7 @@ const comps = {
 class MyComponent extends Component {
   constructor() {
     this.state = {
-      items = LayoutState.createEmpty(),
+      items: LayoutState.createEmpty(),
     }
   }
 
@@ -38,7 +38,7 @@ class MyComponent extends Component {
 ```
 
 ## Editor
-The Editor is the default export of this package and is the component used to create the interfaces using drop and drop. It accepts the folling props.
+The Editor is the default export of this package and is the component used to create the interfaces using drop and drop. It accepts the following props.
 
 |Property|Type|Required|Description|
 |-----|-----|-----|-------|
