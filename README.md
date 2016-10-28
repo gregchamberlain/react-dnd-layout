@@ -25,6 +25,10 @@ class MyComponent extends Component {
     }
   }
 
+  handleLayoutChange(layoutState) {
+    console.log(layoutState);
+  }
+
   render() {
     return (
       <Editor
@@ -47,3 +51,4 @@ The Editor is the default export of this package and is the component used to cr
 |rootId|String|x|The id of the root component used in the `LayoutState`, default is 'root'|
 |locked|Boolean||Used to lock the interface editor (true = readonly)|
 |info|Object||Information that is passed down to all components in the layout through context (Used when custom components need dynamic info from outside the layout)|
+|onChange|func||A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
