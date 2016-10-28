@@ -52,3 +52,11 @@ The Editor is the default export of this package and is the component used to cr
 |locked|Boolean||Used to lock the interface editor (true = readonly)|
 |info|Object||Information that is passed down to all components in the layout through context (Used when custom components need dynamic info from outside the layout)|
 |onChange|func||A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
+
+
+### LayoutState
+LayoutState is an immutable.js `Map` used to hold the current state of the layout, including all components and their `props`.
+##### To JSON
+To get a raw JSON object from the `LayoutState`, (most likey for storage), call layoutState.toJS();
+##### From JSON
+To convert raw JSON back to a LayoutState pass the JSON to LayoutState.fromJS();
