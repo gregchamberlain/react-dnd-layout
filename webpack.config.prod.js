@@ -3,9 +3,9 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: './example/main.js',
+  entry: './site/src/index.js',
   output: {
-    path: path.join(__dirname, 'docs'),
+    path: path.join(__dirname, 'site'),
     filename: 'bundle.js',
   },
   plugins: [
@@ -26,12 +26,12 @@ module.exports = {
     loaders: [{
       test: /\.js?$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'example')
+      include: path.join(__dirname, 'site')
     },
     {
       test: /\.json?$/,
       loaders: ['json'],
-      include: path.join(__dirname, 'example')
+      include: path.join(__dirname, 'site')
     }]
   }
 };

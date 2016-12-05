@@ -6,12 +6,12 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    './example/main.js'
+    './site/src/index.js'
   ],
   output: {
-    path: path.join(__dirname, 'docs'),
+    path: path.join(__dirname, 'site'),
     filename: 'bundle.js',
-    publicPath: '/docs/'
+    publicPath: '/site/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -22,7 +22,7 @@ module.exports = {
     loaders: [{
       test: /\.js?$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'example')
+      include: path.join(__dirname, 'site')
     },
     {
      test: /\.json?$/,

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import DragDropLayout, {
   RootLayout, Row, Column, Title, Link, RichText,
   Image, Text, LayoutState, renderToString, Space
-} from '../lib';
+} from '../../lib';
 import Items from './pages/page2.json';
 import Items2 from './pages/page1.json';
 

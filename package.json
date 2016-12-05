@@ -10,9 +10,9 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "start": "hjs-dev-server",
+    "start": "node tools/devServer.js",
     "test": "jest",
-    "build": "NODE_ENV=production ./scripts/build.sh",
+    "build": "NODE_ENV=production ./tools/build.sh",
     "site": "node tools/devServer.js",
     "buildSite": "webpack --config webpack.config.prod.js --progress",
     "prepublish": "npm run build"
