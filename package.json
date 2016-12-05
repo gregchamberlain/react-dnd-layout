@@ -13,6 +13,7 @@
     "start": "hjs-dev-server",
     "test": "jest",
     "build": "NODE_ENV=production ./scripts/build.sh",
+    "site": "NODE_ENV=production webpack --config webpack.config.site.js --progress",
     "prepublish": "npm run build"
   },
   "repository": {
