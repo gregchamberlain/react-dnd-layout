@@ -3,20 +3,24 @@ var webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-source-map',
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client',
-    './example/main.js'
-  ],
+  entry: './example/main.js',
   output: {
     path: path.join(__dirname, 'docs'),
     filename: 'bundle.js',
-    publicPath: '/docs/'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env':{
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        warnings: false
+      }
+    })
   ],
   module: {
     loaders: [{
@@ -25,8 +29,9 @@ module.exports = {
       include: path.join(__dirname, 'example')
     },
     {
-     test: /\.json?$/,
-     loaders: ['json']
+      test: /\.json?$/,
+      loaders: ['json'],
+      include: path.join(__dirname, 'example')
     }]
   }
 };
