@@ -9,4 +9,12 @@ LayoutState.createEmpty = () => Map({
   root: RootItem
 });
 
+LayoutState.fromJS = js => {
+  const state = {};
+  Object.keys(js).forEach(key => {
+    state[key] = new Item(fromJS(js[key]));
+  });
+  return Map(state);
+};
+
 export default LayoutState;

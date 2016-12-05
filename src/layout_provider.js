@@ -84,7 +84,7 @@ class LayoutProvider extends  Component {
 
   render() {
 
-    const { rootId, components, items } = this.props;
+    const { components, items } = this.props;
     const rootItem = items.get('root');
 
     const style = styles(this.state.scale);
@@ -97,7 +97,7 @@ class LayoutProvider extends  Component {
           <div style={style.content} ref="container">
             <div style={style.layout}>
               <ColumnLayout
-                id={rootId}
+                id="root"
                 {...rootItem.props.toJS()}
                 style={{...ColumnLayout.defaultProps.style, ...{ padding: 0, background: '#fff'}}}/>
             </div>
@@ -148,7 +148,6 @@ const defaultRootItem = {
 };
 
 LayoutProvider.defaultProps = {
-  rootId: defaultRootItem.id,
   info: {},
   items: {[defaultRootItem.id]: defaultRootItem},
   onChange: items => {}

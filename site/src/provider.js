@@ -7,6 +7,7 @@ import Items from './pages/page2.json';
 import Items2 from './pages/page1.json';
 
 window.Immutable = require('immutable');
+import { fromJS } from 'immutable';
 
 const comps = {
   Row,
@@ -44,6 +45,7 @@ class StatelessExample extends Component {
   }
 
   setItems = items => () => {
+    console.log(items);
     this.setState({items});
   }
 
@@ -62,10 +64,10 @@ class StatelessExample extends Component {
           <button onClick={this.changeInfo}>
             Change Info
           </button>
-          <button onClick={this.setItems(Items)}>
+          <button onClick={this.setItems(LayoutState.fromJS(Items2))}>
             Page1
           </button>
-          <button onClick={this.setItems(Items2)}>
+          <button onClick={this.setItems(LayoutState.fromJS(Items2))}>
             Page 2
           </button>
           <button onClick={this.setItems(LayoutState.createEmpty())}>
@@ -80,7 +82,6 @@ class StatelessExample extends Component {
             info={this.state.info}
             items={this.state.items}
             components={comps}
-            rootId="root"
             locked={this.state.locked}
             onChange={i => console.log(i)}
           />
