@@ -1,11 +1,34 @@
 import React from 'react';
+import { DropTarget } from 'react-dnd';
 
-const EditOverlay = ({ item, onRemove }) => (
-  <div style={styles.container}>
-    <div style={styles.remove} onClick={onRemove}>X</div>
-    <div style={styles.handle}>{item.type}</div>
-  </div>
-);
+const overlayTarget = {
+  drop(props, monitor) {
+    if (!monitor.didDrop()) {
+      console.log('dropped');
+    }
+  }
+};
+
+const EditOverlay = ({ item, onRemove, isHovered, isOver, connectDropTarget, children }) => {
+
+  let styles = styleFunc({ isOver: isOver || isHovered });
+
+  return connectDropTarget(isOver || isHovered ? (
+      <div>
+        {children}
+        <div style={styles.container}>
+          <div style={styles.remove} onClick={onRemove}>X</div>
+          <div style={styles.handle}>{item.type}</div>
+        </div>
+      </div>
+    ) : (
+      <div>
+        {children}
+        <div style={styles.container} />
+      </div>
+    )
+  );
+};
 
 const buttonStyle = {
   position: 'absolute',
@@ -15,22 +38,22 @@ const buttonStyle = {
   cursor: 'pointer',
   top: -10,
   minWidth: 20,
-  padding: 5,
   height: 20,
   borderRadius: 5,
   backgroundColor: '#aaa',
   color: '#eee',
 };
 
-const styles = {
+const styleFunc = ({ isOver }) => ({
   container: {
+    // pointerEvents: 'none',
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
     height: '100%',
     boxSizing: 'border-box',
-    border: '1px solid #ccc'
+    border: isOver ? '1px solid #aaa' : '1px solid #eee'
   },
   handle: {
     ...buttonStyle,
@@ -42,6 +65,9 @@ const styles = {
     ...buttonStyle,
     right: -10
   }
-};
+});
 
-export default EditOverlay;
+export default DropTarget('Component', overlayTarget, (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver()
+}))(EditOverlay);

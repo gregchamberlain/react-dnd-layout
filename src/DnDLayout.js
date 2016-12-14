@@ -3,6 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutState from './model/LayoutState';
+import Catalog from './catalog';
 import wrap from './wrap';
 import { generateRandomKey } from './utils';
 
@@ -36,6 +37,7 @@ class DnDLayout extends Component {
 
     return (
       <div>
+        <Catalog />
         {wrap(this.props.readOnly, 'root')}
         <button onClick={this.addItem('root', 'a')}>A</button>
         <button onClick={this.addItem('a', 'b')}>B</button>
