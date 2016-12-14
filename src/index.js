@@ -1,1 +1,1 @@
-export DnDLayout from './DDnDLayout';
+export DnDLayout from './DnDLayout';

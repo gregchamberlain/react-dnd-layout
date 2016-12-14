@@ -53,6 +53,7 @@
   "dependencies": {
     "debounce": "^1.0.0",
     "draft-js": "^0.9.1",
+    "immutability-helper": "^2.0.0",
     "immutable": "^3.8.1",
     "lodash": "^4.16.1",
     "radium": "^0.18.1",
