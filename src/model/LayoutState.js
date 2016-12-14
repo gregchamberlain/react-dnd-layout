@@ -8,7 +8,7 @@ export const deepRemove = (map, id) => {
   return map.deleteIn(['items', id]);
 };
 
-class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'column', props: { children: [] } } }) }) {
+class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Column', props: { children: [] } } }) }) {
 
   onChange(listener) {
     this.listener = listener;
@@ -18,8 +18,11 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'co
     return this.items.get(id);
   }
 
-  addItem(item) {
-    this.listener(this.setIn(['items', item.id], fromJS(item)));
+  addItem(parentId, idx, item) {
+    let nextState = this
+      .setIn(['items', item.id], fromJS(item))
+      .updateIn(['items', parentId, 'props', 'children'], c => c.splice(idx, 0, item.id));
+    this.listener(nextState);
   }
 
   removeItem(parentId, idx) {
@@ -29,6 +32,16 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'co
       return c.splice(idx, 1);
     });
     this.listener(deepRemove(nextState, id));
+  }
+
+  moveItem(from, to) {
+    if (to.id === from.id && from.idx <= to.idx) to.idx -= 1;
+    let item;
+    const nextState = this.updateIn(['items', from.id, 'props', 'children'], c => {
+      item = c.get(from.idx);
+      return c.splice(from.idx, 1);
+    }).updateIn(['items', to.id, 'props', 'children'], c => c.splice(to.idx, 0, item));
+    this.listener(nextState);
   }
 
 }
