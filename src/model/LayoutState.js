@@ -1,14 +1,14 @@
 import { Record, fromJS } from 'immutable';
 
 export const deepRemove = (map, id) => {
-  const children = map.getIn(['items', id, 'props', 'children']);
+  const children = map.getIn(['items', id, 'children']);
   if (children) children.forEach(c => {
     map = deepRemove(map, c);
   });
   return map.deleteIn(['items', id]);
 };
 
-class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Column', props: { children: [] } } }) }) {
+class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Column', props: { },  children: [] } }) }) {
 
   onChange(listener) {
     this.listener = listener;
@@ -21,14 +21,15 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
   addItem(parentId, idx, item) {
     let nextState = this
       .setIn(['items', item.id], fromJS(item))
-      .updateIn(['items', parentId, 'props', 'children'], c => c.splice(idx, 0, item.id));
+      .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
     this.listener(nextState);
   }
 
   removeItem(parentId, idx) {
     let id;
-    let nextState = this.updateIn(['items', parentId, 'props', 'children'], c => {
+    let nextState = this.updateIn(['items', parentId, 'children'], c => {
       id = c.get(idx);
+      if (id === 'root') return c;
       return c.splice(idx, 1);
     });
     this.listener(deepRemove(nextState, id));
@@ -37,10 +38,10 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
   moveItem(from, to) {
     if (to.id === from.id && from.idx <= to.idx) to.idx -= 1;
     let item;
-    const nextState = this.updateIn(['items', from.id, 'props', 'children'], c => {
+    const nextState = this.updateIn(['items', from.id, 'children'], c => {
       item = c.get(from.idx);
       return c.splice(from.idx, 1);
-    }).updateIn(['items', to.id, 'props', 'children'], c => c.splice(to.idx, 0, item));
+    }).updateIn(['items', to.id, 'children'], c => c.splice(to.idx, 0, item));
     this.listener(nextState);
   }
 

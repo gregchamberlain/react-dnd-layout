@@ -3,7 +3,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutState from './model/LayoutState';
-import Wrapper from './Wrapper';
+import wrap from './wrap';
 import { generateRandomKey } from './utils';
 
 class DnDLayout extends Component {
@@ -29,14 +29,14 @@ class DnDLayout extends Component {
   }
 
   addItem = (parent, id) => e => {
-    this.props.layoutState.addItem(parent, 0, { id, type: 'Column', props: { children: [] } });
+    this.props.layoutState.addItem(parent, 0, { id, type: 'Column', props: { }, children: [] });
   }
 
   render() {
 
     return (
       <div>
-        <Wrapper id="root" />
+        {wrap(this.props.readOnly, 'root')}
         <button onClick={this.addItem('root', 'a')}>A</button>
         <button onClick={this.addItem('a', 'b')}>B</button>
         <button onClick={this.addItem('b', 'c')}>C</button>
