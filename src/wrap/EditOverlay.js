@@ -13,24 +13,29 @@ const EditOverlay = ({ item, onRemove, isHovered, isOver, connectDropTarget, chi
 
   let styles = styleFunc({ isOver: isOver || isHovered });
 
-  return connectDropTarget(isOver || isHovered ? (
-      <div>
-        {children}
-        <div style={styles.container}>
-          <div style={styles.remove} onClick={onRemove}>X</div>
-          <div style={styles.handle}>{item.type}</div>
-        </div>
+  // return connectDropTarget(isOver || isHovered ? (
+  //     <div style={styles.container}>
+  //       <div style={styles.overlay} />
+  //       <div style={styles.remove} onClick={onRemove}>&#x274c;</div>
+  //       <div style={styles.handle}>{item.type}</div>
+  //     </div>
+  //   ) : (
+  //     <div style={styles.container}>
+  //       <div style={styles.overlay} />
+  //     </div>
+  //   )
+  // );
+  return connectDropTarget(
+      <div style={styles.container}>
+        <div style={styles.overlay} />
+        <div style={styles.remove} onClick={onRemove}>&#x274c;</div>
+        <div style={styles.handle}>{item.type}</div>
       </div>
-    ) : (
-      <div>
-        {children}
-        <div style={styles.container} />
-      </div>
-    )
-  );
+    );
 };
 
 const buttonStyle = {
+  zIndex: 3,
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
@@ -46,7 +51,16 @@ const buttonStyle = {
 
 const styleFunc = ({ isOver }) => ({
   container: {
-    // pointerEvents: 'none',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    boxSizing: 'border-box',
+  },
+  overlay: {
+    zIndex: 2,
+    pointerEvents: 'none',
     position: 'absolute',
     top: 0,
     left: 0,
@@ -59,11 +73,13 @@ const styleFunc = ({ isOver }) => ({
     ...buttonStyle,
     left: '50%',
     transform: 'translateX(-50%)',
-    cursor: 'move'
+    cursor: 'move',
+    display: isOver ? 'auto' : 'none'
   },
   remove: {
     ...buttonStyle,
-    right: -10
+    right: -10,
+    display: isOver ? 'auto' : 'none'
   }
 });
 

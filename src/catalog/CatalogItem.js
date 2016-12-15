@@ -3,8 +3,8 @@ import { DragSource } from 'react-dnd';
 import { generateRandomKey } from '../utils';
 
 const source = {
-  beginDrag(props) {
-    return props;
+  beginDrag(props, monitor) {
+    return { id: generateRandomKey(), type: props.type, props: {}, children: [] };
   },
   endDrag(props, monitor) {
     if (monitor.didDrop()) {
@@ -14,13 +14,13 @@ const source = {
         children: []
       };
       const dropResult = monitor.getDropResult();
-      
+
     }
   }
 };
 
 const CatalogItem = ({ type, component, connectDragSource }) => connectDragSource(
-  <div>
+  <div style={{backgroundColor: '#444', color: '#eee', padding: 10}}>
     {type}
   </div>
 );

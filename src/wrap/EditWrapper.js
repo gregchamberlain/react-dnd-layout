@@ -3,6 +3,7 @@ import { DropTarget } from 'react-dnd';
 
 import LayoutState from '../model/LayoutState';
 import EditOverlay from './EditOverlay';
+import DropOverlay from './DropOverlay';
 
 const wrapperTarget = {
   drop(props, monitor, component) {
@@ -29,6 +30,14 @@ class Wrapper extends Component {
     this.context.layoutState.removeItem(this.props.id, idx);
   }
 
+  addChild = (idx, item) => {
+    this.context.layoutState.addItem(this.props.id, idx, item);
+  }
+
+  insertChild = idx => (offset, item) => {
+    this.context.layoutState.addItem(this.props.id, idx + offset, item);
+  }
+
   render() {
 
     const { components, layoutState } = this.context;
@@ -41,16 +50,16 @@ class Wrapper extends Component {
         style={styles().container}
         onMouseEnter={this.toggleHover(true)}
         onMouseLeave={this.toggleHover(false)}
-        // onDragEnter={this.toggleHover(true)}
-        // onDragLeave={this.toggleHover(false)}
       >
-        <EditOverlay item={item} onRemove={this.props.onRemove} isHovered={this.state.hovered}>
-          <Comp {...item.props}>
+        <EditOverlay item={item} onRemove={this.props.onRemove} isHovered={this.state.hovered} />
+        <DropOverlay direction="column" onDrop={this.props.onInsert}/>
+        <div style={{position: 'relative'}}>
+          <Comp {...item.props} id={item.id} onAddItem={this.addChild}>
             {React.Children.map(item.children, (child, idx) => (
-              <Wrapper key={child} id={child} onRemove={this.removeChild(idx)}/>
+              <Wrapper key={child} id={child} onRemove={this.removeChild(idx)} onInsert={this.insertChild(idx)}/>
             ))}
           </Comp>
-        </EditOverlay>
+        </div>
       </div>
     );
 

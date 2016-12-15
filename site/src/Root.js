@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { DnDLayout, LayoutState } from '../../src';
 
 import Column from './Column';
+import Row from './Row';
 
 const components = {
-  Column
+  Column,
+  Row
 };
 
 class Root extends Component {

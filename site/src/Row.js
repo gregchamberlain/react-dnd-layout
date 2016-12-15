@@ -9,9 +9,9 @@ const target = {
   }
 };
 
-const Column = ({ id, children, connectDropTarget, isOverCurrent }) => connectDropTarget(
-  <div style={{display: 'flex', flexDirection: 'column', padding: 15, backgroundColor: isOverCurrent ? 'red' : 'white' }}>
-    This is a column! ID: {id}
+const Row = ({ id, children, connectDropTarget, isOverCurrent }) => connectDropTarget(
+  <div style={{display: 'flex', flexDirection: 'row', padding: 15, backgroundColor: isOverCurrent ? 'red' : 'white' }}>
+    This is a Row! ID: {id}
     {children}
   </div>
 );
@@ -19,4 +19,4 @@ const Column = ({ id, children, connectDropTarget, isOverCurrent }) => connectDr
 export default DropTarget('Component', target, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOverCurrent: monitor.isOver({shallow: true}),
-}))(Column);
+}))(Row);
