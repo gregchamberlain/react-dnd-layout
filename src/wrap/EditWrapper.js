@@ -22,6 +22,17 @@ class Wrapper extends Component {
     };
   }
 
+  shouldComponentUpdate(props, state, context) {
+    if (context.layoutState !== this.context.layoutState) {
+      console.log(context.layoutState.toJS());
+    }
+    if (props !== this.props || state !== this.state) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   toggleHover = bool => () => {
     this.setState({ hovered: bool });
   }
@@ -41,7 +52,7 @@ class Wrapper extends Component {
   render() {
 
     const { components, layoutState } = this.context;
-    const { id } = this.props;
+    const { id, connectDropTarget } = this.props;
     const item = layoutState.getItem(id).toJS();
     const Comp = components[item.type];
 
@@ -51,7 +62,7 @@ class Wrapper extends Component {
         onMouseEnter={this.toggleHover(true)}
         onMouseLeave={this.toggleHover(false)}
       >
-        <EditOverlay item={item} onRemove={this.props.onRemove} isHovered={this.state.hovered} />
+        <EditOverlay item={item} onRemove={this.props.onRemove} />
         <DropOverlay direction="column" onDrop={this.props.onInsert}/>
         <div style={{position: 'relative'}}>
           <Comp {...item.props} id={item.id} onAddItem={this.addChild}>
@@ -82,3 +93,6 @@ Wrapper.propTypes = {
 };
 
 export default Wrapper;
+// export default DropTarget('Component', wrapperTarget, (connect, monitor) => ({
+//   connectDropTarget: connect.dropTarget()
+// }))(Wrapper);

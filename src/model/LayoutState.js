@@ -45,6 +45,10 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
     this.listener(nextState);
   }
 
+  editItem(path, func) {
+    this.listener(this.updateIn(['items', ...path], func));
+  }
+
 }
 
 export default LayoutState;

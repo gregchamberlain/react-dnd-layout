@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 
 const overlayTarget = {
@@ -9,30 +9,20 @@ const overlayTarget = {
   }
 };
 
-const EditOverlay = ({ item, onRemove, isHovered, isOver, connectDropTarget, children }) => {
+class EditOverlay extends Component {
 
-  let styles = styleFunc({ isOver: isOver || isHovered });
-
-  // return connectDropTarget(isOver || isHovered ? (
-  //     <div style={styles.container}>
-  //       <div style={styles.overlay} />
-  //       <div style={styles.remove} onClick={onRemove}>&#x274c;</div>
-  //       <div style={styles.handle}>{item.type}</div>
-  //     </div>
-  //   ) : (
-  //     <div style={styles.container}>
-  //       <div style={styles.overlay} />
-  //     </div>
-  //   )
-  // );
-  return connectDropTarget(
+  render() {
+    const { item, onRemove, isHovered, isOver, isOverCurrent, connectDropTarget } = this.props;
+    let styles = styleFunc({ isOver: isOver || isHovered });
+    return connectDropTarget(
       <div style={styles.container}>
         <div style={styles.overlay} />
         <div style={styles.remove} onClick={onRemove}>&#x274c;</div>
         <div style={styles.handle}>{item.type}</div>
       </div>
     );
-};
+  }
+}
 
 const buttonStyle = {
   zIndex: 3,
@@ -74,16 +64,17 @@ const styleFunc = ({ isOver }) => ({
     left: '50%',
     transform: 'translateX(-50%)',
     cursor: 'move',
-    display: isOver ? 'auto' : 'none'
+    display: isOver ? 'block' : 'none'
   },
   remove: {
     ...buttonStyle,
     right: -10,
-    display: isOver ? 'auto' : 'none'
+    display: isOver ? 'block' : 'none'
   }
 });
 
 export default DropTarget('Component', overlayTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver()
+  isOver: monitor.isOver(),
+  isOverCurrent: monitor.isOver({shallow: true})
 }))(EditOverlay);

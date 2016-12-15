@@ -4,16 +4,18 @@ const dyno = require('js-dyno');
 
 let state = new LayoutState();
 state.onChange(nextState => { state = nextState; });
-state.addItem('root', 0, { id: 'a', props: { children: [] } });
+state.addItem('root', 0, { id: 'a', props: {  }, children: [] });
 state.onChange(nextState => { state = nextState; });
-state.addItem('a', 0, { id: 'b', props: { children: [] } });
+state.addItem('a', 0, { id: 'b', props: {  }, children: [] });
 state.onChange(nextState => { state = nextState; });
-state.addItem('a', 0, { id: 'c', props: { children: [] } });
+state.addItem('a', 0, { id: 'c', props: {  }, children: [] });
 state.onChange(nextState => { state = nextState; });
-state.addItem('root', 0, { id: 'd', props: { children: [] } });
+state.addItem('root', 0, { id: 'd', props: {  }, children: [] });
 
-function remove() {
-  state.removeItem('root', 1);
-}
+console.log(state.items.toJS());
 
-dyno(100, remove);
+state.onChange(nextState => {
+  console.log(nextState.items.get('a').toJS());
+});
+
+state.editItem(['a', 'props', 'test', 'yay'], val => 'ok');
