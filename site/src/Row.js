@@ -16,7 +16,11 @@ const Row = ({ id, children, connectDropTarget, isOverCurrent }) => connectDropT
   </div>
 );
 
-export default DropTarget('Component', target, (connect, monitor) => ({
+const RowContainer = DropTarget('Component', target, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOverCurrent: monitor.isOver({shallow: true}),
 }))(Row);
+
+RowContainer.LayoutDirection = 'row';
+
+export default RowContainer;
