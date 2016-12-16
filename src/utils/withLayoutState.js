@@ -20,10 +20,10 @@ class Connect extends Component {
 
   render() {
 
-    const Comp = this.prop.component;
+    const Comp = this.props.component;
 
     return (
-      <Comp layoutState={this.state.layoutState} />
+      <Comp {...this.props.otherProps} layoutState={this.state.layoutState} />
     );
   }
 
@@ -33,6 +33,6 @@ Connect.contextTypes = {
   store: PropTypes.instanceOf(Store)
 };
 
-const withLayoutState = component => () => <Connect component={component} />;
+const withLayoutState = component => (props) => <Connect component={component} otherProps={props} />;
 
 export default withLayoutState;

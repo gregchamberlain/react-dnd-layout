@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { DropTarget, DragSource } from 'react-dnd';
+import withLayoutState from '../utils/withLayoutState';
 
 const overlayTarget = {
   drop(props, monitor) {
@@ -109,8 +110,8 @@ const Draggable = DragSource('Component', overlaySource, (connect, monitor) => (
   isDragging: monitor.isDragging()
 }))(EditOverlay);
 
-export default DropTarget('Component', overlayTarget, (connect, monitor) => ({
+export default withLayoutState(DropTarget('Component', overlayTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   isOverCurrent: monitor.isOver({shallow: true})
-}))(Draggable);
+}))(Draggable));
