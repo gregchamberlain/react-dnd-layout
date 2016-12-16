@@ -8,12 +8,14 @@ import ItemEditor from './editor';
 import wrap from './wrap';
 import LayoutEditor from './addons/LayoutEditor';
 import { generateRandomKey } from './utils';
+import Store from './utils/store';
 
 class DnDLayout extends Component {
 
   constructor(props) {
     super(props);
     props.layoutState.onChange(props.onChange);
+    this.store = new Store(props.layoutState);
     this.state = {
       selectedItem: null
     };
@@ -25,6 +27,7 @@ class DnDLayout extends Component {
 
   getChildContext() {
     return {
+      store: this.store,
       setSelectedItem: this.setSelectedItem,
       addons: [LayoutEditor],
       layoutState: this.props.layoutState,
@@ -37,6 +40,7 @@ class DnDLayout extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.layoutState !== this.props.layoutState) {
       nextProps.layoutState.onChange(this.props.onChange);
+      this.store.updateLayoutState(nextProps.layoutState);
     }
   }
 
@@ -72,6 +76,7 @@ const styles = {
 };
 
 DnDLayout.childContextTypes = {
+  store: PropTypes.instanceOf(Store),
   setSelectedItem: PropTypes.func,
   addons: PropTypes.array,
   layoutState: PropTypes.instanceOf(LayoutState),
