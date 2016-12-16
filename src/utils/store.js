@@ -1,4 +1,5 @@
 class Store {
+
   constructor(layoutState) {
     this.layoutState = layoutState;
     this.listeners = [];
