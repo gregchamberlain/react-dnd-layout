@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { DropTarget } from 'react-dnd';
+import { DropTarget, DragSource } from 'react-dnd';
 
 const overlayTarget = {
   drop(props, monitor) {
@@ -9,10 +9,18 @@ const overlayTarget = {
   }
 };
 
+const overlaySource = {
+  beginDrag(props, monitor, component) {
+    // props.onRemove();
+    return props.item;
+  }
+};
+
 class EditOverlay extends Component {
 
   render() {
-    const { item, onRemove, isHovered, isOver, isOverCurrent, connectDropTarget, children } = this.props;
+    const { item, onRemove, isHovered, isOver, isDragging, connectDragSource, connectDropTarget, children } = this.props;
+    if (isDragging) return null;
     const { setSelectedItem } = this.context;
     let styles = styleFunc({ isOver: isOver || isHovered });
     return connectDropTarget(
@@ -20,7 +28,7 @@ class EditOverlay extends Component {
         <div style={styles.overlay} />
         <div style={styles.edit} onClick={() => setSelectedItem(item.id)}>⚙</div>
         <div style={styles.remove} onClick={onRemove}>&times;</div>
-        <div style={styles.handle}>{item.type}</div>
+        {connectDragSource(<div style={styles.handle}>{item.type}</div>)}
       </div>
     );
   }
@@ -96,8 +104,13 @@ EditOverlay.contextTypes = {
   setSelectedItem: PropTypes.func
 };
 
+const Draggable = DragSource('Component', overlaySource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging()
+}))(EditOverlay);
+
 export default DropTarget('Component', overlayTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
   isOverCurrent: monitor.isOver({shallow: true})
-}))(EditOverlay);
+}))(Draggable);

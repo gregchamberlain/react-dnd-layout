@@ -20,7 +20,6 @@ class Root extends Component {
   }
 
   onChange = layoutState => {
-    console.log('changed', layoutState.items.toJS());
     this.setState({ layoutState });
   }
 
