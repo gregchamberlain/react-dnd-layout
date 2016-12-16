@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
 const overlayTarget = {
@@ -13,13 +13,12 @@ class EditOverlay extends Component {
 
   render() {
     const { item, onRemove, isHovered, isOver, isOverCurrent, connectDropTarget, children } = this.props;
+    const { setSelectedItem } = this.context;
     let styles = styleFunc({ isOver: isOver || isHovered });
     return connectDropTarget(
       <div style={styles.container}>
         <div style={styles.overlay} />
-        <div style={addonsStyle}>
-          {children}
-        </div>
+        <div style={styles.edit} onClick={() => setSelectedItem(item.id)}>⚙</div>
         <div style={styles.remove} onClick={onRemove}>&times;</div>
         <div style={styles.handle}>{item.type}</div>
       </div>
@@ -46,28 +45,6 @@ const actionStyle = hovered => ({
   zIndex: 3,
 });
 
-const buttonStyle = {
-  zIndex: 3,
-  position: 'absolute',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  top: -10,
-  minWidth: 20,
-  height: 20,
-  borderRadius: 5,
-  backgroundColor: '#aaa',
-  color: '#eee',
-};
-
-const addonsStyle = {
-  position: 'absolute',
-  left: 0,
-  top: -10,
-  zIndex: 3,
-};
-
 const styleFunc = ({ isOver }) => ({
   container: {
     position: 'absolute',
@@ -76,6 +53,13 @@ const styleFunc = ({ isOver }) => ({
     width: '100%',
     height: '100%',
     boxSizing: 'border-box',
+  },
+  addons: {
+    position: 'absolute',
+    top: -10,
+    left: -10,
+    display: isOver ? 'flex' : 'none',
+    zIndex: 3,
   },
   overlay: {
     zIndex: 2,
@@ -101,8 +85,16 @@ const styleFunc = ({ isOver }) => ({
   remove: {
     ...actionStyle(isOver),
     right: -11,
+  },
+  edit: {
+    ...actionStyle(isOver),
+    left: -11,
   }
 });
+
+EditOverlay.contextTypes = {
+  setSelectedItem: PropTypes.func
+};
 
 export default DropTarget('Component', overlayTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),

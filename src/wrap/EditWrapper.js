@@ -4,7 +4,6 @@ import { DropTarget } from 'react-dnd';
 import LayoutState from '../model/LayoutState';
 import EditOverlay from './EditOverlay';
 import DropOverlay from './DropOverlay';
-import AddonManager from './AddonManager';
 
 const wrapperTarget = {
   drop(props, monitor, component) {
@@ -57,9 +56,7 @@ class Wrapper extends Component {
           layoutState={layoutState}
           onRemove={this.props.onRemove}
           isHovered={this.state.hovered}
-        >
-          <AddonManager layoutState={layoutState} item={item} addons={addons} />
-        </EditOverlay>
+        />
         <DropOverlay direction={direction} onDrop={this.props.onInsert}/>
         <div style={{position: 'relative'}}>
           <Comp {...item.props} id={item.id} onAddItem={this.addChild}>
