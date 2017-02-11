@@ -2,20 +2,23 @@ class Store {
 
   constructor(layoutState) {
     this.layoutState = layoutState;
-    this.listeners = [];
+    this.listeners = new Set();
   }
 
   updateLayoutState(layoutState) {
     this.layoutState = layoutState;
+    this.listeners.forEach(listener => {
+      listener(this.layoutState);
+    });
   }
 
   subscribe(listener) {
-    this.listeners.push(listener);
+    this.listeners.add(listener);
     return this.layoutState;
   }
 
   unsubscribe(listener) {
-    this.listeners = this.listeners.filter(list => listener !== list);
+    this.listeners.delete(listener);
   }
 
 }

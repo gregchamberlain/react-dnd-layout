@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import LayoutState from './model/LayoutState';
 import Catalog from './catalog';
 import ItemEditor from './editor';
-import wrap from './wrap';
+import wrap from './wrapper';
 import LayoutEditor from './addons/LayoutEditor';
 import { generateRandomKey } from './utils';
 import Store from './utils/store';

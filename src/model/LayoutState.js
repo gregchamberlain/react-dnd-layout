@@ -1,5 +1,7 @@
 import { Record, fromJS } from 'immutable';
 
+import { generateRandomKey } from '../utils';
+
 export const deepRemove = (map, id) => {
   const children = map.getIn(['items', id, 'children']);
   if (children) children.forEach(c => {
@@ -23,10 +25,27 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
     return this.items.get(id);
   }
 
+  getItemJS(id) {
+    return this.items.get(id).toJS();
+  }
+
   addItem(parentId, idx, item) {
-    let nextState = this
-      .setIn(['items', item.id], fromJS(item))
-      .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
+    let nextState;
+    if (item.id) {
+      if (parentId === item.parent.id && idx > item.parent.idx) {
+        idx--;
+      }
+      nextState = this
+        .updateIn(['items', item.parent.id, 'children'], c => c.filter(id => id !== item.id))
+        .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id))
+        .setIn(['items', item.id, 'parent'], fromJS({ id: parentId, idx }));
+    } else {
+      item.id = generateRandomKey();
+      item.parent = { id: parentId, idx: idx };
+      nextState = this
+        .setIn(['items', item.id], fromJS(item))
+        .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
+    }
     this.listener(nextState);
   }
 

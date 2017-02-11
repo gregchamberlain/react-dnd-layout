@@ -1,26 +1,5 @@
 import React from 'react';
-import { DropTarget } from 'react-dnd';
 
-const target = {
-  drop(props, monitor, component) {
-    if (!monitor.didDrop()) {
-      props.onAddItem(props.children.length, monitor.getItem());
-    }
-  }
-};
+import Layout from './Layout';
 
-const Row = ({ id, children, connectDropTarget, isOverCurrent }) => connectDropTarget(
-  <div style={{display: 'flex', flexDirection: 'row', padding: 15, backgroundColor: isOverCurrent ? 'red' : 'white' }}>
-    This is a Row! ID: {id}
-    {children}
-  </div>
-);
-
-const RowContainer = DropTarget('Component', target, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOverCurrent: monitor.isOver({shallow: true}),
-}))(Row);
-
-RowContainer.LayoutDirection = 'row';
-
-export default RowContainer;
+export default props => <Layout {...props} type="row"/>;
