@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 
 import LayoutState from '../model/LayoutState';
+import { connect } from '../utils';
 
 class ItemEditor extends Component {
 
   render() {
 
-    const { selectedItem } = this.props;
-    const { layoutState, addons, setSelectedItem } = this.context;
+    const { selectedItem, layoutState } = this.props;
+    const { addons, setSelectedItem } = this.context;
 
     if (!(selectedItem && layoutState.getItem(selectedItem))) return null;
 
@@ -35,9 +36,8 @@ const styles = {
 };
 
 ItemEditor.contextTypes = {
-  layoutState: PropTypes.instanceOf(LayoutState),
   setSelectedItem: PropTypes.func,
   addons: PropTypes.array
 };
 
-export default ItemEditor;
+export default connect('layoutState', 'selectedItem')(ItemEditor);

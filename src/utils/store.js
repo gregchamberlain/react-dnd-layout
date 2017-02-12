@@ -1,24 +1,36 @@
 class Store {
 
-  constructor(layoutState) {
-    this.layoutState = layoutState;
-    this.listeners = new Set();
+  constructor(state) {
+    this.state = state;
+    this.listeners = {};
   }
 
-  updateLayoutState(layoutState) {
-    this.layoutState = layoutState;
-    this.listeners.forEach(listener => {
-      listener(this.layoutState);
+  update(key, value) {
+    this.state[key] = value;
+    this.listeners[key].forEach(listener => {
+      listener(key, value);
     });
   }
 
-  subscribe(listener) {
-    this.listeners.add(listener);
-    return this.layoutState;
+  subscribe(keys, listener) {
+    let result = {};
+    keys.forEach(key => {
+      if (this.listeners[key]) {
+        this.listeners[key].add(listener);
+      } else {
+        this.listeners[key] = new Set([listener]);
+      }
+      result[key] = this.state[key];
+    });
+    return result;
   }
 
-  unsubscribe(listener) {
-    this.listeners.delete(listener);
+  unsubscribe(keys, listener) {
+    keys.forEach(key => {
+      if (this.listeners[key]) {
+        this.listeners[key].delete(listener);
+      }
+    });
   }
 
 }

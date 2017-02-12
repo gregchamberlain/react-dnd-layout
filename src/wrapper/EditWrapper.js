@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { DragSource } from 'react-dnd';
 
 import LayoutState from '../model/LayoutState';
-import { withLayoutState } from '../utils';
+import { connect } from '../utils';
 
 let source = {
   beginDrag(props, monitor) {
@@ -31,7 +31,7 @@ class EditWrapper extends Component {
   render() {
 
     const { components, addons } = this.context;
-    const { id, layoutState, connectDragSource, isDragging } = this.props;
+    const { id, layoutState, connectDragSource, isDragging, selectedItem } = this.props;
     const { hovered } = this.state;
     const item = layoutState.getItemJS(id);
     const Comp = components[item.type];
@@ -40,7 +40,7 @@ class EditWrapper extends Component {
 
     return connectDragSource(
       <div
-        style={{position: 'relative', outline: hovered ? '1px solid red' : '1px solid black', outlineOffset: -1}}
+        style={{position: 'relative', outline: selectedItem === id ? '1px solid rgba(25, 230, 240, 1)' : hovered ? '1px solid #ccc' : '1px solid #eee', outlineOffset: -1}}
         onMouseEnter={this.setHover(true)}
         onMouseLeave={this.setHover(false)}
         onClick={this.handleClick}
@@ -71,8 +71,8 @@ EditWrapper.propTypes = {
   layoutState: PropTypes.instanceOf(LayoutState).isRequired
 };
 
-const Wrapper = withLayoutState(DragSource('Component', source, (connect, monitor) => ({
-  connectDragSource: connect.dragSource(),
+const Wrapper = connect('layoutState', 'selectedItem')(DragSource('Component', source, (conn, monitor) => ({
+  connectDragSource: conn.dragSource(),
   isDragging: monitor.isDragging()
 }))(EditWrapper));
 

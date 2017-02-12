@@ -7,7 +7,7 @@ const Wrapper = ({ id }, { components, layoutState }) => {
   const Comp = components[item.type];
   return (
     <div style={styles().container}>
-      <Comp {...item.props}>
+      <Comp {...item.props} id={id} >
         {React.Children.map(item.children, child => (
           <Wrapper key={child} id={child} />
         ))}

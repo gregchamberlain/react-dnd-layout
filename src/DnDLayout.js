@@ -15,13 +15,14 @@ class DnDLayout extends Component {
   constructor(props) {
     super(props);
     props.layoutState.onChange(props.onChange);
-    this.store = new Store(props.layoutState);
+    this.store = new Store({ layoutState: props.layoutState, readOnly: props.readOnly, selectedItem: null });
     this.state = {
       selectedItem: null
     };
   }
 
   setSelectedItem = id => {
+    this.store.update('selectedItem', id);
     this.setState({ selectedItem: id });
   }
 
@@ -40,7 +41,10 @@ class DnDLayout extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.layoutState !== this.props.layoutState) {
       nextProps.layoutState.onChange(this.props.onChange);
-      this.store.updateLayoutState(nextProps.layoutState);
+      this.store.update('layoutState', nextProps.layoutState);
+    }
+    if (nextProps.readOnly !== this.props.readOnly) {
+      this.store.update('readOnly', nextProps.readOnly);
     }
   }
 
@@ -52,7 +56,7 @@ class DnDLayout extends Component {
         <div style={styles.layoutEditor}>
           {wrap(this.props.readOnly, 'root')}
         </div>
-        <ItemEditor selectedItem={this.state.selectedItem}/>
+        <ItemEditor />
       </div>
     );
   }

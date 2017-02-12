@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
 import Separator from './Separator';
-import { withLayoutState } from '../../src/utils';
+import { connect } from '../../src/utils';
 
 const target = {
   drop(props, monitor, component) {
@@ -12,10 +12,10 @@ const target = {
   }
 };
 
-const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, layoutState }) => {
+const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, layoutState, readOnly }) => {
 
   let parsedChildren = [];
-  if (children.length) {
+  if (!readOnly && children.length) {
     for (let i=0; i<children.length*2+1;i++) {
       if (i % 2 === 0) {
         parsedChildren.push(
@@ -32,8 +32,10 @@ const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, 
   } else {
     parsedChildren = children;
   }
+
+  const wrap = val => readOnly ? val : connectDropTarget(val);
   
-  return connectDropTarget(
+  return wrap(
     <div style={{
       padding: 10,
       display: type === 'row' ? 'flex' : null,
@@ -45,10 +47,10 @@ const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, 
   );
 };
 
-const LayoutContainer = DropTarget('Component', target, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
+const LayoutContainer = DropTarget('Component', target, (conn, monitor) => ({
+  connectDropTarget: conn.dropTarget(),
   isOverCurrent: monitor.isOver({shallow: true}),
   isOver: monitor.isOver()
 }))(Layout);
 
-export default withLayoutState(LayoutContainer);
+export default connect('layoutState', 'readOnly')(LayoutContainer);
