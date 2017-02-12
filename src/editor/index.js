@@ -18,6 +18,7 @@ class ItemEditor extends Component {
         { addons.map(addon => (
           <div key={addon.Label}>{addon.Label}</div>
         ))}
+        <button onClick={() => layoutState.removeItem(selectedItem)}>Delete</button>
         <pre>
           {JSON.stringify(layoutState.getItem(selectedItem).toJS(), null, 4)}
         </pre>

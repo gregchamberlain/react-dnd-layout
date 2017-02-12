@@ -12,7 +12,7 @@ const target = {
   }
 };
 
-const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, layoutState, readOnly }) => {
+const Layout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutState, readOnly }) => {
 
   let parsedChildren = [];
   if (!readOnly && children.length) {
@@ -49,8 +49,7 @@ const Layout = ({ id, children, isOverCurrent, isOver, connectDropTarget, type, 
 
 const LayoutContainer = DropTarget('Component', target, (conn, monitor) => ({
   connectDropTarget: conn.dropTarget(),
-  isOverCurrent: monitor.isOver({shallow: true}),
-  isOver: monitor.isOver()
+  isOverCurrent: monitor.isOver({shallow: true})
 }))(Layout);
 
 export default connect('layoutState', 'readOnly')(LayoutContainer);

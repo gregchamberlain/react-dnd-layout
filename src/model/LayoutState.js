@@ -49,13 +49,10 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
     this.listener(nextState);
   }
 
-  removeItem(parentId, idx) {
-    let id;
-    let nextState = this.updateIn(['items', parentId, 'children'], c => {
-      id = c.get(idx);
-      if (id === 'root') return c;
-      return c.splice(idx, 1);
-    });
+  removeItem(id) {
+    if (id === 'root') return;
+    let parent = this.getIn(['items', id, 'parent', 'id']);
+    let nextState = this.updateIn(['items', parent, 'children'], c => c.filter(cId => cId !== id));
     this.listener(deepRemove(nextState, id));
   }
   

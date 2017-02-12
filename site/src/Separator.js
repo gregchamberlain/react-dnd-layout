@@ -9,7 +9,7 @@ const target = {
   }
 };
 
-const Separator = ({ direction, connectDropTarget, isOverCurrent }) => (
+const Separator = ({ direction, connectDropTarget, isOverCurrent, canDrop }) => (
   <div style={{
     position: 'relative',
     zIndex: 10,
@@ -17,8 +17,8 @@ const Separator = ({ direction, connectDropTarget, isOverCurrent }) => (
   }}>
     {connectDropTarget(
       <div style={{
+        display: canDrop ? 'flex' : 'none',
         position: 'absolute',
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         width: direction === 'vertical' ? 20 : '100%',
@@ -39,5 +39,6 @@ const Separator = ({ direction, connectDropTarget, isOverCurrent }) => (
 
 export default DropTarget('Component', target, (connect, monitor) => ({
   isOverCurrent: monitor.isOver({ shallow: true }),
-  connectDropTarget: connect.dropTarget()
+  connectDropTarget: connect.dropTarget(),
+  canDrop: monitor.canDrop(),
 }))(Separator);
