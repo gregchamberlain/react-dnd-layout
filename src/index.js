@@ -1,3 +1,3 @@
-export DnDLayout from './DnDLayout';
+export Editor from './Editor';
 export LayoutState from './model/LayoutState';
-export withLayoutState from './utils/withLayoutState';
+export connect from './utils/connect';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { DnDLayout, LayoutState } from '../../src';
+import { Editor, LayoutState } from '../../src';
 
 import Column from './Column';
 import Row from './Row';
@@ -35,7 +35,7 @@ class Root extends Component {
           <button onClick={this.toggleLock}>{this.state.locked ? 'Unlock' : 'Lock'}</button>
         </div>
         <div style={{position: 'relative', height: '100%'}}>
-          <DnDLayout
+          <Editor
             readOnly={this.state.locked}
             layoutState={this.state.layoutState}
             onChange={this.onChange}
