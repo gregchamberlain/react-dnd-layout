@@ -7,8 +7,8 @@ const StaticWrapper = ({ id, components, layoutState }) => {
   const item = layoutState.getItem(id).toJS();
   const Comp = components[item.type];
   return (
-    <div style={styles().container}>
-      <Comp {...item.props} id={id} >
+    <div style={{...item.style, ...{ position: 'relative'}}}>
+      <Comp {...item.props} id={id}>
         {React.Children.map(item.children, child => (
           <Wrapper key={child} id={child} />
         ))}

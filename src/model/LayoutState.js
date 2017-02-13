@@ -58,6 +58,14 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
     this.listener(nextState);
   }
 
+  getAncestors(id) {
+    let result = [this.getItemJS(id)];
+    while (result[0].parent && result.length < 4) {
+      result.unshift(this.getItemJS(result[0].parent.id));
+    }
+    return result;
+  }
+
   removeItem(id) {
     if (id === 'root') return;
     let parent = this.getIn(['items', id, 'parent', 'id']);

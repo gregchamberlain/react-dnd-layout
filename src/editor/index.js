@@ -2,8 +2,39 @@ import React, { Component, PropTypes } from 'react';
 
 import LayoutState from '../model/LayoutState';
 import { connect } from '../utils';
+import Breadcrumb from './Breadcrumb';
+import JSXRenderer from './JSXRenderer';
 
 class ItemEditor extends Component {
+
+  constructor(props) {
+    super(props);
+    let item = props.layoutState.getSelectedItem();
+    if (item) {
+      this.state = {
+        style: JSON.stringify(item.style, null, 2)
+      };
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.layoutState.selectedItem !== this.props.layoutState.selectedItem) {
+      this.setState({ style: JSON.stringify(nextProps.layoutState.getSelectedItem().style, null, 2) });
+    }
+  }
+
+  updateStyle = e => {
+    this.setState({ style: e.target.value });
+  }
+
+  saveStyle = e => {
+    try {
+      let nextStyle = JSON.parse(this.state.style);
+      this.props.layoutState.updateItem(this.props.layoutState.selectedItem)(['style'], () => nextStyle);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
 
   render() {
 
@@ -19,10 +50,16 @@ class ItemEditor extends Component {
         { addons.map(addon => (
           <div key={addon.Label}>{addon.Label}</div>
         ))}
+        <Breadcrumb />
         <button onClick={() => layoutState.removeItem(layoutState.selectedItem)}>Delete</button>
-        <pre>
-          {JSON.stringify(selectedItem, null, 4)}
-        </pre>
+        <textarea
+          value={this.state.style}
+          onChange={this.updateStyle}
+          style={{width: '100%', boxSizing: 'border-box', height: 200}}
+        />
+        <button onClick={this.saveStyle}>Save</button>
+        <hr />
+        <JSXRenderer id="root" />
       </div>
     );
   }
@@ -34,6 +71,8 @@ const styles = {
     backgroundColor: '#ccc',
     width: 300,
     height: '100%',
+    boxSizing: 'border-box',
+    padding: 10
   }
 };
 

@@ -4,7 +4,7 @@ import { generateRandomKey } from '../utils';
 
 const source = {
   beginDrag(props, monitor) {
-    return { type: props.type, props: {}, children: [] };
+    return { type: props.type, props: {}, children: [], style: {} };
   },
   endDrag(props, monitor) {
     if (monitor.didDrop()) {

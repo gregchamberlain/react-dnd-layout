@@ -9,12 +9,25 @@ import Catalog from './catalog';
 import ItemEditor from './editor';
 
 class Editor extends React.Component {
+
+  componentDidMount() {
+
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  handleResize = e => {
+
+  }
+
   render() {
     return (
       <LayoutProvider {...this.props} addons={[LayoutEditor]}>
-        <div style={styles.container}>
+        <div style={styles.container} ref={container => {this.container = container;}}>
           <Catalog />
-          <div style={styles.layoutEditor}>
+          <div style={styles.layoutEditor} ref={box => {this.box = box;}}>
             <RootLayout />
           </div>
           <ItemEditor />
