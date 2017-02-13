@@ -112,4 +112,12 @@ LayoutState.fromRaw = raw => {
   return layoutState.set('items', fromJS(raw));
 };
 
+LayoutState.fromJS = js => {
+  const state = {};
+  Object.keys(js).forEach(key => {
+    state[key] = new Item(fromJS(js[key]));
+  });
+  return Map(state);
+};
+
 export default LayoutState;
