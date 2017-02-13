@@ -43,10 +43,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "react-hot-loader": "^3.0.0-beta.6",
-<<<<<<< HEAD
     "webpack": "^1.14.0",
-=======
->>>>>>> master
     "webpack-dev-middleware": "^1.8.4",
     "webpack-hot-middleware": "^2.13.2"
   },
