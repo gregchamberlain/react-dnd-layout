@@ -8,9 +8,11 @@ const RootLayout = ({ layoutState, components, readOnly }) => {
   const rootItem = layoutState.getItemJS('root');
   const RootComp = components[rootItem.type];
   return (
-    <RootComp {...rootItem.props} id="root">
-      {React.Children.map(rootItem.children, childId => wrap(readOnly, childId))}
-    </RootComp>
+    <div style={rootItem.style} onClick={readOnly ? null : () => layoutState.setSelectedItem('root')}>
+      <RootComp {...rootItem.props} id="root">
+        {React.Children.map(rootItem.children, childId => wrap(readOnly, childId))}
+      </RootComp>
+    </div>
   );
 };
 

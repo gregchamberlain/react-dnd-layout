@@ -10,7 +10,16 @@ export const deepRemove = (map, id) => {
   return map.deleteIn(['items', id]);
 };
 
-class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Column', props: { },  children: [] } }), selectedItem: null }) {
+const defaultItems = fromJS({ root: {
+  id: 'root',
+  type: 'Column',
+  props: { },
+  children: [],
+  style: { backgroundColor: 'white' }
+}});
+
+
+class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
 
   constructor() {
     super();
@@ -75,6 +84,7 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
   }
 
   setSelectedItem(id) {
+    if (this.selectedItem === id) return;
     this.listener(this.set('selectedItem', id));
   }
 
@@ -83,6 +93,15 @@ class LayoutState extends Record({ items: fromJS({ root: { id: 'root', type: 'Co
     return item ? item.toJS() : null;
   }
 
+  toRaw() {
+    return this.items.toJS();
+  }
+
 }
+
+LayoutState.fromRaw = raw => {
+  let layoutState = new LayoutState();
+  return layoutState.set('items', fromJS(raw));
+};
 
 export default LayoutState;

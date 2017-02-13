@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
 import Separator from './Separator';
-import { connect } from '../../src/utils';
+import { connect } from '../../../src/utils';
 
 const target = {
   drop(props, monitor, component) {
@@ -12,7 +12,7 @@ const target = {
   }
 };
 
-const Layout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutState, readOnly }) => {
+const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutState, readOnly }) => {
 
   let parsedChildren = [];
   if (!readOnly && children.length) {
@@ -33,14 +33,20 @@ const Layout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutSt
     parsedChildren = children;
   }
 
-  const wrap = val => readOnly ? val : connectDropTarget(val);
-  
-  return wrap(
+  return connectDropTarget(
     <div style={{
+      position: 'relative',
       padding: 10,
-      display: type === 'row' ? 'flex' : null,
-      backgroundColor: isOverCurrent ? 'rgba(25, 230, 240, 0.2)' : 'white'
+      display: type === 'row' ? 'flex' : null
     }}>
+      <div style={{
+        position: 'absolute',
+        top:0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: isOverCurrent ? 'rgba(25, 230, 240, 0.2)' : ''
+      }}/>
       This is a {type}! ID: {id}
       {parsedChildren}
     </div>
@@ -50,6 +56,8 @@ const Layout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutSt
 const LayoutContainer = DropTarget('Component', target, (conn, monitor) => ({
   connectDropTarget: conn.dropTarget(),
   isOverCurrent: monitor.isOver({shallow: true})
-}))(Layout);
+}))(EditLayout);
 
 export default connect('layoutState', 'readOnly')(LayoutContainer);
+
+// export default LayoutContainer;s

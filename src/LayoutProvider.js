@@ -47,6 +47,7 @@ LayoutProvider.propTypes = {
   layoutState: PropTypes.instanceOf(LayoutState).isRequired,
   onChange: PropTypes.func.isRequired,
   components: PropTypes.object.isRequired,
+  addons: PropTypes.array,
   readOnly: PropTypes.bool
 };
 
