@@ -1,5 +1,3 @@
-// @flow
-
 const usedKeys = {};
 const MULTIPLIER = Math.pow(2, 24);
 

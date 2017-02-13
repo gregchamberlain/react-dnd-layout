@@ -1,12 +1,10 @@
-import { Record, Map } from 'immutable';
+import { Record, fromJS } from 'immutable';
 
-const Item = Record({
-  type: '',
+const Item = Record(fromJS({
   id: '',
-  props: Map({}),
-  layout: Map({
-    flex: 1
-  })
-});
+  type: '',
+  props: {}
+}));
+
 
 export default Item;

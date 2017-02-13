@@ -11,6 +11,7 @@ var compiler = webpack(config);
 app.use(devMiddleware(compiler, {
   publicPath: config.output.publicPath,
   historyApiFallback: true,
+  noInfo: true
 }));
 
 app.use(hotMiddleware(compiler));
