@@ -9,6 +9,7 @@ import wrap from './wrapper';
 import LayoutEditor from './addons/LayoutEditor';
 import { generateRandomKey } from './utils';
 import Store from './utils/store';
+import RootLayout from './RootLayout';
 
 class DnDLayout extends Component {
 
@@ -47,7 +48,7 @@ class DnDLayout extends Component {
       <div style={styles.container}>
         <Catalog />
         <div style={styles.layoutEditor}>
-          {wrap(this.props.readOnly, 'root')}
+          <RootLayout />
         </div>
         <ItemEditor />
       </div>
