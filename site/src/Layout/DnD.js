@@ -41,6 +41,7 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
     }}>
       <div style={{
         position: 'absolute',
+        pointerEvents: 'none',
         top:0,
         left: 0,
         width: '100%',

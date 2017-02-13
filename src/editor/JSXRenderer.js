@@ -21,7 +21,8 @@ const Tag = ({ layoutState, id }) => {
 
 const style = curr => ({
   cursor: 'pointer',
-  fontWeight: curr ? 'bold' : 'normal'
+  fontWeight: 'bold',
+  color: curr ? '#1976D2' : '#333'
 });
 
 const Renderer = connect('layoutState')(Tag);
