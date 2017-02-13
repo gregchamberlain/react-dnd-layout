@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 
 import LayoutState from '../model/LayoutState';
+import { connect } from '../utils';
 
-const Wrapper = ({ id }, { components, layoutState }) => {
+const StaticWrapper = ({ id, components, layoutState }) => {
   const item = layoutState.getItem(id).toJS();
   const Comp = components[item.type];
   return (
@@ -22,13 +23,12 @@ const styles = () => ({
   }
 });
 
-Wrapper.contextTypes = {
-  layoutState: PropTypes.instanceOf(LayoutState),
-  components: PropTypes.object
+StaticWrapper.propTypes = {
+  id: PropTypes.string.isRequired,
+  layoutState: PropTypes.instanceOf(LayoutState).isRequired,
+  components: PropTypes.object.isRequired
 };
 
-Wrapper.propTypes = {
-  id: PropTypes.string.isRequired
-};
+const Wrapper = connect('layoutState', 'components')(StaticWrapper);
 
 export default Wrapper;

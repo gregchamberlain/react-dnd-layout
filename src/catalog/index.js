@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 
 import CatalogItem from './CatalogItem';
+import { connect } from '../utils';
 
-const Catalog = (props, { components }) => (
+const Catalog = ({ components }) => (
   <div style={styles.container}>
     { Object.keys(components).map(key => (
       <CatalogItem key={key} type={key} component={components[key]}/>
@@ -18,8 +19,8 @@ const styles = {
   }
 };
 
-Catalog.contextTypes = {
-  components: PropTypes.object
+Catalog.propTypes = {
+  components: PropTypes.object.isRequired
 };
 
-export default Catalog;
+export default connect('components')(Catalog);

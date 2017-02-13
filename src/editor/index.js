@@ -7,20 +7,21 @@ class ItemEditor extends Component {
 
   render() {
 
-    const { selectedItem, layoutState } = this.props;
-    const { addons, setSelectedItem } = this.context;
+    const { layoutState, addons } = this.props;
 
-    if (!(selectedItem && layoutState.getItem(selectedItem))) return null;
+    let selectedItem = layoutState.getSelectedItem();
+
+    if (!selectedItem) return null;
 
     return (
       <div style={styles.container}>
-        <button onClick={() => setSelectedItem(null)}>x</button>
+        <button onClick={() => layoutState.setSelectedItem(null)}>x</button>
         { addons.map(addon => (
           <div key={addon.Label}>{addon.Label}</div>
         ))}
-        <button onClick={() => layoutState.removeItem(selectedItem)}>Delete</button>
+        <button onClick={() => layoutState.removeItem(layoutState.selectedItem)}>Delete</button>
         <pre>
-          {JSON.stringify(layoutState.getItem(selectedItem).toJS(), null, 4)}
+          {JSON.stringify(selectedItem, null, 4)}
         </pre>
       </div>
     );
@@ -36,9 +37,8 @@ const styles = {
   }
 };
 
-ItemEditor.contextTypes = {
-  setSelectedItem: PropTypes.func,
+ItemEditor.propTypes = {
   addons: PropTypes.array
 };
 
-export default connect('layoutState', 'selectedItem')(ItemEditor);
+export default connect('layoutState', 'addons')(ItemEditor);

@@ -25,13 +25,13 @@ class EditWrapper extends Component {
 
   handleClick = e => {
     e.stopPropagation();
-    this.context.setSelectedItem(this.props.id)
+    this.props.layoutState.setSelectedItem(this.props.id);
   }
 
   render() {
 
-    const { components, addons } = this.context;
-    const { id, layoutState, connectDragSource, isDragging, selectedItem } = this.props;
+    const { addons } = this.context;
+    const { id, layoutState, connectDragSource, isDragging, components } = this.props;
     const { hovered } = this.state;
     const item = layoutState.getItemJS(id);
     const Comp = components[item.type];
@@ -40,7 +40,7 @@ class EditWrapper extends Component {
 
     return connectDragSource(
       <div
-        style={{position: 'relative', outline: selectedItem === id ? '1px solid rgba(25, 230, 240, 1)' : hovered ? '1px solid #ccc' : '1px solid #eee', outlineOffset: -1}}
+        style={{position: 'relative', outline: layoutState.selectedItem === id ? '1px solid rgba(25, 230, 240, 1)' : hovered ? '1px solid #ccc' : '1px solid #eee', outlineOffset: -1}}
         onMouseEnter={this.setHover(true)}
         onMouseLeave={this.setHover(false)}
         onClick={this.handleClick}
@@ -62,7 +62,6 @@ class EditWrapper extends Component {
 
 EditWrapper.contextTypes = {
   components: PropTypes.object,
-  setSelectedItem: PropTypes.func,
   addons: PropTypes.array
 };
 
@@ -71,7 +70,7 @@ EditWrapper.propTypes = {
   layoutState: PropTypes.instanceOf(LayoutState).isRequired
 };
 
-const Wrapper = connect('layoutState', 'selectedItem')(DragSource('Component', source, (conn, monitor) => ({
+const Wrapper = connect('layoutState', 'components')(DragSource('Component', source, (conn, monitor) => ({
   connectDragSource: conn.dragSource(),
   isDragging: monitor.isDragging()
 }))(EditWrapper));

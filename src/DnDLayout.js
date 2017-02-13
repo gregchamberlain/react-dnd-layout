@@ -15,37 +15,30 @@ class DnDLayout extends Component {
   constructor(props) {
     super(props);
     props.layoutState.onChange(props.onChange);
-    this.store = new Store({ layoutState: props.layoutState, readOnly: props.readOnly, selectedItem: null });
-    this.state = {
-      selectedItem: null
-    };
-  }
-
-  setSelectedItem = id => {
-    this.store.update('selectedItem', id);
-    this.setState({ selectedItem: id });
+    this.store = new Store({
+      layoutState: props.layoutState,
+      components: props.components,
+      addons: [LayoutEditor],
+      readOnly: props.readOnly
+    });
   }
 
   getChildContext() {
     return {
       store: this.store,
-      setSelectedItem: this.setSelectedItem,
-      addons: [LayoutEditor],
-      layoutState: this.props.layoutState,
-      components: this.props.components,
-      readOnly: this.props.readOnly,
       info: this.props.info
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    const watched = ['components', 'addons', 'readOnly'];
     if (nextProps.layoutState !== this.props.layoutState) {
       nextProps.layoutState.onChange(this.props.onChange);
       this.store.update('layoutState', nextProps.layoutState);
     }
-    if (nextProps.readOnly !== this.props.readOnly) {
-      this.store.update('readOnly', nextProps.readOnly);
-    }
+    watched.forEach(key => {
+      if (nextProps[key] !== this.props[key]) this.store.update(key, nextProps[key]);
+    });
   }
 
   render() {
@@ -81,11 +74,6 @@ const styles = {
 
 DnDLayout.childContextTypes = {
   store: PropTypes.instanceOf(Store),
-  setSelectedItem: PropTypes.func,
-  addons: PropTypes.array,
-  layoutState: PropTypes.instanceOf(LayoutState),
-  components: PropTypes.object,
-  readOnly: PropTypes.bool,
   info: PropTypes.object
 };
 
