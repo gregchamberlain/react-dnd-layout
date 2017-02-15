@@ -15,7 +15,7 @@ const defaultItems = fromJS({ root: {
   type: 'Column',
   props: { },
   children: [],
-  style: { backgroundColor: 'white' }
+  style: { }
 }});
 
 

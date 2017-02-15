@@ -18,7 +18,8 @@ class ItemEditor extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.layoutState.selectedItem !== this.props.layoutState.selectedItem) {
+    if (nextProps.layoutState.selectedItem && 
+    nextProps.layoutState.selectedItem !== this.props.layoutState.selectedItem) {
       this.setState({ style: JSON.stringify(nextProps.layoutState.getSelectedItem().style, null, 2) });
     }
   }
@@ -68,7 +69,7 @@ class ItemEditor extends Component {
 
 const styles = {
   container: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#455A64',
     width: 300,
     height: '100%',
     boxSizing: 'border-box',

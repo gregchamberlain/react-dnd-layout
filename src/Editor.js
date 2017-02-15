@@ -28,7 +28,9 @@ class Editor extends React.Component {
         <div style={styles.container} ref={container => {this.container = container;}}>
           <Catalog />
           <div style={styles.layoutEditor} ref={box => {this.box = box;}}>
-            <RootLayout />
+            <div style={{backgroundColor: 'white'}}>
+              <RootLayout />
+            </div>
           </div>
           <ItemEditor />
         </div>

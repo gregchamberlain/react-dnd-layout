@@ -13,7 +13,7 @@ const Catalog = ({ components }) => (
 
 const styles = {
   container: {
-    backgroundColor: '#ccc',
+    backgroundColor: '#455A64',
     width: 200,
     height: '100%',
   }

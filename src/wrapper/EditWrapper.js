@@ -40,7 +40,7 @@ class EditWrapper extends Component {
 
     return connectDragSource(
       <div
-        style={{...item.style, ...{position: 'relative', outline: layoutState.selectedItem === id ? '1px solid rgba(25, 230, 240, 1)' : hovered ? '1px solid rgba(0,0,0,0.3)' : '1px solid rgba(0,0,0,0.1)', outlineOffset: -1}}}
+        style={{...item.style, ...{position: 'relative', outline: layoutState.selectedItem === id ? '2px solid rgba(25, 230, 240, 1)' : hovered ? '1px solid rgba(0,0,0,0.3)' : '1px solid rgba(0,0,0,0.1)', outlineOffset: -1}}}
         onMouseEnter={this.setHover(true)}
         onMouseLeave={this.setHover(false)}
         onClick={this.handleClick}

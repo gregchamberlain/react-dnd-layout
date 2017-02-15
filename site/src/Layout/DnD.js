@@ -36,6 +36,8 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
   return connectDropTarget(
     <div style={{
       position: 'relative',
+      minHeight: children.length ? null : 30,
+      minWidth: children.length ? null : 30,
       padding: 10,
       display: type === 'row' ? 'flex' : null
     }}>
@@ -48,7 +50,6 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
         height: '100%',
         backgroundColor: isOverCurrent ? 'rgba(25, 230, 240, 0.2)' : ''
       }}/>
-      This is a {type}! ID: {id}
       {parsedChildren}
     </div>
   );
