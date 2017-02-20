@@ -89,11 +89,13 @@ The `StaticLayout` is used to display a static version of layouts created with t
 |layoutState|[`LayoutState`](#layoutstate)|✓|The data for the layout to display|
 |components|Object|✓|The components that the layoutState contains instances of|
 
-### LayoutState
+## LayoutState
 LayoutState is a custom immutable.js `Record` used to hold the current state of the layout, including all components and their `props`.
-##### To JSON
+
+#### To JSON
 To get a raw JSON object from the `LayoutState`, (most likey for storage), call layoutState.toRaw();
-##### From JSON
+
+#### From JSON
 To convert raw JSON back to a LayoutState pass the JSON to LayoutState.fromRaw();
 
 ### TODO
