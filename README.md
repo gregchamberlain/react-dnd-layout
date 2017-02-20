@@ -46,16 +46,44 @@ class MyComponent extends Component {
 }
 ```
 
+### Rendering a StaticLayout
+
+```js
+import React, { Component } from 'react';
+import { Editor, StaticLayout, Row, Column } from 'react-dnd-layout';
+
+const components = {
+  Row,
+  Column
+};
+
+// layoutState is a LayoutState instance that can be saved from the editor and used to hydrate the static layout.
+
+const MyComponent = ({ layoutState }) => (
+  <StaticLayout
+    layoutState={layoutState}
+    components={components}
+  />
+)
+```
+
 ## Editor
-The Editor is used to create the interfaces using drop and drop. It accepts the following props.
+The `Editor` is used to create the interfaces using drop and drop. It accepts the following props.
 
 |Property|Type|Required|Description|
-|-----|-----|-----|-------|
+|-----|-----|:---:|-------|
 |layoutState|`LayoutState`|✓|Represents the current state of the layout|
 |onChange|Function|✓|A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
 |components|Object|✓|The components to make available in the catalog for drag and drop building|
 |readOnly|Boolean||Used to lock the interface editor (true = readonly)|
 
+## StaticLayout
+The `StaticLayout` is used to display a static version of layouts created with the `Editor`. It accepts the following props.
+
+|Property|Type|Required|Description|
+|-----|-----|:---:|-------|
+|layoutState|`LayoutState`|✓|The data for the layout to display|
+|components|Object|✓|The components that the layoutState contains instances of|
 
 ### LayoutState
 LayoutState is a custom immutable.js `Record` used to hold the current state of the layout, including all components and their `props`.
