@@ -11,7 +11,7 @@ import ItemEditor from './editor';
 class Editor extends React.Component {
 
   componentDidMount() {
-
+    
   }
 
   componentWillUnmount() {

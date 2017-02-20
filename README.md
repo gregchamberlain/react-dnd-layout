@@ -72,7 +72,7 @@ const MyComponent = ({ layoutState }) => (
 ```
 
 ## Editor
-The `Editor` is used to create the interfaces using drop and drop. It accepts the following props.
+The `Editor` is used to create the layouts using a drop and drop interface. It accepts the following props.
 
 |Property|Type|Required|Description|
 |-----|-----|:---:|-------|

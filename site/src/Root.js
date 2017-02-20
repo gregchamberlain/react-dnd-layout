@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import { Editor, StaticLayout, LayoutState, Row, Column } from '../../src';
 
@@ -39,6 +40,16 @@ class Root extends Component {
     this.setState({ editor: e.target.checked });
   }
 
+  serverRender = e => {
+    const markup = renderToStaticMarkup(
+      <StaticLayout
+        layoutState={this.state.layoutState}
+        components={components}
+      />
+    );
+    console.log(markup);
+  }
+
   render() {
     return (
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'auto'}}>
@@ -53,6 +64,7 @@ class Root extends Component {
           </label>
           <button onClick={this.setLayoutState(new LayoutState)}>Empty</button>
           <button onClick={this.save}>Save</button>
+          <button onClick={this.serverRender}>Render</button>
           {this.state.saves.map((save, idx) => (
             <button key={idx} onClick={this.setLayoutState(save)}>{`Layout #${idx + 1}`}</button>
           ))}
