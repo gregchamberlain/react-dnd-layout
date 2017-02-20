@@ -72,7 +72,7 @@ The `Editor` is used to create the interfaces using drop and drop. It accepts th
 
 |Property|Type|Required|Description|
 |-----|-----|:---:|-------|
-|layoutState|`LayoutState`|✓|Represents the current state of the layout|
+|layoutState|[`LayoutState`](#LayoutState]|✓|Represents the current state of the layout|
 |onChange|Function|✓|A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
 |components|Object|✓|The components to make available in the catalog for drag and drop building|
 |readOnly|Boolean||Used to lock the interface editor (true = readonly)|
@@ -82,7 +82,7 @@ The `StaticLayout` is used to display a static version of layouts created with t
 
 |Property|Type|Required|Description|
 |-----|-----|:---:|-------|
-|layoutState|`LayoutState`|✓|The data for the layout to display|
+|layoutState|[`LayoutState`](#LayoutState)|✓|The data for the layout to display|
 |components|Object|✓|The components that the layoutState contains instances of|
 
 ### LayoutState
