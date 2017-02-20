@@ -27,7 +27,7 @@ const withContext = (...items) => Comp => {
   }
 
   Connect.contextTypes = {
-    store: PropTypes.instanceOf(Store)
+    store: PropTypes.object
   };
 
   return Connect;

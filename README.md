@@ -60,7 +60,7 @@ const components = {
 
 /*
  * layoutState is a LayoutState instance that can be saved from the editor and
- *  used to hydrate the static layout.
+ * used to hydrate the static layout.
  */
 
 const MyComponent = ({ layoutState }) => (

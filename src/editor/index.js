@@ -54,7 +54,9 @@ class ItemEditor extends Component {
         ))}
         <Breadcrumb />
         <button onClick={() => layoutState.removeItem(layoutState.selectedItem)}>Delete</button>
+        <h4>Styling</h4>
         <textarea
+          placeholder="Enter css styles here"
           value={this.state.style}
           onChange={this.updateStyle}
           style={{width: '100%', boxSizing: 'border-box', height: 200}}
