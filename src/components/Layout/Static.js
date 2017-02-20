@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import { connect } from '../../../src/utils';
+import { connect } from '../../utils';
 
 const Layout = ({ id, children, type, layoutState }) => (
   <div style={{

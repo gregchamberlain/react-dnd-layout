@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { DropTarget } from 'react-dnd';
 
 import Separator from './Separator';
-import { connect } from '../../../src/utils';
+import { connect } from '../../utils';
 
 const target = {
   drop(props, monitor, component) {

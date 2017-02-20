@@ -2,7 +2,7 @@ import React from 'react';
 import Static from './Static';
 import DnD from './DnD';
 
-import { connect } from '../../../src/utils';
+import { connect } from '../../utils';
 
 const LayoutHandler = ({ readOnly, ...props }) => readOnly ? <Static {...props}/> : <DnD {...props}/>;
 
