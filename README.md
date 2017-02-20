@@ -100,5 +100,5 @@ To convert raw JSON back to a LayoutState pass the JSON to LayoutState.fromRaw()
 
 - [ ] Thorough Docs
 - [ ] Testing
-- [ ] Addons
+- [ ] Plugin support
 - [ ] Pass info down to layout items
