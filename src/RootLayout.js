@@ -19,7 +19,7 @@ const RootLayout = ({ layoutState, components, readOnly }) => {
 RootLayout.propTypes = {
   layoutState: PropTypes.instanceOf(LayoutState).isRequired,
   components: PropTypes.object.isRequired,
-  readOnly: PropTypes.bool.isRequired
+  readOnly: PropTypes.bool
 };
 
 export default connect('layoutState', 'components', 'readOnly')(RootLayout);

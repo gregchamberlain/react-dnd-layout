@@ -1,4 +1,9 @@
-# React DnD Layout
+>## Warning!
+
+>This library is under heavy development, and is prone to breaking changes in the future. It is not safe to use for production purposes at this time.
+
+# React DnD Layout [![npm package](https://img.shields.io/npm/v/react-dnd-layout.svg?style=flat-square)](https://www.npmjs.org/package/react-dnd-layout)
+
 Drag and Drop Layout Builder for React Components
 ```
 npm install --save react-dnd-layout
@@ -7,56 +12,54 @@ npm install --save react-dnd-layout
 ## Getting Started
 ```js
 import React, { Component } from 'react';
-import Editor, { LayoutState, Row, Column, RichText, Space } from 'react-dnd-layout';
-import CustomComponent from '/path/to/your/component';
+import { Editor, LayoutState, Row, Column } from 'react-dnd-layout';
 
 const comps = {
   Row,
-  Column,
-  RichText,
-  Space.
-  CustomComponent
+  Column
 }
 
 class MyComponent extends Component {
-  constructor() {
+
+  constructor(props) {
+    super(props);
     this.state = {
-      items: LayoutState.createEmpty(),
-    }
+      layoutState: new LayoutState()
+    };
+    this.handleLayoutChange = this.handleLayoutChange.bind(this);
   }
 
   handleLayoutChange(layoutState) {
-    console.log(layoutState);
+    this.setState({ layoutState });
   }
 
   render() {
     return (
       <Editor
-        items={this.state.items}
-        components={comps}
-        rootId="root"
+        layoutState={this.state.layoutState}
+        onChange={this.handleLayoutChange}
+        components={components}
       />
     );
   }
+
 }
 ```
 
 ## Editor
-The Editor is the default export of this package and is the component used to create the interfaces using drop and drop. It accepts the following props.
+The Editor is used to create the interfaces using drop and drop. It accepts the following props.
 
 |Property|Type|Required|Description|
 |-----|-----|-----|-------|
-|items|`LayoutState`|x|Represents the current state of the layout|
-|components|Object|x|The components to make available in the catalog for drag and drop building|
-|rootId|String|x|The id of the root component used in the `LayoutState`, default is 'root'|
-|locked|Boolean||Used to lock the interface editor (true = readonly)|
-|info|Object||Information that is passed down to all components in the layout through context (Used when custom components need dynamic info from outside the layout)|
-|onChange|func||A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
+|layoutState|`LayoutState`|✓|Represents the current state of the layout|
+|onChange|Function|✓|A function to be called for every change made to the layoutState, this function is passed the new `LayoutState`|
+|components|Object|✓|The components to make available in the catalog for drag and drop building|
+|readOnly|Boolean||Used to lock the interface editor (true = readonly)|
 
 
 ### LayoutState
-LayoutState is an immutable.js `Map` used to hold the current state of the layout, including all components and their `props`.
+LayoutState is a custom immutable.js `Record` used to hold the current state of the layout, including all components and their `props`.
 ##### To JSON
-To get a raw JSON object from the `LayoutState`, (most likey for storage), call layoutState.toJS();
+To get a raw JSON object from the `LayoutState`, (most likey for storage), call layoutState.toRaw();
 ##### From JSON
-To convert raw JSON back to a LayoutState pass the JSON to LayoutState.fromJS();
+To convert raw JSON back to a LayoutState pass the JSON to LayoutState.fromRaw();
