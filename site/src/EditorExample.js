@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Editor, StaticLayout, LayoutState } from '../../lib';
+import { Editor, StaticLayout, LayoutState } from '../../src';
 
 import Column from './Column';
 import Row from './Row';
