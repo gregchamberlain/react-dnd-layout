@@ -35,7 +35,8 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
 
   return connectDropTarget(
     <div style={{
-      position: 'relative',
+      boxSizing: 'border-box',
+      height: '100%',
       minHeight: children.length ? null : 30,
       minWidth: children.length ? null : 30,
       padding: 10,

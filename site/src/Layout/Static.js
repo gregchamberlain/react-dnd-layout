@@ -4,6 +4,8 @@ import { connect } from '../../../src/utils';
 
 const Layout = ({ id, children, type, layoutState }) => (
   <div style={{
+    position: 'absolute',
+    height: '100%',
     padding: 10,
     minHeight: children.length ? null : 30,
     minWidth: children.length ? null : 30,

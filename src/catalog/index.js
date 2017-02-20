@@ -3,11 +3,14 @@ import React, { PropTypes } from 'react';
 import CatalogItem from './CatalogItem';
 import { connect } from '../utils';
 
+import TestDrag from './TestComp';
+
 const Catalog = ({ components }) => (
   <div style={styles.container}>
     { Object.keys(components).map(key => (
       <CatalogItem key={key} type={key} component={components[key]}/>
     ))}
+    <TestDrag />
   </div>
 );
 

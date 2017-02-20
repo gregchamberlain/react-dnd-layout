@@ -4,6 +4,7 @@ import LayoutState from '../model/LayoutState';
 import { connect } from '../utils';
 import Breadcrumb from './Breadcrumb';
 import JSXRenderer from './JSXRenderer';
+import { jsToCss, cssToJS } from '../utils/parseCss';
 
 class ItemEditor extends Component {
 
@@ -12,7 +13,7 @@ class ItemEditor extends Component {
     let item = props.layoutState.getSelectedItem();
     if (item) {
       this.state = {
-        style: JSON.stringify(item.style, null, 2)
+        style: jsToCss(item.style, null, 2)
       };
     }
   }
@@ -20,7 +21,7 @@ class ItemEditor extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.layoutState.selectedItem && 
     nextProps.layoutState.selectedItem !== this.props.layoutState.selectedItem) {
-      this.setState({ style: JSON.stringify(nextProps.layoutState.getSelectedItem().style, null, 2) });
+      this.setState({ style: jsToCss(nextProps.layoutState.getSelectedItem().style) });
     }
   }
 
@@ -30,7 +31,7 @@ class ItemEditor extends Component {
 
   saveStyle = e => {
     try {
-      let nextStyle = JSON.parse(this.state.style);
+      let nextStyle = cssToJS(this.state.style);
       this.props.layoutState.updateItem(this.props.layoutState.selectedItem)(['style'], () => nextStyle);
     } catch (err) {
       console.log(err.message);

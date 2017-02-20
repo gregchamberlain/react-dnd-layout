@@ -53,7 +53,7 @@
   "dependencies": {
     "immutable": "^3.8.1",
     "react-dnd": "^2.1.4",
-    "react-dnd-html5-backend": "^2.1.2",
+    "react-dnd-html5-backend": "^2.1.2"
   },
   "jest": {
     "verbose": true
