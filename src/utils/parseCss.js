@@ -37,19 +37,3 @@ function camelToDash(str) {
   }
   return result;
 }
-
-let css = `
-color: red;
-background: green;
-box-shadow: 0 0 10px black;
--webkit-transition: height 2s;
-`;
-
-let json = {
-  backgroundColor: 'red',
-  boxShadow: '0 0 10px black',
-  color: 'green'
-};
-
-
-console.log(cssToJS(css));
