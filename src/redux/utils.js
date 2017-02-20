@@ -1,5 +1,4 @@
 import { merge } from 'lodash';
-import ObjectID from 'bson-objectid';
 import { Record, Map, fromJS } from 'immutable';
 
 export const mergeItems = (state, id) => state.getIn([id, 'props']).children.map(cId => state[cId]);
@@ -29,15 +28,3 @@ export const generateEmptyLayout = () => {
     })
   });
 };
-
-// export const generateEmptyLayout = providedId => {
-//   const id = providedId || ObjectID.generate();
-//   return {
-//     [id]: {
-//       id,
-//       props: {
-//         children: []
-//       }
-//     }
-//   };
-// };

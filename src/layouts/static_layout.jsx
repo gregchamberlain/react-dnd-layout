@@ -9,7 +9,6 @@ import CatalogItem from '../catalog/catalog_item';
 import Catalog from '../catalog/catalog';
 import { isEqual } from 'lodash';
 import { replaceState } from '../redux/actions';
-import ObjectID from 'bson-objectid';
 
 class StaticLayout extends  Component {
 
@@ -68,7 +67,7 @@ StaticLayout.childContextTypes = {
 };
 
 const defaultRootItem = {
-  id: ObjectID.generate(),
+  id: 'root',
   props: { children: [] },
 };
 

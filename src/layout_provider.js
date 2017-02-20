@@ -10,7 +10,6 @@ import Catalog from './catalog/catalog';
 import { isEqual } from 'lodash';
 import { fromObject } from 'react-formulate';
 import { replaceState } from './redux/actions';
-import ObjectID from 'bson-objectid';
 import { Map } from 'immutable';
 
 class LayoutProvider extends  Component {
@@ -143,7 +142,7 @@ LayoutProvider.childContextTypes = {
 };
 
 const defaultRootItem = {
-  id: ObjectID.generate(),
+  id: 'root',
   props: { children: [] },
 };
 
