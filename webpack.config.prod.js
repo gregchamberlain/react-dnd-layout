@@ -9,8 +9,8 @@ module.exports = {
     filename: 'bundle.js',
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NoErrorsPlugin(),
+    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env':{
         'NODE_ENV': JSON.stringify('production')
@@ -23,15 +23,10 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [{
+    rules: [{
       test: /\.js?$/,
-      loaders: ['babel'],
+      loaders: ['babel-loader'],
       exclude: /node_modules/
-    },
-    {
-      test: /\.json?$/,
-      loaders: ['json'],
-      include: path.join(__dirname, 'site')
     }]
   }
 };
