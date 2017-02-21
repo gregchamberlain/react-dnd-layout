@@ -24,7 +24,7 @@ class Editor extends React.Component {
 
   render() {
     return (
-      <LayoutProvider {...this.props} addons={[LayoutEditor]}>
+      <LayoutProvider {...this.props}>
         <div style={styles.container} ref={container => {this.container = container;}}>
           <Catalog />
           <div style={styles.layoutEditor} ref={box => {this.box = box;}}>

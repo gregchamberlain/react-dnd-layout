@@ -72,18 +72,6 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
     let nextState = this.updateIn(['items', parent, 'children'], c => c.filter(cId => cId !== id));
     this.listener(deepRemove(nextState, id));
   }
-  
-  moveItem(from) {
-    return (to) => {
-      if (to.id === from.id && from.idx <= to.idx) to.idx -= 1;
-      let item;
-      const nextState = this.updateIn(['items', from.id, 'children'], c => {
-        item = c.get(from.idx);
-        return c.splice(from.idx, 1);
-      }).updateIn(['items', to.id, 'children'], c => c.splice(to.idx, 0, item));
-      this.listener(nextState);
-    };
-  }
 
   updateItem(id) {
     return (path, func) => {

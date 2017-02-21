@@ -8,3 +8,7 @@ class PropsPlugin extends Component {
     );
   }
 }
+
+PropsPlugin.Title = 'Props'
+
+export default PropsPlugin;

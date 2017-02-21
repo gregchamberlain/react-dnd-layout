@@ -51,4 +51,8 @@ LayoutProvider.propTypes = {
   readOnly: PropTypes.bool
 };
 
+LayoutProvider.defaultProps = {
+  addons: []
+}
+
 export default LayoutProvider;

@@ -49,6 +49,6 @@ class LayoutEditor extends Component {
 }
 
 LayoutEditor.Icon = '⇄';
-LayoutEditor.Label = 'Layout';
+LayoutEditor.Title = 'Layout';
 
 export default LayoutEditor;

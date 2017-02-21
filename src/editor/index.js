@@ -4,7 +4,6 @@ import LayoutState from '../model/LayoutState';
 import { connect } from '../utils';
 import Breadcrumb from './Breadcrumb';
 import JSXRenderer from './JSXRenderer';
-import { jsToCss, cssToJS } from '../utils/parseCss';
 
 class ItemEditor extends Component {
 
@@ -13,29 +12,17 @@ class ItemEditor extends Component {
     let item = props.layoutState.getSelectedItem();
     if (item) {
       this.state = {
-        style: jsToCss(item.style, null, 2)
+        currentPlugin: 0
+      };
+    } else {
+      this.state = {
+        currentPlugin: 0
       };
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.layoutState.selectedItem && 
-    nextProps.layoutState.selectedItem !== this.props.layoutState.selectedItem) {
-      this.setState({ style: jsToCss(nextProps.layoutState.getSelectedItem().style) });
-    }
-  }
-
-  updateStyle = e => {
-    this.setState({ style: e.target.value });
-  }
-
-  saveStyle = e => {
-    try {
-      let nextStyle = cssToJS(this.state.style);
-      this.props.layoutState.updateItem(this.props.layoutState.selectedItem)(['style'], () => nextStyle);
-    } catch (err) {
-      console.log(err.message);
-    }
+  handlePluginChange = e => {
+    this.setState({ currentPlugin: e.target.value });
   }
 
   render() {
@@ -46,29 +33,25 @@ class ItemEditor extends Component {
 
     if (!selectedItem) return null;
 
+    let Plugin = addons[this.state.currentPlugin];
+
     return (
       <div style={styles.container}>
         <button onClick={() => layoutState.setSelectedItem(null)}>x</button>
-        { addons.map(addon => (
-          <div key={addon.Label}>{addon.Label}</div>
-        ))}
-        <Breadcrumb />
+        <select onChange={this.handlePluginChange} value={this.state.currentPlugin}>
+          {addons.map((addon, idx) => (
+            <option key={addon.Title} value={idx}>{addon.Title}</option>
+          ))}
+        </select>
         <button onClick={() => layoutState.removeItem(layoutState.selectedItem)}>Delete</button>
-        <h4>Styling</h4>
-        <textarea
-          placeholder="Enter css styles here"
-          value={this.state.style}
-          onChange={this.updateStyle}
-          style={{width: '100%', boxSizing: 'border-box', height: 200}}
-        />
-        <button onClick={this.saveStyle}>Save</button>
-        <hr />
-        <JSXRenderer id="root" />
+        <Breadcrumb />
+        <Plugin layoutState={layoutState} />
       </div>
     );
   }
 
 }
+//         <JSXRenderer id="root" />
 
 const styles = {
   container: {

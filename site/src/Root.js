@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
-import { Editor, StaticLayout, LayoutState, Row, Column } from '../../src';
+import { Editor, StaticLayout, LayoutState, Row, Column, PropsPlugin, StylePlugin } from '../../src';
 
 const components = {
   Column,
@@ -75,6 +75,7 @@ class Root extends Component {
               readOnly={this.state.locked}
               layoutState={this.state.layoutState}
               onChange={this.onChange}
+              addons={[PropsPlugin, StylePlugin]}
               components={components}
             />
           ) : (
