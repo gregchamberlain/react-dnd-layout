@@ -12,7 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "lint": "eslint src",
-    "test": "jest",
+    "test": "mocha ./tests/**/*.test.js --compilers js:babel-core/register",
     "build": "NODE_ENV=production ./tools/build.sh",
     "buildSite": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "prepublish": "npm run build"
@@ -36,11 +36,13 @@
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "enzyme": "^2.7.1",
     "eslint": "^3.14.1",
     "eslint-plugin-react": "^6.9.0",
     "jest": "^18.1.0",
     "json-loader": "^0.5.4",
     "react": "^15.3.0",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.3.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-test-renderer": "^15.4.2",
