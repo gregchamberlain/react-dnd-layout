@@ -1,21 +1,9 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
-import { generateRandomKey } from '../utils';
 
 const source = {
   beginDrag(props, monitor) {
     return { type: props.type, props: {}, children: [], style: {} };
-  },
-  endDrag(props, monitor) {
-    if (monitor.didDrop()) {
-      const item = {
-        id: generateRandomKey(),
-        props: {},
-        children: []
-      };
-      const dropResult = monitor.getDropResult();
-
-    }
   }
 };
 

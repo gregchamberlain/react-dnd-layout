@@ -1,6 +1,6 @@
 import { Record, fromJS } from 'immutable';
 
-import { generateRandomKey } from '../utils';
+// import { generateRandomKey } from '../utils';
 
 export const deepRemove = (map, id) => {
   const children = map.getIn(['items', id, 'children']);
@@ -38,6 +38,14 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
     return this.items.get(id).toJS();
   }
 
+  generateRandomKey() {
+    let key;
+    while (key === undefined || this.items.has(key) || !isNaN(Number(key))) {
+      key = Math.floor(Math.random() * Math.pow(2, 24)).toString(32);
+    }
+    return key;
+  }
+
   addItem(parentId, idx, item) {
     let nextState;
     if (item.id) {
@@ -49,13 +57,14 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
         .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id))
         .setIn(['items', item.id, 'parent'], fromJS({ id: parentId, idx }));
     } else {
-      item.id = generateRandomKey();
+      item.id = this.generateRandomKey();
       item.parent = { id: parentId, idx: idx };
       nextState = this
         .setIn(['items', item.id], fromJS(item))
         .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
     }
     this.listener(nextState);
+    return item;
   }
 
   getAncestors(id) {
@@ -99,13 +108,5 @@ LayoutState.fromRaw = raw => {
   let layoutState = new LayoutState();
   return layoutState.set('items', fromJS(raw));
 };
-
-// LayoutState.fromJS = js => {
-//   const state = {};
-//   Object.keys(js).forEach(key => {
-//     state[key] = new Item(fromJS(js[key]));
-//   });
-//   return Map(state);
-// };
 
 export default LayoutState;

@@ -12,7 +12,8 @@
   "scripts": {
     "start": "webpack-dev-server --open",
     "lint": "eslint src",
-    "test": "mocha ./tests/**/*.test.js --compilers js:babel-core/register",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "build": "NODE_ENV=production ./tools/build.sh",
     "buildSite": "NODE_ENV=production webpack --config webpack.config.prod.js --progress",
     "prepublish": "npm run build"

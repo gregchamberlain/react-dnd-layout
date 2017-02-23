@@ -1,5 +1,3 @@
-import expect from 'expect.js';
-
 import LayoutState from '../../src/model/LayoutState';
 
 let state = new LayoutState();
@@ -11,9 +9,16 @@ let item = { type: 'Test', props: {}, children: [], style: {} };
 describe('LayoutState', () => {
 
   describe('addItem', () => {
-    state.addItem('root', 0, item);
+    const changeListener = jest.fn();
+    state.onChange(changeListener);
+    let newItem = state.addItem('root', 0, item);
+
+    it('calls onChange', () => {
+      expect(changeListener).toHaveBeenCalled();
+    });
+
     it('does not mutate original state', () => {
-      expect(nextState).not.to.equal(state);
+      expect(state.getItem(newItem.id)).toBeUndefined();
     });
   });
 
