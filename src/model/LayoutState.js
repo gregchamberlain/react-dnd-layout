@@ -1,7 +1,5 @@
 import { Record, fromJS } from 'immutable';
 
-// import { generateRandomKey } from '../utils';
-
 export const deepRemove = (map, id) => {
   const children = map.getIn(['items', id, 'children']);
   if (children) children.forEach(c => {
@@ -44,6 +42,18 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
       key = Math.floor(Math.random() * Math.pow(2, 24)).toString(32);
     }
     return key;
+  }
+
+  moveItem(parentId, idx, item) {
+    if (parentId === item.parent.id && idx > item.parent.idx) {
+      idx--;
+    }
+    let nextState = this
+      .updateIn(['items', item.parent.id, 'children'], c => c.filter(id => id !== item.id))
+      .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id))
+      .setIn(['items', item.id, 'parent'], fromJS({ id: parentId, idx })); 
+    this.listener(nextState);
+    return item;
   }
 
   addItem(parentId, idx, item) {
