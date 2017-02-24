@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource } from 'react-dnd';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { LayoutState, connect } from '../../';
 
@@ -10,23 +11,23 @@ const source = {
   }
 };
 
-const DnDWrapper = Child => {
+const DnDWrapper = (WrappedComponent, displayName) => {
 
-  const DnD = ({ connectDragSource, isDragging, ...props }) => isDragging ? null : (
-    <Child {...props} ref={instance => {
-      connectDragSource(findDOMNode(instance))
+  const DnD = ({ connectDragSource, isDragging, pseudoRef, ...props }) => isDragging ? null : (
+    <WrappedComponent {...props} pseudoRef={instance => {
+      connectDragSource(findDOMNode(instance));
+      pseudoRef(instance);
     }} />
   )
+
+  DnD.displayName = `DnDWrapper(${displayName})`
+  hoistNonReactStatic(DnD, WrappedComponent);
 
   return connect('layoutState', 'components')(DragSource('Component', source, (conn, monitor) => ({
     connectDragSource: conn.dragSource(),
     isDragging: monitor.isDragging()
   }))(DnD))
-};
 
-// const Wrapper = connect('layoutState', 'components')(DragSource('Component', source, (conn, monitor) => ({
-//   connectDragSource: conn.dragSource(),
-//   isDragging: monitor.isDragging()
-// }))(DnDWrapper));
+};
 
 export default DnDWrapper;

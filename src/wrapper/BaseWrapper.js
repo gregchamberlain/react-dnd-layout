@@ -1,57 +1,28 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import LayoutState from '../model/LayoutState';
-import { connect } from '../utils';
+const Wrapper = (WrappedComponent, displayName) => {
 
-class BaseWrapper extends Component {
+  const BaseWrapper = ({ pseudoRef, ...props }) => {
 
-  getWrappedComp = Comp => {
-    const { addons } = this.props;
-    let wrappedComp = Comp;
-    addons.forEach(addon => {
-      if (addon.Wrapper) {
-        wrappedComp = addon.Wrapper(wrappedComp);
-      }
-    });
-    return wrappedComp;
-  }
-
-  render() {
-
-    const { id, layoutState, components } = this.props;
-    const item = layoutState.getItemJS(id);
-    const Comp = components[item.type];
-    class Wrapped extends Component {
+    class ClassWrapper extends Component {
       render() {
-        return (
-            <Comp {...item.props} id={item.id}>
-              {React.Children.map(item.children, childId => (
-                <Wrapper
-                  key={childId}
-                  id={childId}
-                />
-              ))}
-            </Comp>
-        );
+        return <WrappedComponent {...this.props}/>;
       }
     }
-    const WrappedComp = this.getWrappedComp(Wrapped);
 
-    return (
-      <WrappedComp id={id} />
-    );
+    ClassWrapper.displayName = `ClassWrapper(${displayName})`
+
+    return <ClassWrapper {...props} ref={instance => pseudoRef(instance)} />
+
   }
 
+  BaseWrapper.getDisplayName = `BaseWrapper(${displayName})`;
+  hoistNonReactStatic(BaseWrapper, WrappedComponent);
+
+  return BaseWrapper;
+
 }
-
-BaseWrapper.propTypes = {
-  id: PropTypes.string.isRequired,
-  layoutState: PropTypes.instanceOf(LayoutState).isRequired,
-  components: PropTypes.object.isRequired,
-  addons: PropTypes.array.isRequired
-};
-
-const Wrapper = connect('layoutState', 'components', 'addons')(BaseWrapper);
 
 export default Wrapper;
 

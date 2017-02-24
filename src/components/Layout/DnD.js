@@ -53,7 +53,7 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
         height: '100%',
         backgroundColor: isOverCurrent ? 'rgba(25, 230, 240, 0.2)' : ''
       }}/>
-      {parsedChildren}
+      {children}
     </div>
   );
 };
