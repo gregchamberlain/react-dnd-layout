@@ -2,7 +2,7 @@
 
 >This library is under heavy development, and is prone to breaking changes in the future. It is not safe to use for production purposes at this time.
 
-# React DnD Layout [![npm package](https://img.shields.io/npm/v/react-dnd-layout.svg?style=flat-square)](https://www.npmjs.org/package/react-dnd-layout) [![CircleCI branch](https://img.shields.io/circleci/project/github/gregchamberlain/react-dnd-layout/master.svg?style=flat-square)]()
+# React DnD Layout [![npm package](https://img.shields.io/npm/v/react-dnd-layout.svg?style=flat-square)](https://www.npmjs.org/package/react-dnd-layout) [![CircleCI branch](https://img.shields.io/circleci/project/github/gregchamberlain/react-dnd-layout/master.svg?style=flat-square)](https://circleci.com/gh/gregchamberlain/react-dnd-layout) [![Coveralls branch](https://img.shields.io/coveralls/gregchamberlain/react-dnd-layout/master.svg?style=flat-square)](https://coveralls.io/github/gregchamberlain/react-dnd-layout)
 
 Drag and Drop Layout Builder for React Components
 ```
