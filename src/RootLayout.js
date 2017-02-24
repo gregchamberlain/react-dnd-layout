@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import LayoutState from './model/LayoutState';
 import { connect } from './utils';
 import wrap from './wrapper';
+import BaseWrapper from './wrapper/BaseWrapper';
 
 const RootLayout = ({ layoutState, components, readOnly }) => {
   const rootItem = layoutState.getItemJS('root');
@@ -10,7 +11,7 @@ const RootLayout = ({ layoutState, components, readOnly }) => {
   return (
     <div style={{...rootItem.style, ...{position: 'relative', minHeight: 40}}} onClick={readOnly ? null : () => layoutState.setSelectedItem('root')}>
       <RootComp {...rootItem.props} id="root">
-        {React.Children.map(rootItem.children, childId => wrap(readOnly, childId))}
+        {React.Children.map(rootItem.children, childId => <BaseWrapper id={childId} />)}
       </RootComp>
     </div>
   );

@@ -21,7 +21,7 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
         parsedChildren.push(
           <Separator
             key={`${id}-seperator-${i}`}
-            onDrop={item => layoutState.addItem(id, i / 2, item)}
+            onDrop={item => layoutState.insertOrMoveItem(id, i / 2, item)}
             direction={ type === 'row' ? 'vertical' : 'horizontal' }
           />
         );
@@ -36,9 +36,11 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
   return connectDropTarget(
     <div style={{
       boxSizing: 'border-box',
+      position: 'relative',
+      outline: '1px solid #ccc',
       height: '100%',
-      minHeight: children.length ? null : 30,
-      minWidth: children.length ? null : 30,
+      minHeight: children.length > 1 ? null : 30,
+      minWidth: children.length > 1? null : 30,
       padding: 10,
       display: type === 'row' ? 'flex' : null
     }}>

@@ -1,20 +1,23 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import LayoutState from '../model/LayoutState';
 import { connect } from '../utils';
 
-const StaticWrapper = ({ id, components, layoutState }) => {
-  const item = layoutState.getItemJS(id);
-  const Comp = components[item.type];
-  return (
-    <div style={{...item.style, ...{ position: 'relative'}}}>
-      <Comp {...item.props} id={id}>
-        {React.Children.map(item.children, child => (
-          <Wrapper key={child} id={child} />
-        ))}
-      </Comp>
-    </div>
-  );
+class StaticWrapper extends Component {
+  render() {
+    const { id, components, layoutState } = this.props;
+    const item = layoutState.getItemJS(id);
+    const Comp = components[item.type];
+    return (
+      <div style={{...item.style, ...{ position: 'relative'}}}>
+        <Comp {...item.props} id={id}>
+          {React.Children.map(item.children, child => (
+            <Wrapper key={child} id={child} />
+          ))}
+        </Comp>
+      </div>
+    );
+  }
 };
 
 const styles = () => ({

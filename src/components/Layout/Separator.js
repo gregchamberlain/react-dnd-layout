@@ -21,8 +21,8 @@ const Separator = ({ direction, connectDropTarget, isOverCurrent, canDrop }) => 
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
-        width: direction === 'vertical' ? 20 : '100%',
-        height: direction === 'vertical' ? '100%' : 20,
+        width: canDrop ? direction === 'vertical' ? 20 : '100%' : 0,
+        height: canDrop ? direction === 'vertical' ? '100%' : 20 : 0,
         top: direction === 'vertical' ? 0 : -10,
         left: direction === 'vertical' ? -10 : 0
       }}>
