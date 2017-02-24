@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 
 import LayoutState from './model/LayoutState';
 import LayoutProvider from './LayoutProvider';
-import RootLayout from './RootLayout';
+import RootWrapper from './wrapper/RootWrapper';
 
 const StaticLayout = props => (
   <LayoutProvider {...props} readOnly={true} onChange={() => {}}>
-    <RootLayout />
+    <RootWrapper id="root" />
   </LayoutProvider>
 );
 

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { connect }from '../utils';
 import BaseWrapper from './BaseWrapper';
 
-class RootWrapper extends Component {
+class RootWrapper extends PureComponent {
 
   constructor(props) {
     super(props);

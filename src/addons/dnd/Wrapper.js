@@ -15,7 +15,7 @@ const DnDWrapper = (WrappedComponent, displayName) => {
 
   const DnD = ({ connectDragSource, isDragging, layoutState, pseudoRef, ...props }) => isDragging ? null : (
     <WrappedComponent {...props} pseudoRef={instance => {
-      connectDragSource(findDOMNode(instance));
+      if (props.id !== 'root') connectDragSource(findDOMNode(instance));
       pseudoRef(instance);
     }} />
   )

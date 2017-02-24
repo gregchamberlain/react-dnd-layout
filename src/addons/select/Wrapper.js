@@ -21,6 +21,7 @@ const HOC = (WrappedComponent, displayName) => {
     }
 
     handleClick = e => {
+      e.stopPropagation();
       this.props.layoutState.setSelectedItem(this.props.id);
     }
 

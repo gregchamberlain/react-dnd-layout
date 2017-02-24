@@ -4,7 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import LayoutProvider from './LayoutProvider';
 import LayoutEditor from './addons/LayoutEditor';
-import RootLayout from './RootLayout';
+import RootWrapper from './wrapper/RootWrapper';
 import Catalog from './catalog';
 import ItemEditor from './editor';
 
@@ -29,7 +29,7 @@ class Editor extends React.Component {
           <Catalog />
           <div style={styles.layoutEditor} ref={box => {this.box = box;}}>
             <div style={{backgroundColor: 'white'}}>
-              <RootLayout />
+              <RootWrapper id="root" />
             </div>
           </div>
           <ItemEditor />

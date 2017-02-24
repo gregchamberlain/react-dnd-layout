@@ -84,6 +84,7 @@ class Root extends Component {
             <StaticLayout
               layoutState={this.state.layoutState}
               components={components}
+              addons={[StylePlugin]}
             />
           )}
           
