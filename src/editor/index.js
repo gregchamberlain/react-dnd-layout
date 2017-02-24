@@ -33,15 +33,15 @@ class ItemEditor extends Component {
 
     if (!selectedItem) return null;
 
-    let Plugin = addons[this.state.currentPlugin];
+    let Plugin = addons[this.state.currentPlugin].Interface || (() => null);
 
     return (
       <div style={styles.container}>
         <button onClick={() => layoutState.setSelectedItem(null)}>x</button>
         <select onChange={this.handlePluginChange} value={this.state.currentPlugin}>
-          {addons.map((addon, idx) => (
+          {addons.map((addon, idx) => addon.Interface ? (
             <option key={addon.Title} value={idx}>{addon.Title}</option>
-          ))}
+          ) : null )}
         </select>
         <button onClick={() => layoutState.removeItem(layoutState.selectedItem)}>Delete</button>
         <Breadcrumb />

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 
 import { Editor, StaticLayout, LayoutState, Row, Column, PropsPlugin, StylePlugin } from '../../src';
+import DnD from '../../src/addons/dnd'; 
+import Select from '../../src/addons/select'; 
 
 const components = {
   Column,
@@ -75,7 +77,7 @@ class Root extends Component {
               readOnly={this.state.locked}
               layoutState={this.state.layoutState}
               onChange={this.onChange}
-              addons={[PropsPlugin, StylePlugin]}
+              addons={[PropsPlugin, StylePlugin, DnD, Select]}
               components={components}
             />
           ) : (

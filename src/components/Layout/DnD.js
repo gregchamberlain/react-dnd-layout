@@ -14,31 +14,33 @@ const target = {
 
 const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutState, readOnly }) => {
 
-  let parsedChildren = [];
-  if (!readOnly && children.length) {
-    for (let i=0; i<children.length*2+1;i++) {
-      if (i % 2 === 0) {
-        parsedChildren.push(
-          <Separator
-            key={`${id}-seperator-${i}`}
-            onDrop={item => layoutState.addItem(id, i / 2, item)}
-            direction={ type === 'row' ? 'vertical' : 'horizontal' }
-          />
-        );
-      } else {
-        parsedChildren.push(children[(i-1)/2]);
-      }
-    }
-  } else {
-    parsedChildren = children;
-  }
+  // let parsedChildren = [];
+  // if (!readOnly && children.length) {
+  //   for (let i=0; i<children.length*2+1;i++) {
+  //     if (i % 2 === 0) {
+  //       parsedChildren.push(
+  //         <Separator
+  //           key={`${id}-seperator-${i}`}
+  //           onDrop={item => layoutState.insertOrMoveItem(id, i / 2, item)}
+  //           direction={ type === 'row' ? 'vertical' : 'horizontal' }
+  //         />
+  //       );
+  //     } else {
+  //       parsedChildren.push(children[(i-1)/2]);
+  //     }
+  //   }
+  // } else {
+  //   parsedChildren = children;
+  // }
 
   return connectDropTarget(
     <div style={{
       boxSizing: 'border-box',
+      position: 'relative',
+      outline: '1px solid #ccc',
       height: '100%',
-      minHeight: children.length ? null : 30,
-      minWidth: children.length ? null : 30,
+      minHeight: children.length > 1 ? null : 30,
+      minWidth: children.length > 1? null : 30,
       padding: 10,
       display: type === 'row' ? 'flex' : null
     }}>
@@ -51,7 +53,7 @@ const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layo
         height: '100%',
         backgroundColor: isOverCurrent ? 'rgba(25, 230, 240, 0.2)' : ''
       }}/>
-      {parsedChildren}
+      {children}
     </div>
   );
 };

@@ -25,7 +25,7 @@ function dashToCamel(str) {
   }).join('');
 }
 
-function camelToDash(str) {
+export function camelToDash(str) {
   let result = '';
   for (let i=0; i<str.length; i++) {
     const letter = str[i];

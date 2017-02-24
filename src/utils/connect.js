@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
 import Store from './store';
 
-const withContext = (...items) => Comp => {
+const withContext = (...items) => WrappedComponent => {
 
   class Connect extends Component {
 
@@ -20,11 +22,15 @@ const withContext = (...items) => Comp => {
 
     render() {
       return (
-        <Comp {...this.props} {...this.state} />
+        <WrappedComponent {...this.props} {...this.state} />
       );
     }
 
   }
+
+  Connect.displayName = `Connect(${getDisplayName(WrappedComponent)})`
+  hoistNonReactStatic(Connect, WrappedComponent);
+
 
   Connect.contextTypes = {
     store: PropTypes.object
@@ -33,5 +39,9 @@ const withContext = (...items) => Comp => {
   return Connect;
   
 };
+
+const getDisplayName = WrappedComponent => {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}
 
 export default withContext;
