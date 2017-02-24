@@ -17,7 +17,7 @@ const Wrapper = (WrappedComponent, displayName) => {
 
   }
 
-  BaseWrapper.getDisplayName = `BaseWrapper(${displayName})`;
+  BaseWrapper.displayName = `BaseWrapper(${displayName})`;
   hoistNonReactStatic(BaseWrapper, WrappedComponent);
 
   return BaseWrapper;

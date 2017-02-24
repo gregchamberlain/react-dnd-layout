@@ -13,7 +13,7 @@ const source = {
 
 const DnDWrapper = (WrappedComponent, displayName) => {
 
-  const DnD = ({ connectDragSource, isDragging, pseudoRef, ...props }) => isDragging ? null : (
+  const DnD = ({ connectDragSource, isDragging, layoutState, pseudoRef, ...props }) => isDragging ? null : (
     <WrappedComponent {...props} pseudoRef={instance => {
       connectDragSource(findDOMNode(instance));
       pseudoRef(instance);
@@ -23,7 +23,7 @@ const DnDWrapper = (WrappedComponent, displayName) => {
   DnD.displayName = `DnDWrapper(${displayName})`
   hoistNonReactStatic(DnD, WrappedComponent);
 
-  return connect('layoutState', 'components')(DragSource('Component', source, (conn, monitor) => ({
+  return connect('layoutState')(DragSource('Component', source, (conn, monitor) => ({
     connectDragSource: conn.dragSource(),
     isDragging: monitor.isDragging()
   }))(DnD))
