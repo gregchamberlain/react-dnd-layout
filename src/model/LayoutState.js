@@ -19,21 +19,13 @@ const defaultItems = fromJS({ root: {
 
 class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
 
-  constructor() {
-    super();
-    this.dragging = null;
-  }
-
   onChange(listener) {
     this.listener = listener;
   }
 
-  getItem(id) {
-    return this.items.get(id);
-  }
-
   getItemJS(id) {
-    return this.items.get(id).toJS();
+    const item = this.items.get(id);
+    return item && item.toJS();
   }
 
   generateRandomKey() {
@@ -42,6 +34,20 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
       key = Math.floor(Math.random() * Math.pow(2, 24)).toString(32);
     }
     return key;
+  }
+
+  insertOrMoveItem(parentId, idx, item) {
+    return item.id ? this.moveItem(parentId, idx, item) : this.insertItem(parentId, idx, item);
+  }
+
+  insertItem(parentId, idx, item) {
+    item.id = this.generateRandomKey();
+    item.parent = { id: parentId, idx: idx };
+    let nextState = this
+      .setIn(['items', item.id], fromJS(item))
+      .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
+    this.listener(nextState);
+    return item;
   }
 
   moveItem(parentId, idx, item) {
@@ -56,40 +62,13 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
     return item;
   }
 
-  addItem(parentId, idx, item) {
-    let nextState;
-    if (item.id) {
-      if (parentId === item.parent.id && idx > item.parent.idx) {
-        idx--;
-      }
-      nextState = this
-        .updateIn(['items', item.parent.id, 'children'], c => c.filter(id => id !== item.id))
-        .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id))
-        .setIn(['items', item.id, 'parent'], fromJS({ id: parentId, idx }));
-    } else {
-      item.id = this.generateRandomKey();
-      item.parent = { id: parentId, idx: idx };
-      nextState = this
-        .setIn(['items', item.id], fromJS(item))
-        .updateIn(['items', parentId, 'children'], c => c.splice(idx, 0, item.id));
-    }
-    this.listener(nextState);
-    return item;
-  }
-
-  getAncestors(id) {
-    let result = [this.getItemJS(id)];
-    while (result[0].parent && result.length < 4) {
-      result.unshift(this.getItemJS(result[0].parent.id));
-    }
-    return result;
-  }
-
   removeItem(id) {
     if (id === 'root') return;
-    let parent = this.getIn(['items', id, 'parent', 'id']);
+    const item = this.getItemJS(id);
+    let parent = item.parent.id;
     let nextState = this.updateIn(['items', parent, 'children'], c => c.filter(cId => cId !== id));
     this.listener(deepRemove(nextState, id));
+    return item;
   }
 
   updateItem(id) {
@@ -105,7 +84,15 @@ class LayoutState extends Record({ items: defaultItems, selectedItem: null }) {
 
   getSelectedItem() {
     const item = this.items.get(this.selectedItem);
-    return item ? item.toJS() : null;
+    return item && item.toJS();
+  }
+
+  getAncestors(id) {
+    let result = [this.getItemJS(id)];
+    while (result[0].parent && result.length < 4) {
+      result.unshift(this.getItemJS(result[0].parent.id));
+    }
+    return result;
   }
 
   toRaw() {

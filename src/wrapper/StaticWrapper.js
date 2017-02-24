@@ -4,7 +4,7 @@ import LayoutState from '../model/LayoutState';
 import { connect } from '../utils';
 
 const StaticWrapper = ({ id, components, layoutState }) => {
-  const item = layoutState.getItem(id).toJS();
+  const item = layoutState.getItemJS(id);
   const Comp = components[item.type];
   return (
     <div style={{...item.style, ...{ position: 'relative'}}}>

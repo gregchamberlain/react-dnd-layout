@@ -7,7 +7,7 @@ import { connect } from '../../utils';
 const target = {
   drop(props, monitor, component) {
     if (!monitor.didDrop()) {
-      props.layoutState.addItem(props.id, props.children.length, monitor.getItem());
+      props.layoutState.insertOrMoveItem(props.id, props.children.length, monitor.getItem());
     }
   }
 };
