@@ -11,4 +11,7 @@ class PropsPlugin extends Component {
 
 PropsPlugin.Title = 'Props'
 
-export default PropsPlugin;
+export default {
+  Title: 'Props',
+  Interface: PropsPlugin
+};

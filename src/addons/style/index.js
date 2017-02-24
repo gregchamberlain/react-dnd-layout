@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { jsToCss, cssToJS } from './parseCss';
+import Wrapper from './Wrapper';
 
 class StylePlugin extends Component {
 
@@ -48,4 +49,8 @@ class StylePlugin extends Component {
 
 StylePlugin.Title = 'Style';
 
-export default StylePlugin;
+export default {
+  Title: 'Style',
+  Wrapper,
+  Interface: StylePlugin
+};

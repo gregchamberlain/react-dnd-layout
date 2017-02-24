@@ -9,7 +9,7 @@ const RootLayout = ({ layoutState, components, readOnly }) => {
   const rootItem = layoutState.getItemJS('root');
   const RootComp = components[rootItem.type];
   return (
-    <div style={{...rootItem.style, ...{position: 'relative', minHeight: 40}}} onClick={e => console.log(e.currentTarget)}>
+    <div style={{...rootItem.style, ...{position: 'relative', minHeight: 40}}}>
       <RootComp {...rootItem.props} id="root">
         {React.Children.map(rootItem.children, childId => <RootWrapper id={childId} />)}
       </RootComp>
