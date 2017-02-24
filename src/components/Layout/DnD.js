@@ -14,24 +14,24 @@ const target = {
 
 const EditLayout = ({ id, children, isOverCurrent, connectDropTarget, type, layoutState, readOnly }) => {
 
-  let parsedChildren = [];
-  if (!readOnly && children.length) {
-    for (let i=0; i<children.length*2+1;i++) {
-      if (i % 2 === 0) {
-        parsedChildren.push(
-          <Separator
-            key={`${id}-seperator-${i}`}
-            onDrop={item => layoutState.insertOrMoveItem(id, i / 2, item)}
-            direction={ type === 'row' ? 'vertical' : 'horizontal' }
-          />
-        );
-      } else {
-        parsedChildren.push(children[(i-1)/2]);
-      }
-    }
-  } else {
-    parsedChildren = children;
-  }
+  // let parsedChildren = [];
+  // if (!readOnly && children.length) {
+  //   for (let i=0; i<children.length*2+1;i++) {
+  //     if (i % 2 === 0) {
+  //       parsedChildren.push(
+  //         <Separator
+  //           key={`${id}-seperator-${i}`}
+  //           onDrop={item => layoutState.insertOrMoveItem(id, i / 2, item)}
+  //           direction={ type === 'row' ? 'vertical' : 'horizontal' }
+  //         />
+  //       );
+  //     } else {
+  //       parsedChildren.push(children[(i-1)/2]);
+  //     }
+  //   }
+  // } else {
+  //   parsedChildren = children;
+  // }
 
   return connectDropTarget(
     <div style={{

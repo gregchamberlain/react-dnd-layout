@@ -2,6 +2,8 @@ import React from 'react';
 
 import Layout from './Layout';
 
-export default props => (
+const Column = props => (
   <Layout {...props} type="column" />
 );
+
+export default Column;
